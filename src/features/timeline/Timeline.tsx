@@ -2,7 +2,7 @@
 
 import { useRef, type KeyboardEvent, type PointerEvent } from "react";
 import { formatYear } from "@/lib/time/format";
-import { PHASE1_SCALE, PHASE1_TICKS, snapYear, type TimeScale } from "@/lib/time/scale";
+import { PHASE1_MOBILE_TICKS, PHASE1_SCALE, PHASE1_TICKS, snapYear, type TimeScale } from "@/lib/time/scale";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import type { AstronomicalYear } from "@/types/time";
@@ -11,6 +11,7 @@ import { TimelineTicks } from "./TimelineTicks";
 interface TimelineProps {
   scale?: TimeScale;
   ticks?: AstronomicalYear[];
+  mobileTicks?: AstronomicalYear[];
 }
 
 /** 鍵盤操作的步進：方向鍵 1 年、Shift + 方向鍵 10 年、PageUp/PageDown 100 年 */
@@ -36,7 +37,7 @@ function keyStep(e: KeyboardEvent): number | "min" | "max" | null {
 }
 
 /** 可拖曳的歷史時間軸。刻度由 TimeScale 決定，日後可直接換成宇宙尺度。 */
-export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS }: TimelineProps) {
+export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTicks = PHASE1_MOBILE_TICKS }: TimelineProps) {
   const year = useAppStore((s) => s.year);
   const setYear = useAppStore((s) => s.setYear);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -92,7 +93,7 @@ export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS }: Timelin
           style={{ left: `${position * 100}%` }}
           data-testid="timeline-thumb"
         />
-        <TimelineTicks scale={scale} ticks={ticks} />
+        <TimelineTicks scale={scale} ticks={ticks} mobileTicks={mobileTicks} />
       </div>
     </div>
   );

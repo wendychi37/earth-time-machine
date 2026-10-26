@@ -5,6 +5,8 @@ import type { AstronomicalYear } from "@/types/time";
 interface TimelineTicksProps {
   scale: TimeScale;
   ticks: AstronomicalYear[];
+  /** 手機上顯示的刻度（需為 ticks 的子集） */
+  mobileTicks: AstronomicalYear[];
 }
 
 /** 兩端的標籤向內對齊，避免超出時間軸 */
@@ -15,13 +17,13 @@ function alignment(index: number, count: number): string {
 }
 
 /** 時間軸刻度與標籤。手機上只顯示部分標籤，避免重疊。 */
-export function TimelineTicks({ scale, ticks }: TimelineTicksProps) {
+export function TimelineTicks({ scale, ticks, mobileTicks }: TimelineTicksProps) {
   return (
     <div className="pointer-events-none absolute inset-x-0 top-full h-5" aria-hidden>
       {ticks.map((year, i) => (
         <div
           key={year}
-          className={`absolute top-0 flex-col ${alignment(i, ticks.length)} ${i % 2 === 1 ? "hidden sm:flex" : "flex"}`}
+          className={`absolute top-0 flex-col ${alignment(i, ticks.length)} ${mobileTicks.includes(year) ? "flex" : "hidden sm:flex"}`}
           style={{ left: `${scale.toPosition(year) * 100}%` }}
         >
           <span className="h-1.5 w-px bg-muted" />

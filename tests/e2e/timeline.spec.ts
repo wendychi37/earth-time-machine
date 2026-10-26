@@ -17,7 +17,10 @@ test("拖曳時間軸改變年份，可拖到西元前", async ({ page }, info) 
   await expect(page.getByTestId("current-year")).toContainText("西元前");
   await page.screenshot({ path: `test-results/timeline-${info.project.name}-bce.png` });
 
-  await page.mouse.click(box.x + box.width - 1, y);
+  // 版面可能因圖例變化而移動，重新取得位置
+  const after = await track.boundingBox();
+  if (!after) throw new Error("找不到時間軸");
+  await page.mouse.click(after.x + after.width - 1, after.y + after.height / 2);
   await expect(page.getByTestId("current-year")).toHaveText(/西元 20\d\d 年/);
 });
 

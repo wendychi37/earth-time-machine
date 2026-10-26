@@ -1,3 +1,4 @@
+import type { BoundaryFeature, BoundaryIndex, BoundarySnapshotMeta } from "@/types/boundary";
 import type { ModernCountry } from "@/types/geo";
 
 /**
@@ -5,4 +6,6 @@ import type { ModernCountry } from "@/types/geo";
  */
 export interface Repository {
   getModernCountries(): Promise<ModernCountry[]>;
+  getBoundaryIndex(): Promise<BoundaryIndex>;
+  getBoundarySnapshot(snapshot: BoundarySnapshotMeta): Promise<BoundaryFeature[]>;
 }

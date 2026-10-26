@@ -5,6 +5,8 @@ import { formatLatLon } from "@/lib/geo/format";
 import { findFeatureAt } from "@/lib/geo/hitTest";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
+import { RegionInfo } from "@/features/boundaries/RegionInfo";
+import { useBoundariesAtYear } from "@/features/boundaries/useBoundariesAtYear";
 import { useModernCountries } from "./useModernCountries";
 
 /** 點擊地球後顯示的位置資訊。 */
@@ -13,6 +15,7 @@ export function SelectionPanel() {
   const select = useAppStore((s) => s.select);
   const showModern = useAppStore((s) => s.layers.modernBorders);
   const countries = useModernCountries();
+  const boundaries = useBoundariesAtYear();
 
   const modern = useMemo(
     () => (selection && countries ? findFeatureAt(countries, selection) : null),
@@ -34,6 +37,7 @@ export function SelectionPanel() {
         </button>
       </div>
       <p data-testid="selection-coords">{formatLatLon(selection)}</p>
+      <RegionInfo point={selection} state={boundaries} />
       {showModern && (
         <div className="mt-3 border-t border-panel-border pt-3">
           <p className="text-xs text-muted">{t.modernCountry}</p>

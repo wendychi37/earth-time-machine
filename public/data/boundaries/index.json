@@ -1,0 +1,308 @@
+{
+  "source": {
+    "id": "historical-basemaps",
+    "title": "Historical boundaries of world countries and cultural regions",
+    "author": "André Ourednik 等貢獻者",
+    "url": "https://github.com/aourednik/historical-basemaps",
+    "license": "GPL-3.0",
+    "version": "da7a4b735ecef70aebdc9c73e409d8a2500d50f3",
+    "retrievedAt": "2026-10-26",
+    "note": "作者註明仍在開發中，學術使用前需與其他來源比對。只有年份快照，沒有逐筆引證與有效期間。"
+  },
+  "snapshots": [
+    {
+      "year": -2999,
+      "sourceLabel": -3000,
+      "file": "hb--2999.topojson",
+      "featureCount": 138
+    },
+    {
+      "year": -1999,
+      "sourceLabel": -2000,
+      "file": "hb--1999.topojson",
+      "featureCount": 145
+    },
+    {
+      "year": -1499,
+      "sourceLabel": -1500,
+      "file": "hb--1499.topojson",
+      "featureCount": 163
+    },
+    {
+      "year": -999,
+      "sourceLabel": -1000,
+      "file": "hb--999.topojson",
+      "featureCount": 163
+    },
+    {
+      "year": -699,
+      "sourceLabel": -700,
+      "file": "hb--699.topojson",
+      "featureCount": 174
+    },
+    {
+      "year": -499,
+      "sourceLabel": -500,
+      "file": "hb--499.topojson",
+      "featureCount": 189
+    },
+    {
+      "year": -399,
+      "sourceLabel": -400,
+      "file": "hb--399.topojson",
+      "featureCount": 190
+    },
+    {
+      "year": -322,
+      "sourceLabel": -323,
+      "file": "hb--322.topojson",
+      "featureCount": 149
+    },
+    {
+      "year": -299,
+      "sourceLabel": -300,
+      "file": "hb--299.topojson",
+      "featureCount": 155
+    },
+    {
+      "year": -199,
+      "sourceLabel": -200,
+      "file": "hb--199.topojson",
+      "featureCount": 183
+    },
+    {
+      "year": -99,
+      "sourceLabel": -100,
+      "file": "hb--99.topojson",
+      "featureCount": 233
+    },
+    {
+      "year": 0,
+      "sourceLabel": -1,
+      "file": "hb-0.topojson",
+      "featureCount": 442
+    },
+    {
+      "year": 100,
+      "sourceLabel": 100,
+      "file": "hb-100.topojson",
+      "featureCount": 440
+    },
+    {
+      "year": 200,
+      "sourceLabel": 200,
+      "file": "hb-200.topojson",
+      "featureCount": 354
+    },
+    {
+      "year": 300,
+      "sourceLabel": 300,
+      "file": "hb-300.topojson",
+      "featureCount": 466
+    },
+    {
+      "year": 400,
+      "sourceLabel": 400,
+      "file": "hb-400.topojson",
+      "featureCount": 367
+    },
+    {
+      "year": 500,
+      "sourceLabel": 500,
+      "file": "hb-500.topojson",
+      "featureCount": 205
+    },
+    {
+      "year": 600,
+      "sourceLabel": 600,
+      "file": "hb-600.topojson",
+      "featureCount": 204
+    },
+    {
+      "year": 700,
+      "sourceLabel": 700,
+      "file": "hb-700.topojson",
+      "featureCount": 253
+    },
+    {
+      "year": 800,
+      "sourceLabel": 800,
+      "file": "hb-800.topojson",
+      "featureCount": 225
+    },
+    {
+      "year": 900,
+      "sourceLabel": 900,
+      "file": "hb-900.topojson",
+      "featureCount": 244
+    },
+    {
+      "year": 1000,
+      "sourceLabel": 1000,
+      "file": "hb-1000.topojson",
+      "featureCount": 264
+    },
+    {
+      "year": 1100,
+      "sourceLabel": 1100,
+      "file": "hb-1100.topojson",
+      "featureCount": 235
+    },
+    {
+      "year": 1200,
+      "sourceLabel": 1200,
+      "file": "hb-1200.topojson",
+      "featureCount": 286
+    },
+    {
+      "year": 1279,
+      "sourceLabel": 1279,
+      "file": "hb-1279.topojson",
+      "featureCount": 247
+    },
+    {
+      "year": 1300,
+      "sourceLabel": 1300,
+      "file": "hb-1300.topojson",
+      "featureCount": 237
+    },
+    {
+      "year": 1400,
+      "sourceLabel": 1400,
+      "file": "hb-1400.topojson",
+      "featureCount": 233
+    },
+    {
+      "year": 1492,
+      "sourceLabel": 1492,
+      "file": "hb-1492.topojson",
+      "featureCount": 1946
+    },
+    {
+      "year": 1500,
+      "sourceLabel": 1500,
+      "file": "hb-1500.topojson",
+      "featureCount": 291
+    },
+    {
+      "year": 1530,
+      "sourceLabel": 1530,
+      "file": "hb-1530.topojson",
+      "featureCount": 494
+    },
+    {
+      "year": 1600,
+      "sourceLabel": 1600,
+      "file": "hb-1600.topojson",
+      "featureCount": 866
+    },
+    {
+      "year": 1650,
+      "sourceLabel": 1650,
+      "file": "hb-1650.topojson",
+      "featureCount": 778
+    },
+    {
+      "year": 1700,
+      "sourceLabel": 1700,
+      "file": "hb-1700.topojson",
+      "featureCount": 782
+    },
+    {
+      "year": 1715,
+      "sourceLabel": 1715,
+      "file": "hb-1715.topojson",
+      "featureCount": 758
+    },
+    {
+      "year": 1783,
+      "sourceLabel": 1783,
+      "file": "hb-1783.topojson",
+      "featureCount": 641
+    },
+    {
+      "year": 1800,
+      "sourceLabel": 1800,
+      "file": "hb-1800.topojson",
+      "featureCount": 627
+    },
+    {
+      "year": 1815,
+      "sourceLabel": 1815,
+      "file": "hb-1815.topojson",
+      "featureCount": 436
+    },
+    {
+      "year": 1878,
+      "sourceLabel": 1878,
+      "file": "hb-1878.topojson",
+      "featureCount": 239
+    },
+    {
+      "year": 1880,
+      "sourceLabel": 1880,
+      "file": "hb-1880.topojson",
+      "featureCount": 236
+    },
+    {
+      "year": 1900,
+      "sourceLabel": 1900,
+      "file": "hb-1900.topojson",
+      "featureCount": 270
+    },
+    {
+      "year": 1914,
+      "sourceLabel": 1914,
+      "file": "hb-1914.topojson",
+      "featureCount": 177
+    },
+    {
+      "year": 1920,
+      "sourceLabel": 1920,
+      "file": "hb-1920.topojson",
+      "featureCount": 205
+    },
+    {
+      "year": 1930,
+      "sourceLabel": 1930,
+      "file": "hb-1930.topojson",
+      "featureCount": 200
+    },
+    {
+      "year": 1938,
+      "sourceLabel": 1938,
+      "file": "hb-1938.topojson",
+      "featureCount": 254
+    },
+    {
+      "year": 1945,
+      "sourceLabel": 1945,
+      "file": "hb-1945.topojson",
+      "featureCount": 227
+    },
+    {
+      "year": 1960,
+      "sourceLabel": 1960,
+      "file": "hb-1960.topojson",
+      "featureCount": 197
+    },
+    {
+      "year": 1994,
+      "sourceLabel": 1994,
+      "file": "hb-1994.topojson",
+      "featureCount": 240
+    },
+    {
+      "year": 2000,
+      "sourceLabel": 2000,
+      "file": "hb-2000.topojson",
+      "featureCount": 240
+    },
+    {
+      "year": 2010,
+      "sourceLabel": 2010,
+      "file": "hb-2010.topojson",
+      "featureCount": 240
+    }
+  ]
+}

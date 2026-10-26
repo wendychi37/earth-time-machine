@@ -5,7 +5,8 @@ const PORT = Number(process.env.PORT ?? 3100);
 export default defineConfig({
   testDir: "tests/e2e",
   outputDir: "test-results",
-  timeout: 60_000,
+  // 無頭瀏覽器用軟體繪製 WebGL，比實機慢很多
+  timeout: 120_000,
   use: {
     baseURL: `http://localhost:${PORT}`,
     screenshot: "only-on-failure",

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { messages } from "@/messages/zh-Hant";
 
 export function AppHeader() {
@@ -7,7 +8,13 @@ export function AppHeader() {
         <h1 className="text-xl font-semibold tracking-wide sm:text-2xl">
           {messages.app.title}
         </h1>
-        <p className="text-xs text-muted sm:text-sm">{messages.app.subtitle}</p>
+        <p className="text-xs text-muted sm:text-sm">
+          {messages.app.subtitle}
+          {" · "}
+          <Link href="/about" className="underline hover:text-foreground">
+            {messages.nav.about}
+          </Link>
+        </p>
       </div>
     </header>
   );

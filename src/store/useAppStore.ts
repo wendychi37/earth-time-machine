@@ -22,7 +22,7 @@ const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MI
 export const useAppStore = create<AppState>((set) => ({
   year: DEFAULT_YEAR,
   selection: null,
-  layers: { modernBorders: true },
+  layers: { modernBorders: false },
   setYear: (year) => set({ year: clampYear(year) }),
   select: (selection) => set({ selection }),
   toggleLayer: (layer) => set((s) => ({ layers: { ...s.layers, [layer]: !s.layers[layer] } })),

@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useSyncExternalStore } from "react";
 import { messages } from "@/messages/zh-Hant";
+import { useBoundariesAtYear } from "@/features/boundaries/useBoundariesAtYear";
 import { isWebGLAvailable } from "./webgl";
 import { useModernCountries } from "./useModernCountries";
 
@@ -25,8 +26,9 @@ const noopSubscribe = () => () => {};
 export function GlobeView() {
   const webgl = useSyncExternalStore(noopSubscribe, isWebGLAvailable, () => null);
   const modernCountries = useModernCountries();
+  const { displayed } = useBoundariesAtYear();
 
   if (webgl === null) return <GlobeStatus text={messages.globe.loading} />;
   if (!webgl) return <GlobeStatus text={messages.globe.webglUnsupported} />;
-  return <GlobeCanvas modernCountries={modernCountries} />;
+  return <GlobeCanvas modernCountries={modernCountries} boundaries={displayed?.features ?? null} />;
 }

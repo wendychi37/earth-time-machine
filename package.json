@@ -15,7 +15,6 @@
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
-    "d3-geo": "^3.1.1",
     "earcut": "^3.2.4",
     "next": "16.4.3",
     "react": "19.3.0",
@@ -27,7 +26,6 @@
   "devDependencies": {
     "@playwright/test": "1.63.0",
     "@tailwindcss/turbopack": "^4",
-    "@types/d3-geo": "^3.1.1",
     "@types/earcut": "^3.0.0",
     "@types/geojson": "^7946.0.16",
     "@types/node": "^22.20.5",

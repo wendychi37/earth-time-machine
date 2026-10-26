@@ -106,3 +106,6 @@ export function snapYear(year: AstronomicalYear): AstronomicalYear {
 
 /** 刻度年份（天文年號）。西元前以歷史紀年的整數表示，例如 −999 = 西元前 1000 年。 */
 export const PHASE1_TICKS: AstronomicalYear[] = [-2999, -1999, -999, -499, 1, 500, 1000, 1500, 1800, 1900, 2000];
+
+/** 手機寬度較窄，只顯示部分刻度標籤 */
+export const PHASE1_MOBILE_TICKS: AstronomicalYear[] = [-2999, -999, 1, 1000, 2000];

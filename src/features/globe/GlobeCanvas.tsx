@@ -5,6 +5,8 @@ import { Canvas } from "@react-three/fiber";
 import { Suspense, useMemo } from "react";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
+import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
+import type { BoundaryFeature } from "@/types/boundary";
 import type { ModernCountry } from "@/types/geo";
 import { Atmosphere } from "./Atmosphere";
 import { CameraLight } from "./CameraLight";
@@ -25,9 +27,10 @@ function initialDistance(): number {
 
 interface GlobeCanvasProps {
   modernCountries: ModernCountry[] | null;
+  boundaries: BoundaryFeature[] | null;
 }
 
-export default function GlobeCanvas({ modernCountries }: GlobeCanvasProps) {
+export default function GlobeCanvas({ modernCountries, boundaries }: GlobeCanvasProps) {
   const showModern = useAppStore((s) => s.layers.modernBorders);
   const quality = useMemo<"2k" | "4k">(
     () => (Math.max(window.screen.width, window.screen.height) * window.devicePixelRatio >= 2400 && window.innerWidth >= 1024 ? "4k" : "2k"),
@@ -56,6 +59,7 @@ export default function GlobeCanvas({ modernCountries }: GlobeCanvasProps) {
         <Earth quality={quality} />
         <Atmosphere />
       </Suspense>
+      {boundaries && <BoundaryLayer features={boundaries} />}
       {showModern && modernCountries && <ModernBorders countries={modernCountries} />}
       <SelectionMarker />
       <GlobeControls />
