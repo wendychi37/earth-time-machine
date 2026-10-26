@@ -12,7 +12,8 @@ export interface BoundaryProps {
   /** 實際行使權力的政權（殖民母國等） */
   subjecto: string | null;
   partOf: string | null;
-  borderPrecision: BorderPrecision;
+  /** null 表示來源未標示 */
+  borderPrecision: BorderPrecision | null;
   /** 0～1，本專案依來源精度換算的可信度 */
   confidence: number;
   wikipedia: string | null;

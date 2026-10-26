@@ -40,6 +40,9 @@ export interface HistoricalDate {
   qualifier: DateQualifier;
   /** 來源使用的曆法 */
   calendar: CalendarSystem;
+  /** 原始曆法中的月、日（精度為月或日時提供） */
+  month?: number;
+  day?: number;
   /** 來源中的原始寫法，例如「康熙十二年」 */
   originalText?: string;
   /** 儒略日數，僅在精確到日時提供 */

@@ -1,4 +1,5 @@
 import type { BoundaryFeature, BoundaryIndex, BoundarySnapshotMeta } from "@/types/boundary";
+import type { HistoricalEvent } from "@/types/event";
 import type { ModernCountry } from "@/types/geo";
 
 /**
@@ -8,4 +9,6 @@ export interface Repository {
   getModernCountries(): Promise<ModernCountry[]>;
   getBoundaryIndex(): Promise<BoundaryIndex>;
   getBoundarySnapshot(snapshot: BoundarySnapshotMeta): Promise<BoundaryFeature[]>;
+  /** 事件與疆域分開存放、分開查詢 */
+  getEvents(): Promise<HistoricalEvent[]>;
 }

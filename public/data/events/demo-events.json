@@ -1,0 +1,353 @@
+{
+  "notice": "示範資料：依常見百科內容整理的知名事件，用於展示事件標記功能，尚未經過來源核對與專家審核，不是正式內容。",
+  "events": [
+    {
+      "id": "demo-great-pyramid",
+      "title": "胡夫金字塔完工",
+      "summary": "古埃及第四王朝法老胡夫的陵墓，位於今埃及吉薩，一般認為約在西元前 2600 至前 2560 年間建成。",
+      "period": {
+        "start": {
+          "earliest": -2599,
+          "latest": -2559,
+          "precision": 9,
+          "qualifier": "circa",
+          "calendar": "gregorian"
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 29.979,
+        "lon": 31.134
+      },
+      "locationLabel": "吉薩（今埃及）",
+      "locationPrecision": "exact",
+      "category": "culture",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "胡夫金字塔",
+        "en": "Great_Pyramid_of_Giza"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Great Pyramid of Giza",
+          "url": "https://en.wikipedia.org/wiki/Great_Pyramid_of_Giza",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-code-of-hammurabi",
+      "title": "《漢摩拉比法典》頒布",
+      "summary": "古巴比倫國王漢摩拉比頒布的法典，刻於石碑上，是現存最完整的古代法典之一，年代約在西元前 1755 至前 1750 年。",
+      "period": {
+        "start": {
+          "earliest": -1754,
+          "latest": -1749,
+          "precision": 9,
+          "qualifier": "circa",
+          "calendar": "gregorian"
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 32.536,
+        "lon": 44.421
+      },
+      "locationLabel": "巴比倫（今伊拉克）",
+      "locationPrecision": "approximate",
+      "category": "politics",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "漢摩拉比法典",
+        "en": "Code_of_Hammurabi"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Code of Hammurabi",
+          "url": "https://en.wikipedia.org/wiki/Code_of_Hammurabi",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-marathon",
+      "title": "馬拉松戰役",
+      "summary": "雅典與普拉提亞聯軍在阿提卡的馬拉松平原擊退波斯帝國的軍隊，是第一次波希戰爭的關鍵戰役。",
+      "period": {
+        "start": {
+          "earliest": -489,
+          "latest": -489,
+          "precision": 9,
+          "qualifier": "exact",
+          "calendar": "gregorian"
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 38.118,
+        "lon": 23.978
+      },
+      "locationLabel": "馬拉松平原（今希臘）",
+      "locationPrecision": "exact",
+      "category": "war",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "馬拉松戰役",
+        "en": "Battle_of_Marathon"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Battle of Marathon",
+          "url": "https://en.wikipedia.org/wiki/Battle_of_Marathon",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-qin-unification",
+      "title": "秦統一六國",
+      "summary": "秦王嬴政滅齊，完成統一，改稱「皇帝」，史稱秦始皇。",
+      "period": {
+        "start": {
+          "earliest": -220,
+          "latest": -220,
+          "precision": 9,
+          "qualifier": "exact",
+          "calendar": "chinese_lunisolar",
+          "originalText": "秦王政二十六年"
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 34.33,
+        "lon": 108.71
+      },
+      "locationLabel": "咸陽（今中國陝西）",
+      "locationPrecision": "approximate",
+      "category": "politics",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "秦滅六國之戰",
+        "en": "Qin's_wars_of_unification"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Qin's wars of unification",
+          "url": "https://en.wikipedia.org/wiki/Qin%27s_wars_of_unification",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-romulus-augustulus",
+      "title": "西羅馬末代皇帝被廢",
+      "summary": "日耳曼將領奧多亞塞廢黜西羅馬皇帝羅慕路斯·奧古斯都，傳統上以這一年作為西羅馬帝國滅亡之年。",
+      "period": {
+        "start": {
+          "earliest": 476,
+          "latest": 476,
+          "precision": 9,
+          "qualifier": "exact",
+          "calendar": "gregorian"
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 44.418,
+        "lon": 12.204
+      },
+      "locationLabel": "拉溫納（今義大利）",
+      "locationPrecision": "exact",
+      "category": "politics",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": null,
+        "en": "Romulus_Augustulus"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Romulus Augustulus",
+          "url": "https://en.wikipedia.org/wiki/Romulus_Augustulus",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-zheng-he-first-voyage",
+      "title": "鄭和第一次下西洋",
+      "summary": "明成祖派遣鄭和率領大型船隊出航，經東南亞抵達印度西南岸的古里，1407 年返國。",
+      "period": {
+        "start": {
+          "earliest": 1405,
+          "latest": 1405,
+          "precision": 9,
+          "qualifier": "exact",
+          "calendar": "chinese_lunisolar",
+          "originalText": "永樂三年"
+        },
+        "end": {
+          "earliest": 1407,
+          "latest": 1407,
+          "precision": 9,
+          "qualifier": "exact",
+          "calendar": "chinese_lunisolar",
+          "originalText": "永樂五年"
+        }
+      },
+      "location": {
+        "lat": 31.6,
+        "lon": 121.25
+      },
+      "locationLabel": "劉家港（今中國江蘇太倉），船隊出發地",
+      "locationPrecision": "approximate",
+      "category": "exploration",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "鄭和下西洋",
+        "en": "Ming_treasure_voyages"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Ming treasure voyages",
+          "url": "https://en.wikipedia.org/wiki/Ming_treasure_voyages",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-fall-of-constantinople",
+      "title": "君士坦丁堡陷落",
+      "summary": "鄂圖曼帝國蘇丹穆罕默德二世攻陷拜占庭帝國首都君士坦丁堡，拜占庭帝國滅亡。",
+      "period": {
+        "start": {
+          "earliest": 1453,
+          "latest": 1453,
+          "precision": 11,
+          "qualifier": "exact",
+          "calendar": "julian",
+          "month": 5,
+          "day": 29
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 41.01,
+        "lon": 28.98
+      },
+      "locationLabel": "君士坦丁堡（今土耳其伊斯坦堡）",
+      "locationPrecision": "exact",
+      "category": "war",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "君士坦丁堡陷落",
+        "en": "Fall_of_Constantinople"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Fall of Constantinople",
+          "url": "https://en.wikipedia.org/wiki/Fall_of_Constantinople",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-columbus-landfall",
+      "title": "哥倫布首次抵達美洲",
+      "summary": "哥倫布率領的西班牙船隊抵達巴哈馬群島的一座島嶼，開啟歐洲與美洲之間持續的接觸。確切登陸的島嶼至今仍有爭議。",
+      "period": {
+        "start": {
+          "earliest": 1492,
+          "latest": 1492,
+          "precision": 11,
+          "qualifier": "exact",
+          "calendar": "julian",
+          "month": 10,
+          "day": 12
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 24.05,
+        "lon": -74.53
+      },
+      "locationLabel": "巴哈馬群島（標記於聖薩爾瓦多島，登陸地點有爭議）",
+      "locationPrecision": "approximate",
+      "category": "exploration",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": null,
+        "en": "Voyages_of_Christopher_Columbus"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Voyages of Christopher Columbus",
+          "url": "https://en.wikipedia.org/wiki/Voyages_of_Christopher_Columbus",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    },
+    {
+      "id": "demo-sarajevo",
+      "title": "薩拉熱窩事件",
+      "summary": "奧匈帝國皇儲法蘭茲·斐迪南大公夫婦在薩拉熱窩遇刺，成為第一次世界大戰爆發的導火線。",
+      "period": {
+        "start": {
+          "earliest": 1914,
+          "latest": 1914,
+          "precision": 11,
+          "qualifier": "exact",
+          "calendar": "gregorian",
+          "month": 6,
+          "day": 28
+        },
+        "end": null
+      },
+      "location": {
+        "lat": 43.858,
+        "lon": 18.428
+      },
+      "locationLabel": "薩拉熱窩（今波士尼亞與赫塞哥維納）",
+      "locationPrecision": "exact",
+      "category": "politics",
+      "wikidataQid": null,
+      "wikipedia": {
+        "zh": "薩拉熱窩事件",
+        "en": "Assassination_of_Archduke_Franz_Ferdinand"
+      },
+      "sources": [
+        {
+          "title": "Wikipedia: Assassination of Archduke Franz Ferdinand",
+          "url": "https://en.wikipedia.org/wiki/Assassination_of_Archduke_Franz_Ferdinand",
+          "supports": "overall",
+          "note": "示範用，開發環境無法連線至維基百科，尚未逐項核對"
+        }
+      ],
+      "isDemo": true,
+      "reviewStatus": "unreviewed"
+    }
+  ]
+}

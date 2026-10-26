@@ -23,8 +23,9 @@ const MIN_YEAR = -2999;
 /** 簡化程度：移除權重最低的 35% 頂點 */
 const SIMPLIFY_QUANTILE = 0.35;
 
-/** BORDERPRECISION：1 = 近似、2 = 中等、3 = 依國際法確定 */
+/** BORDERPRECISION：1 = 近似、2 = 中等、3 = 依國際法確定；其他值（來源中少數為 0）視為未標示 */
 const PRECISION_TO_CONFIDENCE: Record<number, number> = { 1: 0.3, 2: 0.5, 3: 0.8 };
+const UNKNOWN_PRECISION_CONFIDENCE = 0.2;
 
 interface SourceProps {
   NAME: string | null;
@@ -62,7 +63,8 @@ for (const entry of entries) {
   const features: Feature[] = raw.features
     .filter((f) => f.geometry)
     .map((f, i) => {
-      const precision = f.properties.BORDERPRECISION ?? 1;
+      const raw = f.properties.BORDERPRECISION;
+      const precision = raw === 1 || raw === 2 || raw === 3 ? raw : null;
       return {
         type: "Feature",
         geometry: f.geometry,
@@ -72,7 +74,7 @@ for (const entry of entries) {
           subjecto: clean(f.properties.SUBJECTO),
           partOf: clean(f.properties.PARTOF),
           borderPrecision: precision,
-          confidence: PRECISION_TO_CONFIDENCE[precision] ?? 0.3,
+          confidence: precision ? PRECISION_TO_CONFIDENCE[precision] : UNKNOWN_PRECISION_CONFIDENCE,
           wikipedia: clean(f.properties.wikipedia),
         },
       };

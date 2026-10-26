@@ -37,7 +37,7 @@ export function RegionInfo({ point, state }: { point: LatLon; state: BoundarySta
           </>
         )}
         <dt className="text-xs text-muted">{t.precision}</dt>
-        <dd>{t.precisionLabels[p.borderPrecision]}</dd>
+        <dd>{p.borderPrecision ? t.precisionLabels[p.borderPrecision] : t.precisionUnknown}</dd>
         <dt className="text-xs text-muted">{t.confidence}</dt>
         <dd>{Math.round(p.confidence * 100)}%</dd>
         <dt className="text-xs text-muted">{t.snapshot}</dt>

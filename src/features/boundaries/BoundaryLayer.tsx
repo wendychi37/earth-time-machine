@@ -16,7 +16,7 @@ const isNamed = (f: BoundaryFeature) => !!f.properties.name;
 
 /**
  * 歷史疆域：依政權上色的半透明面 + 邊界線。
- * 近似邊界（精度 1、2）用虛線，依國際法確定的邊界（精度 3）用實線。
+ * 近似、中等或未標示精度的邊界用虛線，依國際法確定的邊界（精度 3）用實線。
  */
 export function BoundaryLayer({ features }: BoundaryLayerProps) {
   const fill = useMemo(() => {
@@ -37,7 +37,7 @@ export function BoundaryLayer({ features }: BoundaryLayerProps) {
       return g;
     };
     return [
-      toGeometry(named.filter((f) => f.properties.borderPrecision < 3)),
+      toGeometry(named.filter((f) => f.properties.borderPrecision !== 3)),
       toGeometry(named.filter((f) => f.properties.borderPrecision === 3)),
     ];
   }, [features]);

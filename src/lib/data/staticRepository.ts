@@ -1,6 +1,7 @@
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import type { BoundaryFeature, BoundaryIndex, BoundaryProps } from "@/types/boundary";
+import type { HistoricalEvent } from "@/types/event";
 import type { ModernCountry, ModernCountryProps } from "@/types/geo";
 import type { Repository } from "./repository";
 
@@ -44,5 +45,10 @@ export const staticRepository: Repository = {
       const topo = await fetchJson<Topology<{ regions: GeometryCollection<BoundaryProps> }>>(path);
       return feature(topo, topo.objects.regions).features as BoundaryFeature[];
     });
+  },
+
+  getEvents() {
+    const path = "/data/events/demo-events.json";
+    return cached(path, async () => (await fetchJson<{ events: HistoricalEvent[] }>(path)).events);
   },
 };
