@@ -10,11 +10,17 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "playwright test",
-    "check": "npm run typecheck && npm run lint && npm run test && npm run build"
+    "check": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "data:modern": "node scripts/import-natural-earth.mts",
+    "data:boundaries": "node scripts/import-historical-basemaps.mts",
+    "data:textures": "./scripts/fetch-textures.sh",
+    "db:seed": "node scripts/generate-seed.mts",
+    "db:boundaries-sql": "node scripts/export-boundaries-sql.mts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
+    "@supabase/supabase-js": "^2.118.0",
     "earcut": "^3.2.4",
     "next": "16.4.3",
     "react": "19.3.0",
