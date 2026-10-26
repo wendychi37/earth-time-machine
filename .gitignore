@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright
+/test-results/
+/playwright-report/
+
+# 原始下載資料（由 scripts 重新產生）
+/data/raw/
+
+# 允許提交環境變數範例
+!.env.example
