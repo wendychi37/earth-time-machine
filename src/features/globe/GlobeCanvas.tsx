@@ -51,10 +51,11 @@ export default function GlobeCanvas({ modernCountries }: GlobeCanvasProps) {
       <ambientLight intensity={0.55} />
       <CameraLight />
       <Stars radius={50} depth={30} count={3000} factor={2.5} fade />
+      {/* 大氣層與地球一起出現，避免貼圖載入前只看到光暈 */}
       <Suspense fallback={null}>
         <Earth quality={quality} />
+        <Atmosphere />
       </Suspense>
-      <Atmosphere />
       {showModern && modernCountries && <ModernBorders countries={modernCountries} />}
       <SelectionMarker />
       <GlobeControls />

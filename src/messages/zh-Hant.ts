@@ -19,6 +19,16 @@ export const messages = {
     east: "東經",
     west: "西經",
   },
+  timeline: {
+    label: "歷史時間軸",
+    current: "目前年份",
+    inputLabel: "輸入年份",
+    inputPlaceholder: "例：西元前 221、1500",
+    go: "前往",
+    outOfRange: "第一階段的時間軸範圍為西元前 3000 年至今",
+    stepBack: "往前",
+    stepForward: "往後",
+  },
   layers: {
     title: "圖層",
     modernBorders: "現代國界（參考）",
