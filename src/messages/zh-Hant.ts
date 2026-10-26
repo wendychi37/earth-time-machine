@@ -13,6 +13,23 @@ export const messages = {
     loading: "正在載入地球…",
     webglUnsupported: "此瀏覽器不支援 WebGL，無法顯示 3D 地球。",
   },
+  coords: {
+    north: "北緯",
+    south: "南緯",
+    east: "東經",
+    west: "西經",
+  },
+  layers: {
+    title: "圖層",
+    modernBorders: "現代國界（參考）",
+  },
+  selection: {
+    title: "選取位置",
+    close: "關閉",
+    modernCountry: "現代國家（參考）",
+    modernNote: "此為今日的國界，不代表任何歷史時期的疆域。",
+    ocean: "海洋或無國家領土",
+  },
 } as const;
 
 export type Messages = typeof messages;
