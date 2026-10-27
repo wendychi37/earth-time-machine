@@ -1,0 +1,23 @@
+# 沙箱無法連線維基百科，由此 workflow 下載年表並提交 data/chronology/raw.json
+name: fetch-chronology
+on:
+  push:
+    branches: [claude/chronology-probe]
+    paths: [scripts/fetch-world-chronology.mjs, .github/workflows/fetch-chronology.yml]
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/fetch-world-chronology.mjs
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/chronology/raw.json
+          git commit -m "更新世界史年表原始資料（自動下載）" || echo "沒有變更"
+          git push
