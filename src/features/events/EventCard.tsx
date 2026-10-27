@@ -9,8 +9,9 @@ import type { HistoricalEvent } from "@/types/event";
 const wikiUrl = (lang: "zh" | "en", title: string) => `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(title)}`;
 
 /** 事件卡片：名稱、日期、地點、摘要、來源與維基百科連結。 */
-export function EventCard({ event }: { event: HistoricalEvent }) {
+export function EventCard({ event, onClose }: { event: HistoricalEvent; onClose?: () => void }) {
   const selectEvent = useAppStore((s) => s.selectEvent);
+  const close = onClose ?? (() => selectEvent(null));
   const t = messages.events;
   const originals = [event.period.start.originalText, event.period.end?.originalText].filter(Boolean);
   const precisionNote =
@@ -33,7 +34,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
             {event.title}
           </h2>
         </div>
-        <button type="button" onClick={() => selectEvent(null)} className="text-muted hover:text-foreground" aria-label={t.close}>
+        <button type="button" onClick={close} className="text-muted hover:text-foreground" aria-label={t.close}>
           ✕
         </button>
       </header>
@@ -58,7 +59,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
         </div>
         <div>
           <dt className="text-xs text-muted">{t.summary}</dt>
-          <dd className="leading-relaxed">{event.summary}</dd>
+          <dd className="leading-relaxed">{event.summary || t.noSummary}</dd>
         </div>
         <div>
           <dt className="text-xs text-muted">{t.sources}</dt>
@@ -93,6 +94,11 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
           </div>
         )}
       </dl>
+      {event.wikidataQid && !event.isDemo && event.reviewStatus === "unreviewed" && (
+        <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted" data-testid="event-unreviewed-note">
+          {t.wikidataNote}
+        </p>
+      )}
       {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-200/80">{t.demoNote}</p>}
     </article>
   );

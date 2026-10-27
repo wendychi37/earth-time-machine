@@ -20,7 +20,7 @@ export interface HistoricalEvent {
   location: { lat: number; lon: number };
   locationLabel: string;
   locationPrecision: LocationPrecision;
-  category: "politics" | "war" | "culture" | "exploration" | "science";
+  category: "politics" | "war" | "culture" | "exploration" | "science" | "other";
   wikidataQid: string | null;
   wikipedia: { zh: string | null; en: string | null };
   sources: EventSource[];

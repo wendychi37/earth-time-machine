@@ -7,6 +7,7 @@ import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import { RegionInfo } from "@/features/boundaries/RegionInfo";
 import { useBoundariesAtYear } from "@/features/boundaries/useBoundariesAtYear";
+import { NearbyEvents } from "@/features/events/NearbyEvents";
 import { useModernCountries } from "./useModernCountries";
 
 /** 點擊地球後顯示的位置資訊。 */
@@ -28,7 +29,7 @@ export function SelectionPanel() {
   return (
     <section
       aria-label={t.title}
-      className="w-full rounded-lg border border-panel-border bg-panel p-4 text-sm backdrop-blur sm:w-80"
+      className="max-h-[50dvh] w-full overflow-y-auto rounded-lg border border-panel-border bg-panel p-4 text-sm backdrop-blur sm:max-h-[70dvh] sm:w-80"
     >
       <div className="mb-2 flex items-center justify-between">
         <h2 className="font-semibold">{t.title}</h2>
@@ -45,6 +46,7 @@ export function SelectionPanel() {
           <p className="mt-1 text-xs text-muted">{t.modernNote}</p>
         </div>
       )}
+      <NearbyEvents key={`${selection.lat},${selection.lon}`} point={selection} />
     </section>
   );
 }
