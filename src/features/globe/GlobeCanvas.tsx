@@ -31,9 +31,11 @@ interface GlobeCanvasProps {
   modernCountries: ModernCountry[] | null;
   boundaries: BoundaryFeature[] | null;
   events: HistoricalEvent[];
+  /** 瀏覽器回收 WebGL context（例如顯示卡重置）時通知上層重新建立畫布 */
+  onContextLost?: () => void;
 }
 
-export default function GlobeCanvas({ modernCountries, boundaries, events }: GlobeCanvasProps) {
+export default function GlobeCanvas({ modernCountries, boundaries, events, onContextLost }: GlobeCanvasProps) {
   const showModern = useAppStore((s) => s.layers.modernBorders);
   const showEvents = useAppStore((s) => s.layers.events);
   const quality = useMemo<"2k" | "4k">(
@@ -53,6 +55,12 @@ export default function GlobeCanvas({ modernCountries, boundaries, events }: Glo
       gl={{ antialias: true }}
       style={{ touchAction: "none" }}
       data-testid="globe-canvas"
+      onCreated={({ gl }) => {
+        gl.domElement.addEventListener("webglcontextlost", (e) => {
+          e.preventDefault();
+          onContextLost?.();
+        });
+      }}
     >
       <color attach="background" args={["#05070d"]} />
       <ambientLight intensity={0.55} />

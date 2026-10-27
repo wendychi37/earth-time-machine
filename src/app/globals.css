@@ -20,6 +20,7 @@
     sans-serif;
 }
 
+html,
 body {
   background: var(--background);
   color: var(--foreground);
