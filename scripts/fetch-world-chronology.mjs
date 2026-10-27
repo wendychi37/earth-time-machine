@@ -91,8 +91,8 @@ for (let i = 0; i < titles.length; i += 50) {
   console.log(`座標查詢 ${Math.min(i + 50, titles.length)}/${titles.length}`);
 }
 
-// Wikidata：座標（P625）、所在地點（P276）、所在行政區（P131）、國家（P17）、國籍（P27）、出生地（P19）、類型（P31）
-const PROPS = ["P625", "P276", "P131", "P17", "P27", "P19", "P31"];
+// Wikidata：座標（P625）、所在地點（P276）、所在行政區（P131）、國家（P17）、國籍（P27）、出生地（P19）、類型（P31）、所在大洲（P30）
+const PROPS = ["P625", "P276", "P131", "P17", "P27", "P19", "P31", "P30"];
 async function wbget(ids) {
   const url = "https://www.wikidata.org/w/api.php?" + new URLSearchParams({ action: "wbgetentities", ids: ids.join("|"), props: "claims|labels", languages: "zh-tw|zh-hant|zh|en", format: "json" });
   for (let i = 0; i < 4; i++) {
@@ -132,6 +132,10 @@ await loadEntities(linkQids);
 const second = [];
 for (const q of linkQids) for (const prop of ["P276", "P131", "P17", "P27", "P19"]) second.push(...(wikidata[q]?.[prop] ?? []));
 await loadEntities(second);
+// 第三層：第二層項目所屬國家（用來查大洲 P30）
+const third = [];
+for (const q of new Set(second)) third.push(...(wikidata[q]?.P17 ?? []));
+await loadEntities(third);
 
 mkdirSync("data/chronology", { recursive: true });
 writeFileSync(
