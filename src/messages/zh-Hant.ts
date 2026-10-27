@@ -15,6 +15,15 @@ export const messages = {
     contextLost: "3D 畫面被瀏覽器中斷，正在重新載入…",
     contextFailed: "3D 畫面無法載入，請重新整理頁面再試一次。",
   },
+  baseMap: {
+    label: "底圖",
+    map: "地圖",
+    mapHint: "像地球儀",
+    satellite: "地形",
+    satelliteHint: "衛星照片",
+    switchTo: (name: string) => `切換到${name}模式`,
+    modernNote: "國名與行政區為現代",
+  },
   coords: {
     north: "北緯",
     south: "南緯",
@@ -72,8 +81,9 @@ export const messages = {
   },
   layers: {
     title: "圖層",
-    modernBorders: "現代國界（參考）",
     events: "事件標記",
+    labels: "國名與行政區（現代）",
+    historical: "古代疆域（依年份）",
   },
   selection: {
     title: "選取位置",

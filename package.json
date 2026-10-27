@@ -12,6 +12,7 @@
     "test:e2e": "playwright test",
     "check": "npm run typecheck && npm run lint && npm run test && npm run build",
     "data:modern": "node scripts/import-natural-earth.mts",
+    "data:map": "node scripts/import-natural-earth-map.mts",
     "data:boundaries": "node scripts/import-historical-basemaps.mts",
     "data:textures": "./scripts/fetch-textures.sh",
     "db:seed": "node scripts/generate-seed.mts",

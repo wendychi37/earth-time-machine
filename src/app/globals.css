@@ -26,3 +26,43 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+/* 地球上的國名、行政區名、海洋名（由 MapLabels 產生） */
+.map-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #2b2f38;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 3px rgb(255 255 255 / 0.85);
+  will-change: transform;
+}
+.map-label[data-kind="admin1"] {
+  font-weight: 500;
+  font-size: 11px;
+  color: #59606e;
+}
+.map-label[data-kind="marine"] {
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: #2f6a99;
+  -webkit-text-stroke: 0;
+}
+.map-label[data-tone="light"] {
+  color: #fff;
+  -webkit-text-stroke: 3px rgb(0 0 0 / 0.6);
+}
+.map-label[data-tone="light"][data-kind="admin1"] {
+  color: #e4e8ef;
+}
+.map-label[data-tone="light"][data-kind="marine"] {
+  color: #b9dcff;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.7);
+}

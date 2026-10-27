@@ -4,7 +4,8 @@ import { OrbitControls } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, type ComponentRef } from "react";
 
-export const MIN_DISTANCE = 1.25;
+// 最近可拉到離地表約 0.12 個地球半徑，看得到縣市名稱
+export const MIN_DISTANCE = 1.12;
 export const MAX_DISTANCE = 6;
 
 /**

@@ -17,9 +17,10 @@ const SOURCES = [
   {
     name: "Natural Earth",
     url: "https://www.naturalearthdata.com/",
-    use: "現代國界參考圖層（1:110m）",
+    use: "地圖模式的現代國家、國界、一級行政區（省、州、縣市）與海洋名稱（1:50m、1:10m），以及點選位置的現代國家（1:110m）",
     license: "公有領域",
-    limits: "採實際控制邊界，僅代表今日情況，不代表任何歷史時期的疆域。",
+    limits:
+      "採實際控制邊界，僅代表今日情況，不代表任何歷史時期的疆域。中文名稱取自 Natural Earth 的繁體中文欄位，少數過長的國名改用臺灣常用簡稱（例如中國、臺灣、南韓、北韓）。",
   },
   {
     name: "NASA Blue Marble",

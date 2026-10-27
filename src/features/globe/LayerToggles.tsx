@@ -7,8 +7,9 @@ export function LayerToggles() {
   const layers = useAppStore((s) => s.layers);
   const toggleLayer = useAppStore((s) => s.toggleLayer);
   const items = [
+    { key: "labels", label: messages.layers.labels },
+    { key: "historical", label: messages.layers.historical },
     { key: "events", label: messages.layers.events },
-    { key: "modernBorders", label: messages.layers.modernBorders },
   ] as const;
 
   return (

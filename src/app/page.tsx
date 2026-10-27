@@ -1,5 +1,6 @@
 import { AppHeader } from "@/components/AppHeader";
 import { BoundaryGapBanner } from "@/features/boundaries/BoundaryStatus";
+import { BaseMapToggle } from "@/features/globe/BaseMapToggle";
 import { GlobeView } from "@/features/globe/GlobeView";
 import { LayerToggles } from "@/features/globe/LayerToggles";
 import { EventList } from "@/features/events/EventList";
@@ -15,7 +16,7 @@ export default function Home() {
       </div>
       <AppHeader />
       <div className="pointer-events-none absolute right-0 top-0 z-10 p-4 sm:p-6">
-        <div className="pointer-events-auto flex flex-col items-end gap-2">
+        <div className="pointer-events-auto flex flex-col items-end gap-2" data-label-avoid>
           <LayerToggles />
           <EventList />
         </div>
@@ -31,7 +32,11 @@ export default function Home() {
           <SelectionPanel />
           <SelectedEventCard />
         </div>
-        <div className="pointer-events-auto mx-auto w-full max-w-5xl">
+        {/* 像 Google 地圖左下角的「地圖／地形」切換 */}
+        <div className="pointer-events-auto self-start" data-label-avoid>
+          <BaseMapToggle />
+        </div>
+        <div className="pointer-events-auto mx-auto w-full max-w-5xl" data-label-avoid>
           <TimelinePanel />
         </div>
       </div>

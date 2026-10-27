@@ -5,6 +5,7 @@
 | 檔案 | 來源 | 版本 | 授權 | 備註 |
 | --- | --- | --- | --- | --- |
 | `public/data/modern/ne_110m_admin0.topojson` | [Natural Earth](https://www.naturalearthdata.com/) 1:110m Admin 0 Countries，經 [nvkelso/natural-earth-vector](https://github.com/nvkelso/natural-earth-vector) 取得 | commit `ca96624a`（5.2.0-pre） | 公有領域（已核對該 repo 的 LICENSE.md） | 只保留 `name`、`nameZh`（NAME_ZHT）、`iso`（ADM0_A3）。採「實際控制」邊界，僅作為現代參考圖層 |
+| `public/data/modern/ne_50m_admin0_map.topojson`、`ne_10m_admin1_lines.json`、`map-labels.json` | Natural Earth 1:50m Admin 0 Countries、1:10m Admin 1 States/Provinces（面與界線）、1:110m Marine Polys，經 [nvkelso/natural-earth-vector](https://github.com/nvkelso/natural-earth-vector) 取得 | commit `ca96624a`（5.2.0-pre） | 公有領域 | 地圖模式用。國家只保留 `iso`、`nameZh`（NAME_ZHT，少數過長國名改用臺灣常用簡稱，清單見 `scripts/import-natural-earth-map.mts`）、`color`（MAPCOLOR7）；國家面保留 60% 頂點；行政區界線以 Douglas–Peucker（0.02°）簡化；名稱位置取自 LABEL_X/Y、latitude/longitude，海洋名稱位置為最大面的形心；少數海洋名稱的簡體「湾」改為「灣」 |
 | `public/data/boundaries/*.topojson`、`index.json` | [aourednik/historical-basemaps](https://github.com/aourednik/historical-basemaps) | commit `da7a4b73` | **GPL-3.0**（衍生資料同樣以 GPL-3.0 釋出） | 49 個快照（西元前 3000 年～2010 年）；年份轉為天文年號；經 TopoJSON 量化（1e4）與簡化（移除 35% 頂點）；新增 `id`、`confidence`（由 BORDERPRECISION 換算）等欄位 |
 | `public/textures/earth-color-*.jpg`、`earth-relief-2k.jpg` | NASA Visible Earth「Blue Marble」地表與地形影像，經 [vasturiano/three-globe](https://github.com/vasturiano/three-globe) 範例檔取得 | commit `1e1f4400` | NASA 影像為公有領域，使用時標示 NASA 為來源 | NASA 原站在開發環境無法連線，因此經第三方轉存取得；正式上線前應改由 NASA 原始檔以 `scripts/fetch-textures.sh` 重製 |
 
@@ -12,6 +13,7 @@
 
 ```bash
 node scripts/import-natural-earth.mts
+node scripts/import-natural-earth-map.mts
 node scripts/import-historical-basemaps.mts
 ./scripts/fetch-textures.sh
 ```
