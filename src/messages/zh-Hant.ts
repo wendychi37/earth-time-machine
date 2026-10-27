@@ -13,6 +13,7 @@ export const messages = {
     loading: "正在載入地球…",
     webglUnsupported: "此瀏覽器不支援 WebGL，無法顯示 3D 地球。",
     contextLost: "3D 畫面被瀏覽器中斷，正在重新載入…",
+    contextFailed: "3D 畫面無法載入，請重新整理頁面再試一次。",
   },
   coords: {
     north: "北緯",

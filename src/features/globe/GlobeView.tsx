@@ -6,6 +6,7 @@ import { messages } from "@/messages/zh-Hant";
 import { useBoundariesAtYear } from "@/features/boundaries/useBoundariesAtYear";
 import { useEventsNearYear } from "@/features/events/useEvents";
 import { isWebGLAvailable } from "./webgl";
+import { GlobeErrorBoundary } from "./GlobeErrorBoundary";
 import { useModernCountries } from "./useModernCountries";
 
 const GlobeCanvas = dynamic(() => import("./GlobeCanvas"), {
@@ -23,6 +24,8 @@ function GlobeStatus({ text }: { text: string }) {
 
 const noopSubscribe = () => () => {};
 const CONTEXT_RESTORE_DELAY_MS = 800;
+/** 連續重試幾次都失敗就停下來，請使用者重新整理，避免無限循環 */
+const MAX_RESTORE_ATTEMPTS = 5;
 
 /** 3D 地球的進入點：只在瀏覽器端載入 WebGL，並處理不支援的情況。 */
 export function GlobeView() {
@@ -33,7 +36,13 @@ export function GlobeView() {
   // 畫布被回收時換一個 key，讓 React 重新建立整個 3D 畫面
   const [canvasKey, setCanvasKey] = useState(0);
   const [lost, setLost] = useState(false);
-  const handleContextLost = useCallback(() => setLost(true), []);
+  const [attempts, setAttempts] = useState(0);
+  const handleContextLost = useCallback(() => {
+    setLost(true);
+    setAttempts((n) => n + 1);
+  }, []);
+  // 畫面正常建立後，重試次數歸零
+  const handleCreated = useCallback(() => setAttempts(0), []);
 
   useEffect(() => {
     if (!lost) return;
@@ -46,14 +55,17 @@ export function GlobeView() {
 
   if (webgl === null) return <GlobeStatus text={messages.globe.loading} />;
   if (!webgl) return <GlobeStatus text={messages.globe.webglUnsupported} />;
+  if (attempts > MAX_RESTORE_ATTEMPTS) return <GlobeStatus text={messages.globe.contextFailed} />;
   if (lost) return <GlobeStatus text={messages.globe.contextLost} />;
   return (
-    <GlobeCanvas
-      key={canvasKey}
-      modernCountries={modernCountries}
-      boundaries={displayed?.features ?? null}
-      events={events}
-      onContextLost={handleContextLost}
-    />
+    <GlobeErrorBoundary key={canvasKey} onError={handleContextLost}>
+      <GlobeCanvas
+        modernCountries={modernCountries}
+        boundaries={displayed?.features ?? null}
+        events={events}
+        onContextLost={handleContextLost}
+        onCreated={handleCreated}
+      />
+    </GlobeErrorBoundary>
   );
 }

@@ -66,3 +66,29 @@ test("WebGL 畫面被瀏覽器回收時，地球會自動重新載入", async ({
     .evaluate((el: HTMLCanvasElement) => (el.getContext("webgl2") ?? el.getContext("webgl"))?.isContextLost());
   expect(lost).toBe(false);
 });
+
+test("畫布剛建立就被瀏覽器回收時，不會整頁當掉，而是自動重試", async ({ page }) => {
+  const pageErrors: string[] = [];
+  page.on("pageerror", (e) => pageErrors.push(e.message));
+  // 讓地球畫布拿到的第一個 WebGL context 立刻失效，重現 three.js 初始化到一半時 context 消失的情況
+  await page.addInitScript(() => {
+    const original = HTMLCanvasElement.prototype.getContext;
+    let sabotaged = false;
+    HTMLCanvasElement.prototype.getContext = function (this: HTMLCanvasElement, type: string, ...rest: unknown[]) {
+      const ctx = (original as (...a: unknown[]) => RenderingContext | null).call(this, type, ...rest);
+      if (!sabotaged && this.isConnected && ctx && (type === "webgl2" || type === "webgl")) {
+        sabotaged = true;
+        (ctx as WebGLRenderingContext).getExtension("WEBGL_lose_context")?.loseContext();
+      }
+      return ctx;
+    } as typeof original;
+  });
+  await page.goto("/");
+  const canvas = page.getByTestId("globe-canvas").locator("canvas");
+  await expect(canvas).toBeVisible({ timeout: 30_000 });
+  await expect
+    .poll(() => canvas.evaluate((el: HTMLCanvasElement) => (el.getContext("webgl2") ?? el.getContext("webgl"))?.isContextLost()), { timeout: 30_000 })
+    .toBe(false);
+  await expect(page.getByText("This page couldn't load")).toHaveCount(0);
+  console.log("page errors:", pageErrors);
+});
