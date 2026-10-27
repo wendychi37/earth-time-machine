@@ -5,7 +5,7 @@
  * 沙箱無法連線維基百科，此腳本由 GitHub Actions 執行（.github/workflows/fetch-chronology.yml）。
  * 用法：node scripts/fetch-world-chronology.mjs
  */
-import { writeFileSync } from "node:fs";
+import { mkdirSync, writeFileSync } from "node:fs";
 
 const UA = { "User-Agent": "EarthTimeMachine/0.1 (https://github.com/wendychi37/earth-time-machine)" };
 const PAGES = ["世界史年表 (公元前)", "世界史年表 (1世纪-10世纪)", "世界史年表 (11世纪-15世纪)", "世界史年表 (16世纪-19世纪)", "世界史年表 (20世纪-现在)"];
@@ -91,6 +91,7 @@ for (let i = 0; i < titles.length; i += 50) {
   console.log(`座標查詢 ${Math.min(i + 50, titles.length)}/${titles.length}`);
 }
 
+mkdirSync("data/chronology", { recursive: true });
 writeFileSync(
   "data/chronology/raw.json",
   JSON.stringify({ source: "https://zh.wikipedia.org/wiki/世界史年表", license: "CC BY-SA 4.0", fetchedAt: new Date().toISOString(), pages, linkInfo }, null, 1) + "\n",
