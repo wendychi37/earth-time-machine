@@ -1,11 +1,16 @@
 import { readFileSync } from "node:fs";
+import { feature } from "topojson-client";
+import type { GeometryCollection, Topology } from "topojson-specification";
 import { describe, expect, it } from "vitest";
+import { countryOptions } from "@/features/chronology/CountryPicker";
 import { groupByContinent } from "@/features/chronology/SameEraPanel";
 import { spreadMarkers } from "@/lib/events/spread";
 import { buildChronology, locateItem, tidy, titleOf, type RawChronology } from "@/lib/chronology/build";
 import { continentAt } from "@/lib/chronology/continent";
-import { eventsNearYear, eventWindowYears } from "@/lib/events/visible";
+import { makeCountryLocator } from "@/lib/chronology/country";
+import { eventsNearYear, eventWindowYears, filterByCountry } from "@/lib/events/visible";
 import type { HistoricalEvent } from "@/types/event";
+import type { ModernCountry, ModernCountryProps } from "@/types/geo";
 
 const data = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as {
   license: string;
@@ -193,5 +198,42 @@ describe("spreadMarkers", () => {
     const markers = spreadMarkers(events);
     expect(markers).toHaveLength(2);
     expect(markers[0].lat !== markers[1].lat || markers[0].lon !== markers[1].lon).toBe(true);
+  });
+});
+
+describe("依國家篩選", () => {
+  const topo = JSON.parse(readFileSync("public/data/modern/ne_110m_admin0.topojson", "utf8")) as Topology<{
+    countries: GeometryCollection<ModernCountryProps>;
+  }>;
+  const countryAt = makeCountryLocator(feature(topo, topo.objects.countries).features as ModernCountry[]);
+
+  it("依位置找出今日國家，海岸附近也找得到", () => {
+    expect(countryAt(48.86, 2.35)?.nameZh).toBe("法國");
+    expect(countryAt(35.68, 139.69)?.iso).toBe("JPN");
+    expect(countryAt(41.01, 28.98)?.iso).toBe("TUR"); // 伊斯坦堡
+    expect(countryAt(37.57, 126.98)?.iso).toBe("KOR");
+    expect(countryAt(0, -30)).toBeNull(); // 大西洋中間
+  });
+
+  it("產生的年表每個有位置的事件幾乎都有國家", () => {
+    const located = data.events.filter((e) => e.location);
+    expect(located.filter((e) => e.country).length / located.length).toBeGreaterThan(0.95);
+  });
+
+  it("勾選國家後只顯示那些國家的事件；null 為全部", () => {
+    const near = eventsNearYear(data.events, 1600);
+    expect(filterByCountry(near, null)).toBe(near);
+    const jp = filterByCountry(near, ["JPN"]);
+    expect(jp.length).toBeGreaterThan(0);
+    expect(jp.every((e) => e.country?.iso === "JPN")).toBe(true);
+    expect(filterByCountry(near, [])).toEqual([]);
+  });
+
+  it("國家清單依大洲分組、事件多的在前", () => {
+    const options = countryOptions(data.events);
+    expect(options[0].continent).toBe("asia");
+    expect(options.find((o) => o.iso === "FRA")?.continent).toBe("europe");
+    const asia = options.filter((o) => o.continent === "asia");
+    expect(asia[0].count).toBeGreaterThanOrEqual(asia[1].count);
   });
 });

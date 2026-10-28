@@ -19,6 +19,9 @@ interface AppState {
   select: (point: LatLon | null) => void;
   selectEvent: (id: string | null) => void;
   toggleLayer: (layer: keyof LayerVisibility) => void;
+  /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
+  countryFilter: string[] | null;
+  setCountryFilter: (isos: string[] | null) => void;
 }
 
 const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MIN_YEAR, Math.round(year)));
@@ -32,4 +35,6 @@ export const useAppStore = create<AppState>((set) => ({
   select: (selection) => set({ selection, selectedEventId: null }),
   selectEvent: (selectedEventId) => set({ selectedEventId, selection: null }),
   toggleLayer: (layer) => set((s) => ({ layers: { ...s.layers, [layer]: !s.layers[layer] } })),
+  countryFilter: null,
+  setCountryFilter: (countryFilter) => set({ countryFilter }),
 }));

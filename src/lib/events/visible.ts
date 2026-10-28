@@ -21,3 +21,10 @@ export function eventsNearYear(events: HistoricalEvent[], year: AstronomicalYear
     return from <= year + window && to >= year - window;
   });
 }
+
+/** 依使用者勾選的國家篩選；null 表示不篩選。沒有對應國家的事件在篩選時不顯示。 */
+export function filterByCountry(events: HistoricalEvent[], isos: string[] | null) {
+  if (!isos) return events;
+  const set = new Set(isos);
+  return events.filter((e) => e.country && set.has(e.country.iso));
+}

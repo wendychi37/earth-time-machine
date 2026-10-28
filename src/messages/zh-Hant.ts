@@ -83,6 +83,17 @@ export const messages = {
     other: "其他／跨洲",
     count: (n: number) => `${n} 件`,
     source: "資料：維基百科〈世界史年表〉（CC BY-SA 4.0）",
+    countries: {
+      button: (selected: number | null) => (selected === null ? "選擇國家：全部" : `選擇國家：${selected} 國`),
+      title: "要看哪些國家？",
+      search: "搜尋國家",
+      all: "全部顯示",
+      none: "全部取消",
+      done: "完成",
+      count: (n: number) => `${n} 件`,
+      note: "依事件在今天的哪個國家分類；古代事件會歸到今天所在的國家。",
+      filtering: (names: string) => `只顯示：${names}`,
+    },
   },
   layers: {
     title: "圖層",

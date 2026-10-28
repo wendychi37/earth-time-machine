@@ -77,7 +77,9 @@ function locateLink(raw: RawChronology, link: string): Located | null {
   const e = raw.wikidata[qid];
   const label = e?.label ?? link;
   const isPolity = (e?.P31 ?? []).some((t) => POLITY_TYPES.has(t));
-  const own = e?.coord ?? info.coord;
+  // 月球等其他天體的座標在 Wikidata 也存成經緯度（常見 0,0），不能放到地球上
+  const onEarth = (c: { lat: number; lon: number } | null | undefined) => (c && !(c.lat === 0 && c.lon === 0) ? c : null);
+  const own = onEarth(e?.coord) ?? onEarth(info.coord);
   if (own) return { ...pick(own), precision: isPolity ? "region" : "exact", label, qid, via: null, link };
   if (!e) return null;
   const viaProp = (props: (keyof WikidataEntry)[], precision: LocationPrecision): Located | null => {
@@ -132,7 +134,10 @@ const pageUrl = (title: string, revid: number) =>
   `https://zh.wikipedia.org/w/index.php?title=${encodeURIComponent(title)}&oldid=${revid}&variant=zh-tw`;
 
 /** 把維基百科「世界史年表」原始資料轉成網站使用的事件清單。 */
-export function buildChronology(raw: RawChronology): { events: HistoricalEvent[]; skipped: string[] } {
+export function buildChronology(
+  raw: RawChronology,
+  countryAt: (lat: number, lon: number) => { iso: string; nameZh: string } | null = () => null,
+): { events: HistoricalEvent[]; skipped: string[] } {
   const events: HistoricalEvent[] = [];
   const skipped: string[] = [];
   raw.pages.forEach((page, p) => {
@@ -177,6 +182,7 @@ export function buildChronology(raw: RawChronology): { events: HistoricalEvent[]
         locationPrecision: where?.precision ?? "region",
         category: "other",
         continent: where ? continentAt(where.lat, where.lon) : null,
+        country: where ? countryAt(where.lat, where.lon) : null,
         relatedArticles: related,
         wikidataQid: where?.qid ?? null,
         wikipedia: { zh: where?.link ?? related[0]?.title ?? null, en: null },

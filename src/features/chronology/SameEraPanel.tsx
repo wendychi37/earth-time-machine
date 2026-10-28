@@ -8,6 +8,7 @@ import { formatYear } from "@/lib/time/format";
 import { periodRange } from "@/lib/time/formatDate";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
+import { CountryPicker } from "./CountryPicker";
 import type { HistoricalEvent } from "@/types/event";
 
 type ColumnId = (typeof CONTINENTS)[number]["id"] | "other";
@@ -102,6 +103,9 @@ export function SameEraPanel() {
             {t.close}
           </button>
         </header>
+        <div className="mb-2">
+          <CountryPicker />
+        </div>
 
         {/* 手機：大洲分頁 */}
         <div className="sm:hidden">

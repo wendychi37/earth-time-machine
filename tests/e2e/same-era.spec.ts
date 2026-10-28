@@ -46,3 +46,30 @@ test("對照表可以收起再打開", async ({ page }, info) => {
   await page.getByTestId("same-era-open").click();
   await expect(page.getByTestId("same-era-panel")).toBeVisible();
 });
+
+test("打勾選國家：只看日本發生的事", async ({ page }, info) => {
+  await page.goto("/");
+  await goToYear(page, "1600");
+  if (info.project.name === "mobile") await page.getByTestId("same-era-open").click();
+  const panel = page.getByTestId("same-era-panel");
+  await panel.getByTestId("country-picker-button").click();
+  const picker = page.getByTestId("country-picker");
+  await picker.getByRole("button", { name: "全部取消" }).click();
+  await picker.getByPlaceholder("搜尋國家").fill("日本");
+  await picker.getByRole("checkbox", { name: /日本/ }).check();
+  await picker.getByRole("button", { name: "完成" }).click();
+  await expect(panel.getByTestId("country-picker-button")).toHaveText("選擇國家：1 國");
+  await page.screenshot({ path: `test-results/country-filter-${info.project.name}.png` });
+
+  // 對照表只剩亞洲有事件；鍵盤用的事件清單也一起篩選
+  const items = page.getByRole("navigation", { name: "此時期的事件" }).getByRole("button");
+  const count = await items.count();
+  expect(count).toBeGreaterThan(0);
+  if (info.project.name === "desktop") {
+    await expect(page.getByTestId("same-era-columns")).toContainText("歐洲0 件");
+  }
+
+  await panel.getByTestId("country-picker-button").click();
+  await picker.getByRole("button", { name: "全部顯示" }).click();
+  await expect(panel.getByTestId("country-picker-button")).toHaveText("選擇國家：全部");
+});
