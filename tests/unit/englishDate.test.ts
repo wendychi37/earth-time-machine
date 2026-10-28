@@ -60,7 +60,8 @@ describe("英文年表日期轉換", () => {
 
   it("以年份當小標題時，底下沒寫日期的項目用小標題的年份", () => {
     const html = `<h2>The Dutch Cape Colony</h2><h3>1652</h3><ul><li>Cape Town was founded.</li></ul>
-      <h3>Notes</h3><ul><li>Not an event.</li></ul>`;
+      <h3>Notes</h3><ul><li>Not an event.</li></ul>
+      <h2>Further reading</h2><h3>1790s</h3><ul><li>Smith, John. Politics in the 1790s. 1963.</li></ul>`;
     expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["1652年：Cape Town was founded."]);
   });
 });

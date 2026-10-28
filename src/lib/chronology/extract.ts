@@ -211,6 +211,8 @@ export function extractChronologyItems(rawHtml: string, lang: ChronologyLang = "
   let section: string | null = null;
   // 英文年表常以年份當小標題（例如〈Timeline of South African history〉的「1652」），底下的清單沒寫日期
   let headingDate: string | null = null;
+  // 「Further reading」等書目區的小標題也常是年代（例如「1790s」），不能拿來當日期
+  let backmatter = false;
   // 依序處理標題、表格與表格之間的清單
   const re = /<h([234])[^>]*>([\s\S]*?)<\/h\1>|<table[^>]*class="[^"]*wikitable[^"]*"[^>]*>([\s\S]*?)<\/table>/g;
   let last = 0;
@@ -219,7 +221,8 @@ export function extractChronologyItems(rawHtml: string, lang: ChronologyLang = "
     last = m.index! + m[0].length;
     if (m[2] !== undefined) {
       section = textAndLinks(m[2]).text || section;
-      headingDate = lang === "en" && rules.isDate(section ?? "") ? rules.cell(section ?? "") : null;
+      if (m[1] === "2") backmatter = /^(?:see also|further reading|references|bibliography|notes|sources|external links|citations|works cited)/i.test(section ?? "");
+      headingDate = lang === "en" && !backmatter && rules.isDate(section ?? "") ? rules.cell(section ?? "") : null;
     }
     else extractTable(m[3], section, out, rules);
   }
