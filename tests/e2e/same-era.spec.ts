@@ -73,3 +73,29 @@ test("打勾選國家：只看日本發生的事", async ({ page }, info) => {
   await picker.getByRole("button", { name: "全部顯示" }).click();
   await expect(panel.getByTestId("country-picker-button")).toHaveText("選擇國家：全部");
 });
+
+test("美國的大事譯自英文維基百科，標示翻譯並附英文原文", async ({ page }, info) => {
+  await page.goto("/");
+  await goToYear(page, "1969");
+  if (info.project.name === "mobile") await page.getByTestId("same-era-open").click();
+  const panel = page.getByTestId("same-era-panel");
+  await panel.getByTestId("country-picker-button").click();
+  const picker = page.getByTestId("country-picker");
+  await picker.getByRole("button", { name: "全部取消" }).click();
+  await picker.getByPlaceholder("搜尋國家").fill("美國");
+  await picker.getByRole("checkbox", { name: /^美國/ }).check();
+  await picker.getByRole("button", { name: "完成" }).click();
+
+  if (info.project.name === "desktop") {
+    await page.getByTestId("same-era-columns").getByRole("button", { name: /阿波羅11號/ }).click();
+  } else {
+    await panel.getByRole("tab", { name: /美洲/ }).click();
+    await panel.getByRole("tabpanel").getByRole("button", { name: /阿波羅11號/ }).click();
+  }
+  const card = page.getByTestId("event-card");
+  await expect(card).toBeVisible();
+  await expect(card.getByTestId("translated-badge")).toHaveText("譯自英文維基百科");
+  await card.getByText("英文原文").click();
+  await expect(card).toContainText("Apollo 11");
+  await page.screenshot({ path: `test-results/translated-${info.project.name}.png` });
+});
