@@ -18,7 +18,8 @@ for (const source of COUNTRY_CHRONOLOGIES) {
   items.forEach((it) => it.links.forEach((l) => allLinks.add(l)));
   pages.push({ title: r.parse.title, displayTitle: stripTags(r.parse.displaytitle), revid: r.parse.revid, sourcePage: source.page, items });
   console.log(`${source.page}: ${items.length} 條，revid ${r.parse.revid}`);
-  await new Promise((ok) => setTimeout(ok, 1000));
+  // 大頁面解析很耗維基百科資源，間隔久一點以免被限速
+  await new Promise((ok) => setTimeout(ok, 5000));
 }
 const linkInfo = await queryLinkInfo([...allLinks]);
 const wikidata = await loadWikidata(linkInfo);

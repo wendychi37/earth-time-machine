@@ -6,11 +6,13 @@ export const UA = { "User-Agent": "EarthTimeMachine/0.1 (https://github.com/wend
 export async function api(params) {
   const url = "https://zh.wikipedia.org/w/api.php?" + new URLSearchParams({ format: "json", formatversion: "2", ...params });
   // 維基百科偶爾限速並回傳非 JSON 的錯誤頁，多等幾次
-  for (let i = 0; i < 6; i++) {
-    const res = await fetch(url, { headers: UA });
-    const json = res.ok ? await res.json().catch(() => null) : null;
-    if (json) return json;
-    await new Promise((r) => setTimeout(r, 3000 * (i + 1)));
+  for (let i = 0; i < 8; i++) {
+    const res = await fetch(url, { headers: UA }).catch(() => null);
+    const json = res?.ok ? await res.json().catch(() => null) : null;
+    if (json && !json.error) return json;
+    const wait = Math.min(60_000, 5000 * 2 ** i);
+    console.log(`維基百科回應 ${res?.status ?? "連線失敗"}${json?.error ? `（${json.error.code}）` : ""}，${wait / 1000} 秒後重試`);
+    await new Promise((r) => setTimeout(r, wait));
   }
   throw new Error(`API 失敗：${url}`);
 }
