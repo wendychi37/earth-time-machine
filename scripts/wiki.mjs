@@ -17,6 +17,27 @@ export async function api(params) {
   throw new Error(`API 失敗：${url}`);
 }
 
+/**
+ * 取得頁面轉成繁體（zh-tw）後的 HTML、版本號與繁體標題。
+ * 用 index.php?action=render（使用解析快取），大頁面不像 action=parse 那樣容易被拒（503）。
+ */
+export async function fetchPage(title) {
+  const info = await api({ action: "query", titles: title, prop: "revisions|info", rvprop: "ids", inprop: "varianttitles", redirects: "1" });
+  const page = info.query.pages[0];
+  const url = "https://zh.wikipedia.org/w/index.php?" + new URLSearchParams({ title: page.title, action: "render", variant: "zh-tw", oldid: String(page.revisions[0].revid) });
+  for (let i = 0; i < 8; i++) {
+    const res = await fetch(url, { headers: UA }).catch(() => null);
+    if (res?.ok) {
+      const html = await res.text();
+      return { title: page.title, displayTitle: page.varianttitles?.["zh-tw"] ?? page.title, revid: page.revisions[0].revid, html };
+    }
+    const wait = Math.min(60_000, 5000 * 2 ** i);
+    console.log(`頁面 ${page.title} 回應 ${res?.status ?? "連線失敗"}，${wait / 1000} 秒後重試`);
+    await new Promise((r) => setTimeout(r, wait));
+  }
+  throw new Error(`頁面下載失敗：${title}`);
+}
+
 /** 查詢連結條目的座標、座標類型與 Wikidata 項目 */
 export async function queryLinkInfo(titles) {
   const linkInfo = {};

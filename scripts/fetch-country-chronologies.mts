@@ -7,17 +7,16 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { extractChronologyItems } from "../src/lib/chronology/extract";
 import { COUNTRY_CHRONOLOGIES } from "../src/lib/chronology/sources";
-import { api, loadWikidata, queryLinkInfo } from "./wiki.mjs";
+import { fetchPage, loadWikidata, queryLinkInfo } from "./wiki.mjs";
 
-const stripTags = (s: string) => s.replace(/<[^>]+>/g, "");
 const pages = [];
 const allLinks = new Set<string>();
 for (const source of COUNTRY_CHRONOLOGIES) {
-  const r = await api({ action: "parse", page: source.page, prop: "text|revid|displaytitle", variant: "zh-tw", redirects: "1" });
-  const items = extractChronologyItems(r.parse.text);
+  const page = await fetchPage(source.page);
+  const items = extractChronologyItems(page.html);
   items.forEach((it) => it.links.forEach((l) => allLinks.add(l)));
-  pages.push({ title: r.parse.title, displayTitle: stripTags(r.parse.displaytitle), revid: r.parse.revid, sourcePage: source.page, items });
-  console.log(`${source.page}: ${items.length} 條，revid ${r.parse.revid}`);
+  pages.push({ title: page.title, displayTitle: page.displayTitle, revid: page.revid, sourcePage: source.page, items });
+  console.log(`${source.page}: ${items.length} 條，revid ${page.revid}`);
   // 大頁面解析很耗維基百科資源，間隔久一點以免被限速
   await new Promise((ok) => setTimeout(ok, 5000));
 }

@@ -27,7 +27,8 @@ const NON_ARTICLE = /^(Special|File|Help|Wikipedia|Category|Template|Portal|Talk
 
 /** 一段 HTML 的純文字與條目連結 */
 export function textAndLinks(html: string): { text: string; links: string[] } {
-  const links = [...html.matchAll(/<a [^>]*href="\/wiki\/([^"#?]+)[^"]*"[^>]*>/g)]
+  // action=parse 的連結是 /wiki/…；action=render 的是 https://zh.wikipedia.org/wiki/…
+  const links = [...html.matchAll(/<a [^>]*href="(?:https?:)?(?:\/\/zh\.wikipedia\.org)?\/wiki\/([^"#?]+)[^"]*"[^>]*>/g)]
     .map((a) => {
       try {
         return decodeURIComponent(a[1]).replace(/_/g, " ");
