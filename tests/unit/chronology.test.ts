@@ -6,16 +6,16 @@ import { countryOptions } from "@/features/chronology/CountryPicker";
 import { groupByContinent } from "@/features/chronology/SameEraPanel";
 import { spreadMarkers } from "@/lib/events/spread";
 import { buildChronology, locateItem, tidy, titleOf, type RawChronology } from "@/lib/chronology/build";
+import { packChronology, unpackChronology, type CompactChronology } from "@/lib/chronology/compact";
 import { continentAt } from "@/lib/chronology/continent";
 import { makeCountryLocator } from "@/lib/chronology/country";
-import { eventsNearYear, eventWindowYears, filterByCountry } from "@/lib/events/visible";
-import type { HistoricalEvent } from "@/types/event";
+import { capPerCountry, eventsNearYear, eventWindowYears, filterByCountry } from "@/lib/events/visible";
 import type { ModernCountry, ModernCountryProps } from "@/types/geo";
 
-const data = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as {
-  license: string;
-  events: HistoricalEvent[];
-};
+const worldFile = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as CompactChronology;
+const countryFile = JSON.parse(readFileSync("public/data/chronology/country-chronologies.json", "utf8")) as CompactChronology;
+const data = { license: worldFile.license, events: unpackChronology(worldFile) };
+const countryEvents = unpackChronology(countryFile);
 
 describe("continentAt", () => {
   it.each([
@@ -174,11 +174,12 @@ describe("產生的世界史年表資料", () => {
 
 describe("eventWindowYears", () => {
   it("越古老視窗越寬", () => {
-    expect(eventWindowYears(1950)).toBe(10);
-    expect(eventWindowYears(1600)).toBe(25);
-    expect(eventWindowYears(1000)).toBe(50);
-    expect(eventWindowYears(-500)).toBe(100);
-    expect(eventWindowYears(-2500)).toBe(250);
+    expect(eventWindowYears(1950)).toBe(5);
+    expect(eventWindowYears(1600)).toBe(10);
+    expect(eventWindowYears(1000)).toBe(20);
+    expect(eventWindowYears(500)).toBe(25);
+    expect(eventWindowYears(-500)).toBe(50);
+    expect(eventWindowYears(-2500)).toBe(150);
   });
 });
 
@@ -235,5 +236,33 @@ describe("依國家篩選", () => {
     expect(options.find((o) => o.iso === "FRA")?.continent).toBe("europe");
     const asia = options.filter((o) => o.continent === "asia");
     expect(asia[0].count).toBeGreaterThanOrEqual(asia[1].count);
+  });
+});
+
+describe("各國歷史年表", () => {
+  it("每份年表都有事件，事件都歸屬該國並有地點", () => {
+    expect(countryEvents.length).toBeGreaterThan(3000);
+    for (const e of countryEvents) {
+      expect(e.country).not.toBeNull();
+      expect(e.location).not.toBeNull();
+      expect(e.sources[0].url).toMatch(/oldid=\d+/);
+    }
+    const isos = new Set(countryEvents.map((e) => e.country!.iso));
+    for (const iso of ["CHN", "TWN", "JPN", "KOR", "GBR", "DEU", "FRA", "TUR", "ITA", "NGA", "MYS"]) expect(isos).toContain(iso);
+  });
+
+  it("精簡格式可以還原成原本的事件", () => {
+    const { events } = buildChronology(raw);
+    const packed = packChronology({ notice: "", license: "CC BY-SA 4.0", fetchedAt: "" }, events);
+    expect(unpackChronology(JSON.parse(JSON.stringify(packed)))).toEqual(events);
+  });
+
+  it("每國最多顯示 8 件，記載特別多的年表不會蓋過其他地方", () => {
+    const all = [...data.events, ...countryEvents];
+    const shown = capPerCountry(eventsNearYear(all, 0), 0);
+    const perCountry = new Map<string, number>();
+    for (const e of shown) perCountry.set(e.country?.iso ?? "", (perCountry.get(e.country?.iso ?? "") ?? 0) + 1);
+    expect(Math.max(...perCountry.values())).toBeLessThanOrEqual(8);
+    expect(perCountry.get("ITA")).toBe(8);
   });
 });

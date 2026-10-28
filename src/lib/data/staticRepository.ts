@@ -1,8 +1,8 @@
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import type { BoundaryFeature, BoundaryIndex, BoundaryProps } from "@/types/boundary";
-import type { HistoricalEvent } from "@/types/event";
 import type { ModernCountry, ModernCountryProps } from "@/types/geo";
+import { unpackChronology, type CompactChronology } from "@/lib/chronology/compact";
 import type { Repository } from "./repository";
 
 async function fetchJson<T>(path: string): Promise<T> {
@@ -53,10 +53,10 @@ export const staticRepository: Repository = {
     const countries = "/data/chronology/country-chronologies.json";
     return cached("events", async () => {
       const [a, b] = await Promise.all([
-        fetchJson<{ events: HistoricalEvent[] }>(world),
-        fetchJson<{ events: HistoricalEvent[] }>(countries).catch(() => ({ events: [] })),
+        fetchJson<CompactChronology>(world).then(unpackChronology),
+        fetchJson<CompactChronology>(countries).then(unpackChronology, () => []),
       ]);
-      return [...a.events, ...b.events];
+      return [...a, ...b];
     });
   },
 };

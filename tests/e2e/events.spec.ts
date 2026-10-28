@@ -1,12 +1,14 @@
 import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 import { PerspectiveCamera } from "three";
-import { eventsNearYear } from "../../src/lib/events/visible";
+import { unpackChronology, type CompactChronology } from "../../src/lib/chronology/compact";
+import { capPerCountry, eventsNearYear } from "../../src/lib/events/visible";
 import { spreadMarkers } from "../../src/lib/events/spread";
 import { latLonToVector3 } from "../../src/lib/geo/sphere";
 import type { HistoricalEvent } from "../../src/types/event";
 
-const { events } = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as { events: HistoricalEvent[] };
+const load = (f: string) => unpackChronology(JSON.parse(readFileSync(`public/data/chronology/${f}`, "utf8")) as CompactChronology);
+const events: HistoricalEvent[] = [...load("world-chronology.json"), ...load("country-chronologies.json")];
 
 async function goToYear(page: Page, text: string) {
   await page.getByTestId("year-input").fill(text);
@@ -29,7 +31,7 @@ function projectInitialView(lat: number, lon: number, width: number, height: num
 test("點擊地球上的年表大事，開啟事件卡片與出處", async ({ page }, info) => {
   const year = 1600;
   // 選一個離初始視角中心（東亞）最近、且附近沒有其他標記的事件
-  const markers = spreadMarkers(eventsNearYear(events, year));
+  const markers = spreadMarkers(capPerCountry(eventsNearYear(events, year), year));
   const distance = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => Math.hypot(a.lat - b.lat, a.lon - b.lon);
   const target = markers
     .filter((m) => markers.every((o) => o === m || distance(o, m) > 4))

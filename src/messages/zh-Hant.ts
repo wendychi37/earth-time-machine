@@ -71,7 +71,7 @@ export const messages = {
     listLabel: "此時期的事件",
     noLocation: "原文沒有提到可以放上地球的地點",
     related: "原文提到的條目",
-    chronologyNote: "內容取自中文維基百科〈世界史年表〉，原文照錄、未經改寫；地點由原文連結的條目推算，可能只是大概位置。",
+    chronologyNote: "內容取自中文維基百科的年表頁面（出處見下方），原文照錄、未經改寫；地點由原文連結的條目推算，可能只是大概位置。",
   },
   chronology: {
     title: "同一時期的世界",
@@ -82,7 +82,7 @@ export const messages = {
     continents: { asia: "亞洲", europe: "歐洲", africa: "非洲", americas: "美洲", oceania: "大洋洲" } as Record<string, string>,
     other: "其他／跨洲",
     count: (n: number) => `${n} 件`,
-    source: "資料：維基百科〈世界史年表〉（CC BY-SA 4.0）",
+    source: "資料：維基百科〈世界史年表〉與各國歷史年表（CC BY-SA 4.0）",
     countries: {
       button: (selected: number | null) => (selected === null ? "選擇國家：全部" : `選擇國家：${selected} 國`),
       title: "要看哪些國家？",

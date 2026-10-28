@@ -6,6 +6,7 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import { buildChronology, type RawChronology } from "../src/lib/chronology/build";
+import { packChronology } from "../src/lib/chronology/compact";
 import { makeCountryLocator } from "../src/lib/chronology/country";
 import { COUNTRY_CHRONOLOGIES } from "../src/lib/chronology/sources";
 import type { ModernCountry, ModernCountryProps } from "../src/types/geo";
@@ -17,14 +18,14 @@ const topo = JSON.parse(readFileSync("public/data/modern/ne_110m_admin0.topojson
 const countries = feature(topo, topo.objects.countries).features as ModernCountry[];
 const countryAt = makeCountryLocator(countries);
 const { events, skipped } = buildChronology(raw, { countryAt });
-const out = {
-  notice: "內容取自中文維基百科〈世界史年表〉各頁（CC BY-SA 4.0），未經改寫；地點由原文連結的 Wikidata 條目推算。",
-  source: raw.source,
-  license: raw.license,
-  fetchedAt: raw.fetchedAt,
-  pages: raw.pages.map((p) => ({ title: p.title, displayTitle: p.displayTitle, revid: p.revid })),
+const out = packChronology(
+  {
+    notice: "內容取自中文維基百科〈世界史年表〉各頁（CC BY-SA 4.0），未經改寫；地點由原文連結的 Wikidata 條目推算。",
+    license: raw.license,
+    fetchedAt: raw.fetchedAt,
+  },
   events,
-};
+);
 writeFileSync("public/data/chronology/world-chronology.json", JSON.stringify(out) + "\n");
 const located = events.filter((e) => e.location).length;
 const withCountry = events.filter((e) => e.country).length;
@@ -44,16 +45,15 @@ if (existsSync("data/chronology/countries-raw.json")) {
       return source && country ? { country, fallback: source.fallback } : null;
     },
   });
-  writeFileSync(
-    "public/data/chronology/country-chronologies.json",
-    JSON.stringify({
+  const packed = packChronology(
+    {
       notice: "內容取自中文維基百科各國歷史年表（CC BY-SA 4.0），未經改寫；地點由原文連結的 Wikidata 條目推算，找不到時以該國代表位置示意。",
       license: countriesRaw.license,
       fetchedAt: countriesRaw.fetchedAt,
-      pages: countriesRaw.pages.map((p) => ({ title: p.title, displayTitle: p.displayTitle, revid: p.revid, items: p.items.length })),
-      events: built.events,
-    }) + "\n",
+    },
+    built.events,
   );
+  writeFileSync("public/data/chronology/country-chronologies.json", JSON.stringify(packed) + "\n");
   console.log(`各國年表：${built.events.length} 條，略過 ${built.skipped.length} 條`);
   for (const p of countriesRaw.pages) console.log(`  ${p.displayTitle}：${built.events.filter((e) => e.sources[0].title.includes(p.displayTitle)).length} 條`);
 }
