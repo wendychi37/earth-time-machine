@@ -91,8 +91,8 @@ for (let i = 0; i < titles.length; i += 50) {
   console.log(`座標查詢 ${Math.min(i + 50, titles.length)}/${titles.length}`);
 }
 
-// Wikidata：座標（P625）、所在地點（P276）、所在行政區（P131）、國家（P17）、國籍（P27）、出生地（P19）、類型（P31）、所在大洲（P30）
-const PROPS = ["P625", "P276", "P131", "P17", "P27", "P19", "P31", "P30"];
+// Wikidata：座標（P625）、所在地點（P276）、所在行政區（P131）、國家（P17）、國籍（P27）、出生地（P19）、類型（P31）、所在大洲（P30）、首都（P36）
+const PROPS = ["P625", "P276", "P131", "P17", "P27", "P19", "P31", "P30", "P36"];
 async function wbget(ids) {
   const url = "https://www.wikidata.org/w/api.php?" + new URLSearchParams({ action: "wbgetentities", ids: ids.join("|"), props: "claims|labels", languages: "zh-tw|zh-hant|zh|en", format: "json" });
   for (let i = 0; i < 4; i++) {
@@ -130,7 +130,7 @@ const linkQids = Object.values(linkInfo).map((l) => l.qid);
 await loadEntities(linkQids);
 // 第二層：所在地點、行政區、國家、出生地的座標與名稱（供沒有自身座標的條目使用）
 const second = [];
-for (const q of linkQids) for (const prop of ["P276", "P131", "P17", "P27", "P19"]) second.push(...(wikidata[q]?.[prop] ?? []));
+for (const q of linkQids) for (const prop of ["P276", "P131", "P17", "P27", "P19", "P36"]) second.push(...(wikidata[q]?.[prop] ?? []));
 await loadEntities(second);
 // 第三層：第二層項目所屬國家（用來查大洲 P30）
 const third = [];
