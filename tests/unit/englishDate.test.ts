@@ -35,6 +35,12 @@ describe("英文年表日期轉換", () => {
     });
   });
 
+  it("日的範圍（「4–6 June」）不當成西元年", () => {
+    expect(splitEnglishLine("4–6 June. The Battle of Samdunja occurs.")).toBeNull();
+    expect(splitEnglishLine("23–24 February – First national convention.")).toBeNull();
+    expect(splitEnglishLine("23 May – 2 June surprise visit")).toBeNull();
+  });
+
   it("年表「Date」欄的月日", () => {
     expect(englishMonthDay("May")).toEqual({ month: 5 });
     expect(englishMonthDay("8 September")).toEqual({ month: 9, day: 8 });
