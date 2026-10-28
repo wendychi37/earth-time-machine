@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useAllEvents } from "@/features/events/useEvents";
 import { eraIndexAt, regionAt, resolveEra } from "@/lib/eras/query";
-import { REGIONS, type Era } from "@/lib/eras/regions";
+import { REGIONS, wikiCandidates, type Era } from "@/lib/eras/regions";
 import { wikiUrl } from "@/lib/eras/summaries";
 import { PRESENT_YEAR } from "@/lib/time/constants";
 import { formatYear } from "@/lib/time/format";
@@ -52,7 +52,7 @@ export function EraCard() {
 
   if (!ref || !resolved) return null;
   const { region, era } = resolved;
-  const wikiTitle = era.wiki ?? era.name;
+  const wikiTitle = wikiCandidates(era)[0];
   // 用站內搜尋找到的條目還沒人工確認，先不顯示介紹文字
   const found = summaries?.articles[wikiTitle];
   const article = found && !found.matchedBy ? found : undefined;

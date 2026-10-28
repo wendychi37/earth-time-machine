@@ -12,7 +12,7 @@ export interface EraArticle {
 
 export interface EraSummaries {
   source: { name: string; license: string; retrievedAt: string | null };
-  /** 以 regions.ts 裡的條目名稱（era.wiki ?? era.name，或 region.source）為鍵 */
+  /** 以 regions.ts 裡的條目名稱（wikiCandidates 的第一個，或 region.source）為鍵 */
   articles: Record<string, EraArticle>;
   /** 找不到的條目，供維護時修正名稱 */
   missing: string[];

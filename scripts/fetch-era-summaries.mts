@@ -7,7 +7,7 @@
  */
 import { writeFileSync } from "node:fs";
 import { extractLead } from "../src/lib/eras/extract";
-import { REGIONS } from "../src/lib/eras/regions";
+import { REGIONS, wikiCandidates } from "../src/lib/eras/regions";
 import type { EraArticle, EraSummaries } from "../src/lib/eras/summaries";
 
 const UA = { "User-Agent": "EarthTimeMachine/0.1 (https://github.com/wendychi37/earth-time-machine)" };
@@ -22,30 +22,36 @@ async function api(params: Record<string, string>) {
   throw new Error(`API 失敗：${url}`);
 }
 
-const titles = new Set<string>();
+/** 鍵（第一個候選名稱）→ 依序嘗試的候選名稱 */
+const titles = new Map<string, string[]>();
 for (const r of REGIONS) {
-  titles.add(r.source);
-  for (const e of r.eras) titles.add(e.wiki ?? e.name);
+  titles.set(r.source, [r.source]);
+  for (const e of r.eras) {
+    const c = wikiCandidates(e);
+    titles.set(c[0], c);
+  }
 }
 
 /**
  * 條目名稱先用 query + converttitles 解析（繁簡轉換、重新導向），
  * 找不到時再用站內搜尋取第一筆；搜尋到的會標記 matchedBy: "search"，維護時要人工確認是否正確。
  */
-async function resolveTitle(key: string): Promise<{ title: string; matchedBy: "title" | "search" } | null> {
-  const q = await api({ action: "query", titles: key, converttitles: "1", redirects: "1" });
-  const page = q.query?.pages?.[0];
-  if (page && !page.missing && !page.invalid) return { title: page.title, matchedBy: "title" };
-  const s = await api({ action: "query", list: "search", srsearch: key, srlimit: "1", srnamespace: "0" });
+async function resolveTitle(candidates: string[]): Promise<{ title: string; matchedBy: "title" | "search" } | null> {
+  for (const c of candidates) {
+    const q = await api({ action: "query", titles: c, converttitles: "1", redirects: "1" });
+    const page = q.query?.pages?.[0];
+    if (page && !page.missing && !page.invalid) return { title: page.title, matchedBy: "title" };
+  }
+  const s = await api({ action: "query", list: "search", srsearch: candidates[0], srlimit: "1", srnamespace: "0" });
   const hit = s.query?.search?.[0];
   return hit ? { title: hit.title, matchedBy: "search" } : null;
 }
 
 const articles: Record<string, EraArticle> = {};
 const missing: string[] = [];
-for (const key of titles) {
+for (const [key, candidates] of titles) {
   await new Promise((r) => setTimeout(r, 200)); // 放慢速度，避免被維基百科限速
-  const resolved = await resolveTitle(key);
+  const resolved = await resolveTitle(candidates);
   if (!resolved) {
     missing.push(key);
     console.log(`找不到：${key}`);

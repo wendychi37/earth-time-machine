@@ -20,8 +20,8 @@ export interface Era {
   end: AstronomicalYear;
   /** 起訖年為大約值 */
   approx?: boolean;
-  /** 中文維基百科條目名稱；省略時與 name 相同 */
-  wiki?: string;
+  /** 中文維基百科條目名稱（可列多個候選，依序嘗試）；省略時與 name 相同 */
+  wiki?: string | string[];
 }
 
 /** 經緯度方框 [西經界, 南緯界, 東經界, 北緯界]，用來判斷疆域與事件屬於哪個地區 */
@@ -152,9 +152,9 @@ export const REGIONS: Region[] = [
       { name: "吠陀時代", start: bc(1500), end: bc(600), approx: true },
       { name: "十六雄國", start: bc(600), end: bc(322), approx: true },
       { name: "孔雀王朝", start: bc(322), end: bc(185) },
-      { name: "列國分立", start: bc(185), end: 320, wiki: "印度中王國時期" },
+      { name: "列國分立", start: bc(185), end: 320, wiki: "印度歷史" },
       { name: "笈多王朝", start: 320, end: 550, approx: true },
-      { name: "列國分立", start: 550, end: 1206, wiki: "印度中王國時期" },
+      { name: "列國分立", start: 550, end: 1206, wiki: "印度歷史" },
       { name: "德里蘇丹國", start: 1206, end: 1526 },
       { name: "蒙兀兒帝國", start: 1526, end: 1858 },
       { name: "英屬印度", start: 1858, end: 1947 },
@@ -200,21 +200,21 @@ export const REGIONS: Region[] = [
     boxes: [[24, 20, 36, 32]],
     source: "埃及歷史",
     eras: [
-      { name: "早王朝", start: bc(3100), end: bc(2686), approx: true, wiki: "埃及早王朝時期" },
-      { name: "古王國", start: bc(2686), end: bc(2181), approx: true, wiki: "埃及古王國" },
-      { name: "第一中間期", start: bc(2181), end: bc(2055), approx: true, wiki: "埃及第一中間期" },
+      { name: "早王朝", start: bc(3100), end: bc(2686), approx: true, wiki: "早王朝時期 (埃及)" },
+      { name: "古王國", start: bc(2686), end: bc(2181), approx: true, wiki: ["古王國時期 (埃及)", "埃及古王國時期", "古埃及古王國"] },
+      { name: "第一中間期", start: bc(2181), end: bc(2055), approx: true, wiki: ["第一中間期 (埃及)", "埃及第一中間期"] },
       { name: "中王國", start: bc(2055), end: bc(1650), approx: true, wiki: "埃及中王國" },
-      { name: "第二中間期", start: bc(1650), end: bc(1550), approx: true, wiki: "埃及第二中間期" },
+      { name: "第二中間期", start: bc(1650), end: bc(1550), approx: true, wiki: ["第二中間期 (埃及)", "埃及第二中間期"] },
       { name: "新王國", start: bc(1550), end: bc(1069), approx: true, wiki: "埃及新王國" },
-      { name: "第三中間期", start: bc(1069), end: bc(664), approx: true, wiki: "埃及第三中間期" },
-      { name: "後王朝", start: bc(664), end: bc(332), wiki: "埃及後王朝" },
+      { name: "第三中間期", start: bc(1069), end: bc(664), approx: true, wiki: ["第三中間期 (埃及)", "埃及第三中間期"] },
+      { name: "後王朝", start: bc(664), end: bc(332), wiki: "古埃及後期" },
       { name: "托勒密王朝", start: bc(332), end: bc(30) },
       { name: "羅馬統治", start: bc(30), end: 641, wiki: "羅馬埃及" },
       { name: "阿拉伯帝國", start: 641, end: 969 },
       { name: "法蒂瑪王朝", start: 969, end: 1171 },
       { name: "阿尤布王朝", start: 1171, end: 1250 },
       { name: "馬木路克王朝", start: 1250, end: 1517 },
-      { name: "鄂圖曼統治", start: 1517, end: 1805, wiki: "鄂圖曼埃及" },
+      { name: "鄂圖曼統治", start: 1517, end: 1805, wiki: "鄂圖曼帝國" },
       { name: "穆罕默德·阿里王朝", start: 1805, end: 1953 },
       { name: "埃及共和國", start: 1953, end: 2027, wiki: "埃及" },
     ],
@@ -230,12 +230,12 @@ export const REGIONS: Region[] = [
       { name: "米諾斯文明", start: bc(2700), end: bc(1450), approx: true },
       { name: "邁錫尼文明", start: bc(1450), end: bc(1100), approx: true },
       { name: "黑暗時代", start: bc(1100), end: bc(800), approx: true, wiki: "希臘黑暗時代" },
-      { name: "古風時代", start: bc(800), end: bc(480), approx: true, wiki: "古風時期 (希臘)" },
-      { name: "古典時代", start: bc(480), end: bc(323), wiki: "古典時代 (希臘)" },
+      { name: "古風時代", start: bc(800), end: bc(480), approx: true, wiki: "古風時期" },
+      { name: "古典時代", start: bc(480), end: bc(323), wiki: ["古典時代 (希臘)", "古典希臘", "古希臘"] },
       { name: "希臘化時代", start: bc(323), end: bc(146) },
-      { name: "羅馬統治", start: bc(146), end: 330, wiki: "羅馬統治時期的希臘" },
+      { name: "羅馬統治", start: bc(146), end: 330, wiki: "希臘歷史" },
       { name: "拜占庭帝國", start: 330, end: 1453 },
-      { name: "鄂圖曼統治", start: 1453, end: 1830, wiki: "鄂圖曼希臘" },
+      { name: "鄂圖曼統治", start: 1453, end: 1830, wiki: "鄂圖曼帝國" },
       { name: "現代希臘", start: 1830, end: 2027, wiki: "希臘" },
     ],
   },
@@ -266,7 +266,7 @@ export const REGIONS: Region[] = [
     boxes: [[-118, 7, -83, 25]],
     source: "中部美洲",
     eras: [
-      { name: "前古典期", start: bc(2000), end: 250, approx: true, wiki: "中部美洲前古典期" },
+      { name: "前古典期", start: bc(2000), end: 250, approx: true, wiki: "奧爾梅克文明" },
       { name: "古典期（瑪雅）", start: 250, end: 900, approx: true, wiki: "瑪雅文明" },
       { name: "後古典期（阿茲特克）", start: 900, end: 1521, approx: true, wiki: "阿茲特克" },
       { name: "西班牙殖民", start: 1521, end: 1821, wiki: "新西班牙總督轄區" },
@@ -279,12 +279,12 @@ export const REGIONS: Region[] = [
     color: "#b9cc4a",
     anchor: { lat: -11, lon: -75 },
     boxes: [[-82, -30, -62, 2]],
-    source: "安地斯文明",
+    source: "秘魯歷史",
     eras: [
-      { name: "卡拉爾文明", start: bc(3000), end: bc(1800), approx: true, wiki: "卡拉爾-蘇佩" },
+      { name: "卡拉爾文明", start: bc(3000), end: bc(1800), approx: true, wiki: ["卡拉爾-蘇佩", "卡拉爾", "小北文明"] },
       { name: "查文文化", start: bc(900), end: bc(200), approx: true },
       { name: "莫切、納斯卡", start: 100, end: 700, approx: true, wiki: "莫切文化" },
-      { name: "瓦里、蒂瓦納科", start: 700, end: 1000, approx: true, wiki: "瓦里文化" },
+      { name: "瓦里、蒂瓦納科", start: 700, end: 1000, approx: true, wiki: ["瓦里文化", "瓦里帝國", "瓦里"] },
       { name: "奇穆王國", start: 1000, end: 1470, approx: true },
       { name: "印加帝國", start: 1438, end: 1533 },
       { name: "西班牙殖民", start: 1533, end: 1821, wiki: "秘魯總督轄區" },
@@ -307,3 +307,6 @@ export const REGIONS: Region[] = [
 ];
 
 export const regionById = (id: string) => REGIONS.find((r) => r.id === id);
+
+/** 條目候選名稱（依序嘗試）；第一個同時是介紹文字資料的鍵 */
+export const wikiCandidates = (era: Era): string[] => (Array.isArray(era.wiki) ? era.wiki : [era.wiki ?? era.name]);
