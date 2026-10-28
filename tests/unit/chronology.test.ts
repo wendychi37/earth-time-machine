@@ -4,7 +4,7 @@ import type { GeometryCollection, Topology } from "topojson-specification";
 import { describe, expect, it } from "vitest";
 import { countryOptions } from "@/features/chronology/CountryPicker";
 import { groupByContinent } from "@/features/chronology/SameEraPanel";
-import { spreadMarkers } from "@/lib/events/spread";
+import { CLUSTER_DEGREES, clusterMarkers, markerScale } from "@/lib/events/cluster";
 import { buildChronology, locateItem, tidy, titleOf, type RawChronology } from "@/lib/chronology/build";
 import { packChronology, unpackChronology, type CompactChronology } from "@/lib/chronology/compact";
 import { continentAt } from "@/lib/chronology/continent";
@@ -202,13 +202,19 @@ describe("groupByContinent", () => {
   });
 });
 
-describe("spreadMarkers", () => {
-  it("同一位置的標記會分開，沒有地點的不顯示", () => {
-    const base = data.events.find((e) => e.location)!;
-    const events = [base, { ...base, id: "b" }, { ...base, id: "c", location: null }];
-    const markers = spreadMarkers(events);
-    expect(markers).toHaveLength(2);
-    expect(markers[0].lat !== markers[1].lat || markers[0].lon !== markers[1].lon).toBe(true);
+describe("clusterMarkers", () => {
+  const base = data.events.find((e) => e.location)!;
+  const at = (id: string, lat: number, lon: number) => ({ ...base, id, location: { lat, lon } });
+
+  it("靠得太近的標記合併成一群，遠的分開；沒有地點的不顯示", () => {
+    const events = [at("a", 23, 120), at("b", 23.5, 120.5), at("c", 35, 139), { ...base, id: "d", location: null }];
+    const clusters = clusterMarkers(events, CLUSTER_DEGREES);
+    expect(clusters.map((c) => c.events.map((e) => e.id))).toEqual([["a", "b"], ["c"]]);
+  });
+
+  it("拉近地球後門檻變小，原本合併的標記會分開", () => {
+    const events = [at("a", 23, 120), at("b", 23.5, 120.5)];
+    expect(clusterMarkers(events, CLUSTER_DEGREES * markerScale(1.25))).toHaveLength(2);
   });
 });
 

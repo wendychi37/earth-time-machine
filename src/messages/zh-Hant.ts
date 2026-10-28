@@ -55,6 +55,7 @@ export const messages = {
     moreAbout: "資料來源與限制",
   },
   events: {
+    clusterTitle: (n: number) => `這裡有 ${n} 件事，選一件看看`,
     demoBadge: "示範資料",
     demoNote: "此事件為示範用，內容尚未經過來源核對與專家審核，不是正式內容。",
     date: "日期",
