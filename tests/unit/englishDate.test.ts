@@ -70,6 +70,18 @@ describe("英文年表日期轉換", () => {
     ]);
   });
 
+  it("年份與日期兩欄都跨列時，仍取「Event」欄，不取後面的「Source」欄", () => {
+    const html = `<table class="wikitable"><tr><th>Year</th><th>Date</th><th>Event</th><th>Source</th></tr>
+      <tr><td rowspan="3">1898</td><td rowspan="2">April 25</td><td>The US declares war on Spain.</td><td>[1]</td></tr>
+      <tr><td>Congress meets.</td><td>[2]</td></tr>
+      <tr><td>June 12</td><td>Independence declared.</td><td></td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "1898年4月25日：The US declares war on Spain.",
+      "1898年4月25日：Congress meets.",
+      "1898年6月12日：Independence declared.",
+    ]);
+  });
+
   it("以年份當小標題時，底下沒寫日期的項目用小標題的年份", () => {
     const html = `<h2>The Dutch Cape Colony</h2><h3>1652</h3><ul><li>Cape Town was founded.</li></ul>
       <h3>Notes</h3><ul><li>Not an event.</li></ul>

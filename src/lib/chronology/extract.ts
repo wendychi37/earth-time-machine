@@ -169,7 +169,9 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
   // 日期不在第一欄的表格（例如〈Timeline of Danish history〉的「Event | Date | Result」）
   let dateCol = -1;
   let resultCol = -1;
-  let carried: { date: string; left: number } | null = null;
+  // 跨列（rowspan）的格子：每一欄還要延續幾列、格子內容
+  let spans: { left: number; html: string }[] = [];
+  let carriedDate: string | null = null;
   for (const row of rows) {
     const cells = [...row.matchAll(/<t([dh])([^>]*)>([\s\S]*?)<\/t[dh]>/g)].map((c) => ({
       header: c[1] === "h",
@@ -184,8 +186,13 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
       const firstIsDate = /year|date|年|日期/i.test(textAndLinks(cells[0].html).text);
       dateCol = firstIsDate ? -1 : cells.findIndex((c) => /^(?:date|year)s?$/i.test(textAndLinks(c.html).text));
       resultCol = cells.findIndex((c) => /^(?:result|outcome)s?$/i.test(textAndLinks(c.html).text));
+      spans = [];
       continue;
     }
+    // 前面幾欄由上一列跨下來時，這一列少了最前面的格子（表格最後的「Map」等欄也可能整列省略，不能當成少了前面的格子）
+    let shift = 0;
+    while (spans[shift]?.left > 0) spans[shift++].left--;
+    cells.forEach((c, i) => (spans[shift + i] = { left: c.rowspan - 1, html: c.html }));
     if (dateCol > 0 && cells.length === columns) {
       const date = rules.cell(textAndLinks(cells[dateCol].html).text);
       const event = textAndLinks(cells[eventCol >= 0 ? eventCol : 0].html);
@@ -197,24 +204,22 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
     }
     let date: string | null = null;
     let rest = cells;
-    // 年份欄跨列時，這一列少了最前面那格（表格最後的「Map」等欄也可能整列省略，不能當成少了前面的格子）
-    let shift = 0;
-    if (carried && carried.left > 0 && cells.length < columns) {
-      date = carried.date;
-      carried.left--;
-      shift = 1;
+    if (shift > 0) {
+      if (!carriedDate) continue;
+      date = carriedDate;
     } else {
       const yearText = textAndLinks(cells[0].html).text;
       const first = rules.cell(bceTable && !/BCE?\b/.test(yearText) ? `${yearText} BCE` : yearText);
+      carriedDate = first;
       if (!first) continue;
       date = first;
       rest = cells.slice(1);
-      carried = cells[0].rowspan > 1 ? { date, left: cells[0].rowspan - 1 } : null;
     }
     const event = eventCol > 0 ? (cells[eventCol - shift] ?? rest[rest.length - 1]) : rest[rest.length - 1];
     if (!event) continue;
-    // 英文年表的「Date」欄（例如「May」「8 September」）：只有年份的日期補上月日
-    const md = rest.length >= 2 && rules === EN ? englishMonthDay(textAndLinks(rest[0].html).text) : null;
+    // 英文年表的「Date」欄（例如「May」「8 September」）：只有年份的日期補上月日；「Date」欄也跨列時用跨下來的那格
+    const dateHtml = shift >= 2 ? spans[1].html : rest.length >= 2 ? rest[0].html : null;
+    const md = dateHtml !== null && rules === EN ? englishMonthDay(textAndLinks(dateHtml).text) : null;
     const dated = md && /^\d+年$/.test(date) ? `${date}${md.month}月${md.day ? `${md.day}日` : ""}` : date;
     const { text, links } = textAndLinks(event.html);
     if (text) out.push({ section, text: `${dated}：${text}`, links });
