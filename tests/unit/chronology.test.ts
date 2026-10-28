@@ -118,6 +118,15 @@ describe("buildChronology", () => {
     expect(events[2]).toMatchObject({ locationLabel: "義大利", locationPrecision: "approximate" });
   });
 
+  it("各國年表不用人物出生地當事件地點，改用該國的代表位置", () => {
+    const page = { ...raw.pages[0], title: "某國年表", items: [raw.pages[0].items[1]] };
+    const { events: own } = buildChronology(
+      { ...raw, pages: [page] },
+      { pageCountry: () => ({ country: { iso: "TWN", nameZh: "台灣" }, fallback: { lat: 25.03, lon: 121.56, label: "台灣（以台北示意）" } }) },
+    );
+    expect(own[0]).toMatchObject({ locationLabel: "台灣（以台北示意）", location: { lat: 25.03, lon: 121.56 } });
+  });
+
   it("所在地點是大區域時只算區域示意；沒有座標的朝代用首都代表", () => {
     expect(events[4]).toMatchObject({ locationLabel: "秦朝（首都咸陽）", locationPrecision: "region", location: { lat: 34.33, lon: 108.71 } });
   });

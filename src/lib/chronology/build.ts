@@ -71,6 +71,8 @@ interface Located {
   label: string;
   qid: string;
   via: string | null;
+  /** 經由哪個 Wikidata 屬性取得位置（P19 為人物出生地） */
+  prop?: string;
   /** 定位所依據的原文連結 */
   link: string;
   /** 以政權的首都代表位置 */
@@ -100,7 +102,7 @@ function locateLink(raw: RawChronology, link: string): Located | null {
         if (!t?.coord) continue;
         // 所在地點若是國家、地區或洲，只能當作區域示意
         const broad = (t.P31 ?? []).some((x) => POLITY_TYPES.has(x));
-        return { ...pick(t.coord), precision: broad ? "region" : precision, label: t.label ?? label, qid, via: target, link };
+        return { ...pick(t.coord), precision: broad ? "region" : precision, label: t.label ?? label, qid, via: target, prop, link };
       }
     }
     return null;
@@ -117,12 +119,12 @@ const pick = (c: { lat: number; lon: number }) => ({ lat: round(c.lat), lon: rou
 const round = (n: number) => Math.round(n * 1000) / 1000;
 
 /** 依原文連結找出事件位置：取精度最高者，同精度取最先出現的連結。 */
-export function locateItem(raw: RawChronology, links: string[]): Located | null {
+export function locateItem(raw: RawChronology, links: string[], accept: (l: Located) => boolean = () => true): Located | null {
   let best: Located | null = null;
   for (const link of links) {
     if (DATE_LINK.test(link)) continue;
     const found = locateLink(raw, link);
-    if (found && (!best || score(found) > score(best))) best = found;
+    if (found && accept(found) && (!best || score(found) > score(best))) best = found;
     if (best?.precision === "exact") break;
   }
   return best;
@@ -208,11 +210,12 @@ export function buildChronology(
         return;
       }
       const body = translated ?? original;
-      let where = locateItem(raw, item.links);
-      // 各國年表：找不到地點，或只找到「別國」的國家級位置時，改用該國的代表位置
-      if (owner && (!where || (where.precision === "region" && countryAt(where.lat, where.lon)?.iso !== owner.country.iso))) {
-        where = null;
-      }
+      // 各國年表：不採用人物的出生地（例如台灣年表的「鄭成功攻入台南」不能標在他的出生地日本平戶），
+      // 位置在別國時也不採用國家級位置；找不到就用該國的代表位置
+      const inOwner = (l: Located) => countryAt(l.lat, l.lon)?.iso === owner?.country.iso;
+      const where = owner
+        ? locateItem(raw, item.links, (l) => l.prop !== "P19" && (inOwner(l) || l.precision !== "region"))
+        : locateItem(raw, item.links);
       const entry = (title: string) => raw.wikidata[raw.linkInfo[title]?.qid ?? ""];
       // 外文年表的相關條目連到對應的中文條目；沒有中文條目的就不列
       const related = item.links
