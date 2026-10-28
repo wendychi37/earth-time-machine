@@ -81,7 +81,11 @@ describe("地區判斷", () => {
   });
 
   it("不屬於任何地區的位置回傳 null", () => {
-    expect(regionAt(-25, 134)).toBeNull(); // 澳洲
+    expect(regionAt(-75, 0)).toBeNull(); // 南極洲
+  });
+
+  it("澳洲屬於澳洲地區", () => {
+    expect(regionAt(-25, 134)?.id).toBe("au");
   });
 
   const square = (lon: number, lat: number) => ({
