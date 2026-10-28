@@ -51,8 +51,9 @@ describe("示範事件資料", () => {
     for (const e of demo.events) {
       expect(ids.has(e.id)).toBe(false);
       ids.add(e.id);
-      expect(Math.abs(e.location.lat)).toBeLessThanOrEqual(90);
-      expect(Math.abs(e.location.lon)).toBeLessThanOrEqual(180);
+      expect(e.location).not.toBeNull();
+      expect(Math.abs(e.location!.lat)).toBeLessThanOrEqual(90);
+      expect(Math.abs(e.location!.lon)).toBeLessThanOrEqual(180);
       const [from, to] = periodRange(e.period);
       expect(from).toBeLessThanOrEqual(to);
     }

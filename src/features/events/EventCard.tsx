@@ -6,7 +6,8 @@ import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import type { HistoricalEvent } from "@/types/event";
 
-const wikiUrl = (lang: "zh" | "en", title: string) => `https://${lang}.wikipedia.org/wiki/${encodeURIComponent(title)}`;
+const wikiUrl = (lang: "zh" | "en", title: string) =>
+  `https://${lang}.wikipedia.org/${lang === "zh" ? "zh-tw" : "wiki"}/${encodeURIComponent(title)}`;
 
 /** 事件卡片：名稱、日期、地點、摘要、來源與維基百科連結。 */
 export function EventCard({ event }: { event: HistoricalEvent }) {
@@ -50,11 +51,17 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
         </div>
         <div>
           <dt className="text-xs text-muted">{t.location}</dt>
-          <dd>
-            {event.locationLabel}
-            <span className="text-xs text-muted">{precisionNote}</span>
-          </dd>
-          <dd className="text-xs text-muted">{formatLatLon(event.location)}</dd>
+          {event.location ? (
+            <>
+              <dd>
+                {event.locationLabel}
+                <span className="text-xs text-muted">{precisionNote}</span>
+              </dd>
+              <dd className="text-xs text-muted">{formatLatLon(event.location)}</dd>
+            </>
+          ) : (
+            <dd className="text-muted">{t.noLocation}</dd>
+          )}
         </div>
         <div>
           <dt className="text-xs text-muted">{t.summary}</dt>
@@ -75,7 +82,19 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
             </dd>
           ))}
         </div>
-        {(event.wikipedia.zh || event.wikipedia.en) && (
+        {event.relatedArticles && event.relatedArticles.length > 0 && (
+          <div>
+            <dt className="text-xs text-muted">{t.related}</dt>
+            <dd className="flex flex-wrap gap-x-3 gap-y-1">
+              {event.relatedArticles.map(({ title, label }) => (
+                <a key={title} href={wikiUrl("zh", title)} target="_blank" rel="noreferrer" className="underline">
+                  {label}
+                </a>
+              ))}
+            </dd>
+          </div>
+        )}
+        {!event.relatedArticles && (event.wikipedia.zh || event.wikipedia.en) && (
           <div>
             <dt className="text-xs text-muted">{t.wikipedia}</dt>
             <dd className="flex gap-3">
@@ -93,6 +112,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
           </div>
         )}
       </dl>
+      {event.relatedArticles && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{t.chronologyNote}</p>}
       {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-200/80">{t.demoNote}</p>}
     </article>
   );
