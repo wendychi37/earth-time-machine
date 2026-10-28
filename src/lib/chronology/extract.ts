@@ -197,9 +197,12 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
     }
     let date: string | null = null;
     let rest = cells;
+    // 年份欄跨列時，這一列少了最前面那格（表格最後的「Map」等欄也可能整列省略，不能當成少了前面的格子）
+    let shift = 0;
     if (carried && carried.left > 0 && cells.length < columns) {
       date = carried.date;
       carried.left--;
+      shift = 1;
     } else {
       const yearText = textAndLinks(cells[0].html).text;
       const first = rules.cell(bceTable && !/BCE?\b/.test(yearText) ? `${yearText} BCE` : yearText);
@@ -208,7 +211,7 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
       rest = cells.slice(1);
       carried = cells[0].rowspan > 1 ? { date, left: cells[0].rowspan - 1 } : null;
     }
-    const event = eventCol > 0 ? cells[eventCol - (cells.length < columns ? columns - cells.length : 0)] : rest[rest.length - 1];
+    const event = eventCol > 0 ? (cells[eventCol - shift] ?? rest[rest.length - 1]) : rest[rest.length - 1];
     if (!event) continue;
     // 英文年表的「Date」欄（例如「May」「8 September」）：只有年份的日期補上月日
     const md = rest.length >= 2 && rules === EN ? englishMonthDay(textAndLinks(rest[0].html).text) : null;

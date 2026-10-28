@@ -58,6 +58,18 @@ describe("英文年表日期轉換", () => {
     expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["約前1000年：Mining began.", "約前1000年：Jars were made."]);
   });
 
+  it("表格最後的「Map」欄整列省略時，仍取「Event」欄", () => {
+    const html = `<table class="wikitable"><tr><th>Year</th><th>Date</th><th>Event</th><th>Map</th></tr>
+      <tr><td>408</td><td>Summer</td><td>Gerontius ends the revolt.</td></tr>
+      <tr><td rowspan="2">1009</td><td></td><td>Hisham was overthrown.</td></tr>
+      <tr><td>1 November</td><td>Sulayman freed Hisham.</td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "408年：Gerontius ends the revolt.",
+      "1009年：Hisham was overthrown.",
+      "1009年11月1日：Sulayman freed Hisham.",
+    ]);
+  });
+
   it("以年份當小標題時，底下沒寫日期的項目用小標題的年份", () => {
     const html = `<h2>The Dutch Cape Colony</h2><h3>1652</h3><ul><li>Cape Town was founded.</li></ul>
       <h3>Notes</h3><ul><li>Not an event.</li></ul>
