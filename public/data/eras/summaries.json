@@ -912,13 +912,6 @@
    "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E7%8E%8B%E5%9C%8B%E6%99%82%E6%9C%9F&oldid=94516370&variant=zh-tw",
    "extract": "古王國時期（前2686年—前2181年）是古埃及歷史的一個時期，對應於從埃及第三王朝至第六王朝的四個王朝。這一時期也被稱作「金字塔時期」，因為其中的第四王朝以曾修建為數眾多的金字塔建築群而聞名於世。"
   },
-  "第一中間期 (埃及)": {
-   "title": "古埃及歷史",
-   "revid": 88890232,
-   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
-   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
-   "matchedBy": "search"
-  },
   "埃及中王國": {
    "title": "中王國時期",
    "revid": 94721782,
@@ -926,10 +919,10 @@
    "extract": "中王國時期是古埃及歷史上的一個時期，包括第十一、第十二、第十三與第十四王朝，通常劃定在前2133－1786年，但嚴格地說，應該從第十一王朝的孟圖霍特普二世時代（約前2060－2010年）開始。"
   },
   "第二中間期 (埃及)": {
-   "title": "古埃及後期",
-   "revid": 94859350,
-   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%90%8E%E6%9C%9F&oldid=94859350&variant=zh-tw",
-   "extract": "古埃及後期是古埃及本土統治者在位的最後一個興盛時期。",
+   "title": "古埃及歷史",
+   "revid": 88890232,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
+   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
    "matchedBy": "search"
   },
   "埃及新王國": {
@@ -1004,6 +997,13 @@
    "revid": 94769654,
    "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A1%A3%E7%B4%A2%E6%AF%94%E4%BA%9E%E6%AD%B7%E5%8F%B2&oldid=94769654&variant=zh-tw",
    "extract": "衣索比亞是非洲最古老的獨立國家。舊稱阿比西尼亞，直到二次大戰後。和一般非洲國家不同，衣索比亞在第二次世界大戰被義大利王國入侵（1936-1941）之前，其古老的君主和制度都一直保存下來，並未有受到殖民主義浪潮的吞噬。"
+  },
+  "達莫特王國": {
+   "title": "希臘-巴克特里亞王國",
+   "revid": 95096299,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E8%85%8A-%E5%B7%B4%E5%85%8B%E7%89%B9%E9%87%8C%E4%BA%9A%E7%8E%8B%E5%9B%BD&oldid=95096299&variant=zh-tw",
+   "extract": "希臘-巴克特里亞王國，是一個古代位於中亞巴克特里亞的希臘化國家。",
+   "matchedBy": "search"
   },
   "阿克蘇姆王國": {
    "title": "阿克蘇姆王國",
@@ -1419,6 +1419,309 @@
    "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E8%85%8A&oldid=95310390&variant=zh-tw",
    "extract": "希臘共和國，簡稱希臘，是位於歐洲南部的發達跨大陸國家。2024年其人口為1,039萬。雅典為希臘首都及最大城市，塞薩洛尼基為第二大城市。"
   },
+  "葡萄牙歷史": {
+   "title": "葡萄牙歷史",
+   "revid": 95276988,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%91%A1%E8%90%84%E7%89%99%E5%8E%86%E5%8F%B2&oldid=95276988&variant=zh-tw",
+   "extract": ""
+  },
+  "盧西塔尼亞": {
+   "title": "盧西塔尼亞",
+   "revid": 94324540,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%9B%A7%E8%A5%BF%E5%A1%94%E5%B0%BC%E4%BA%9E&oldid=94324540&variant=zh-tw",
+   "extract": "盧西塔尼亞，也譯路西塔尼亞、琉息太尼亞、盧士坦尼亞，是羅馬帝國的一個行省。"
+  },
+  "蘇維匯王國": {
+   "title": "斯維比王國",
+   "revid": 94381913,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8B%8F%E7%BB%B4%E6%B1%87%E7%8E%8B%E5%9B%BD&oldid=94381913&variant=zh-tw",
+   "extract": "斯維比王國，又名加利西亞王國。是由日耳曼人建立的後羅馬王國，是最早脫離羅馬帝國的王國之一。"
+  },
+  "西哥德王國": {
+   "title": "西哥德王國",
+   "revid": 94684357,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E5%93%A5%E7%89%B9%E7%8E%8B%E5%9B%BD&oldid=94684357&variant=zh-tw",
+   "extract": "西哥德王國，又稱西哥德西班牙或哥德王國，是日耳曼民族的西哥德人於公元5世紀至8世紀所建立的王國，位於今法國西南部和伊比利半島的大部分地區。"
+  },
+  "安達盧斯": {
+   "title": "安達魯斯",
+   "revid": 95170638,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%AE%89%E8%BE%BE%E5%8D%A2%E6%96%AF&oldid=95170638&variant=zh-tw",
+   "extract": "安達魯斯是穆斯林在中世紀對伊比利半島的稱呼。 全盛時期包括大部分伊比利半島和今天南法的塞蒂馬尼亞。"
+  },
+  "葡萄牙王國": {
+   "title": "葡萄牙王國",
+   "revid": 94759807,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%91%A1%E8%90%84%E7%89%99%E7%8E%8B%E5%9C%8B&oldid=94759807&variant=zh-tw",
+   "extract": "葡萄牙及阿爾加維王國是位於南歐伊比利半島西部的一個君主制國家，是現今葡萄牙共和國的前身。王國存在於1139年至1910年間，歷經四個王朝，依次是勃艮地王朝、阿維斯王朝、菲利佩王朝和布拉干薩王朝。"
+  },
+  "阿維斯王朝": {
+   "title": "阿維斯王朝",
+   "revid": 86947876,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E7%B6%AD%E6%96%AF%E7%8E%8B%E6%9C%9D&oldid=86947876&variant=zh-tw",
+   "extract": "阿維斯王朝是1385年～1580年間統治葡萄牙王國的王朝。創造大航海時代的黃金期。"
+  },
+  "伊比利聯盟": {
+   "title": "伊比利聯盟",
+   "revid": 94029922,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BC%8A%E6%AF%94%E5%88%A9%E4%BA%9E%E8%81%AF%E7%9B%9F&oldid=94029922&variant=zh-tw",
+   "extract": "伊比利聯盟是指歷史上由西班牙與葡萄牙兩大殖民帝國組成的共主邦聯，為當時世界上制海權、領土範圍最廣闊的政體，自1580年西班牙國王菲利佩二世兼任葡萄牙國王（稱菲利佩一世）開始，直到1640年布拉干薩公爵若昂二世在位為葡萄牙國王時結束。"
+  },
+  "布拉干薩王朝": {
+   "title": "布拉干薩王朝",
+   "revid": 94609217,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%83%E6%8B%89%E5%B9%B2%E8%90%A8%E7%8E%8B%E6%9C%9D&oldid=94609217&variant=zh-tw",
+   "extract": "布拉干薩王朝，全稱最尊貴的布拉干薩王朝，是1640年—1910年統治葡萄牙王國、1815年—1822年統治葡萄牙、巴西和阿爾加維聯合王國以及1822年—1889年統治巴西帝國的王室。"
+  },
+  "葡萄牙第一共和國": {
+   "title": "葡萄牙第一共和國",
+   "revid": 90233676,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%91%A1%E8%90%84%E7%89%99%E7%AC%AC%E4%B8%80%E5%85%B1%E5%92%8C%E5%9C%8B&oldid=90233676&variant=zh-tw",
+   "extract": "葡萄牙第一共和國  是1910年至1926年間曾短暫統治葡萄牙的共和政權。1910年，葡萄牙共和黨發動十月初五革命，推翻了自中世紀建國以來的君主政體，迫使布拉干薩王朝的曼努埃爾二世流亡海外。"
+  },
+  "新國家 (葡萄牙)": {
+   "title": "新國家 (葡萄牙)",
+   "revid": 95034579,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E5%9C%8B%E5%AE%B6%20(%E8%91%A1%E8%90%84%E7%89%99)&oldid=95034579&variant=zh-tw",
+   "extract": "葡萄牙第二共和國，通稱新國家，是1933年至1974年間統治葡萄牙的社團主義獨裁政府，由於1926年發動國民革命推翻第一共和的臨時軍政府所演變而來；後者在史學上有時會被歸為第二共和的一部份。"
+  },
+  "葡萄牙": {
+   "title": "葡萄牙",
+   "revid": 95288934,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%91%A1%E8%90%84%E7%89%99&oldid=95288934&variant=zh-tw",
+   "extract": "葡萄牙共和國，簡稱葡萄牙或葡國，是位於西南歐伊比利半島上的一個共和制國家，實行單一制和半總統制政體，以里斯本為首都。"
+  },
+  "西班牙歷史": {
+   "title": "西班牙歷史",
+   "revid": 94442111,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E7%8F%AD%E7%89%99%E6%AD%B7%E5%8F%B2&oldid=94442111&variant=zh-tw",
+   "extract": "西班牙歷史可以追溯到史前時期和古典時期地中海沿岸羅馬人、希臘人和腓尼基人的在伊比利半島的人類活動。"
+  },
+  "伊比利人": {
+   "title": "伊比利亞人",
+   "revid": 94550701,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BC%8A%E6%AF%94%E5%88%A9%E4%BA%9A%E4%BA%BA&oldid=94550701&variant=zh-tw",
+   "extract": "伊比利亞人這個概念，在語言學和地理學上有著不同的含義。"
+  },
+  "西斯帕尼亞": {
+   "title": "希斯帕尼亞",
+   "revid": 94563244,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E6%96%AF%E5%B8%95%E5%B0%BC%E4%BA%9A&oldid=94563244&variant=zh-tw",
+   "extract": "希斯帕尼亞是羅馬帝國對現今伊比利半島的稱呼。在羅馬共和國時期，希斯帕尼亞被劃分為近西班牙和遠西班牙兩個行省。在羅馬元首制時期，遠西班牙行省被析分為貝提卡和盧西塔尼亞兩個行省，而近西班牙行省被重新命名為塔拉哥納。"
+  },
+  "收復失地運動": {
+   "title": "收復失地運動",
+   "revid": 93004993,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%94%B6%E5%BE%A9%E5%A4%B1%E5%9C%B0%E9%81%8B%E5%8B%95&oldid=93004993&variant=zh-tw",
+   "extract": "再征服運動，亦稱為八百年復國運動、復地運動，是718至1492年間（安達魯斯或阿拉伯殖民西班牙的時期），位於西歐伊比利半島北部的天主教各國逐漸戰勝南部穆斯林摩爾人政權的運動。"
+  },
+  "西班牙帝國": {
+   "title": "西班牙帝國",
+   "revid": 95220861,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E7%8F%AD%E7%89%99%E5%B8%9D%E5%9C%8B&oldid=95220861&variant=zh-tw",
+   "extract": "西班牙帝國是1492年至1898年間由西班牙和其前身控制的歐洲殖民帝國，領土曾囊括今美洲、非洲、亞洲和其他歐洲地區的部分區域，是第一批全球帝國與殖民帝國，被稱為「日不落帝國」。"
+  },
+  "西班牙內戰": {
+   "title": "西班牙內戰",
+   "revid": 93529614,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E7%8F%AD%E7%89%99%E5%86%85%E6%88%98&oldid=93529614&variant=zh-tw",
+   "extract": "西班牙內戰是西班牙共和軍與國民軍之間的一場內戰。共和派效忠於左翼的人民陣線政府，包含社會黨、共產黨及分離勢力。敵對的國民派則是由右翼的長槍黨、保皇黨和傳統保守派組成的聯盟。"
+  },
+  "佛朗哥時期的西班牙": {
+   "title": "法蘭西斯科·佛朗哥",
+   "revid": 94698419,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%BC%97%E6%9C%97%E8%A5%BF%E6%96%AF%E7%A7%91%C2%B7%E4%BD%9B%E6%9C%97%E5%93%A5&oldid=94698419&variant=zh-tw",
+   "extract": "法蘭西斯科·佛朗哥·巴阿蒙德，全名法蘭西斯科·保利諾·埃梅內希爾多·特奧杜洛·佛朗哥·巴阿蒙德，是西班牙軍人和獨裁者，西班牙內戰期間為國民軍領袖，1936年10月1日起任西班牙國國家元首，1938年1月30日至1973年6月8日兼任政府主席，1937年4月起任長槍黨國家領袖，直至1975年去世。"
+  },
+  "西班牙": {
+   "title": "西班牙",
+   "revid": 95187136,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E7%8F%AD%E7%89%99&oldid=95187136&variant=zh-tw",
+   "extract": "西班牙王國，通稱西班牙，是位於歐洲南部的君主立憲制國家，首都及最大城市為馬德里。其大部分領土位於伊比利半島上，占到了伊比利半島總面積之六分之五。"
+  },
+  "法國歷史": {
+   "title": "法國歷史",
+   "revid": 94583967,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E5%9C%8B%E6%AD%B7%E5%8F%B2&oldid=94583967&variant=zh-tw",
+   "extract": "文字可考的法國歷史誕生於鐵器時代，當時許多族群生活於被後世稱為高盧的地區。其中的主要族群為高盧人，為説高盧語的凱爾特人族群，沿地中海地區則有被希臘人所控制的殖民地。"
+  },
+  "高盧": {
+   "title": "高盧",
+   "revid": 93862386,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%AB%98%E5%8D%A2&oldid=93862386&variant=zh-tw",
+   "extract": "高盧，又稱高盧地區，指的是位於西歐的古代地區，這個詞彙最早由羅馬人發明，高盧地區以今日的法國為中心，版圖最大時還包括比利時、荷蘭南部、盧森堡以及瑞士東部、德國的萊茵蘭地區和義大利北部。面積共494,000平方公里。"
+  },
+  "羅馬高盧": {
+   "title": "羅馬高盧",
+   "revid": 90108333,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BD%97%E9%A9%AC%E9%AB%98%E5%8D%A2&oldid=90108333&variant=zh-tw",
+   "extract": "羅馬高盧既指一個特定的地區，也指歷史上的一個特定時期。"
+  },
+  "法蘭克王國": {
+   "title": "法蘭克王國",
+   "revid": 92332829,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E5%85%B0%E5%85%8B%E7%8E%8B%E5%9B%BD&oldid=92332829&variant=zh-tw",
+   "extract": "法蘭克王國，是5世紀至9世紀間位於歐洲西部的一個君主制國家，其領土橫跨法國、德國、瑞士、奧地利、低地國家和北義大利。它開創了歐洲封建制度，在經歷墨洛溫王朝和加洛林王朝後分裂。"
+  },
+  "西法蘭克王國": {
+   "title": "西法蘭克王國",
+   "revid": 93300749,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E6%B3%95%E8%98%AD%E5%85%8B%E7%8E%8B%E5%9C%8B&oldid=93300749&variant=zh-tw",
+   "extract": "西法蘭克王國是西歐中世紀時期的一個君主制國家，存在時間為843年至987年。"
+  },
+  "卡佩王朝": {
+   "title": "卡佩王朝",
+   "revid": 89679644,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%A1%E4%BD%A9%E7%8E%8B%E6%9C%9D&oldid=89679644&variant=zh-tw",
+   "extract": "卡佩王朝，或稱卡佩家族主支是法國歷史上的一個王朝，存在於987年—1328年，上承加洛林王朝，下接瓦盧瓦王朝。"
+  },
+  "瓦盧瓦王朝": {
+   "title": "瓦盧瓦王朝",
+   "revid": 95004769,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%93%A6%E7%9B%A7%E7%93%A6%E7%8E%8B%E6%9C%9D&oldid=95004769&variant=zh-tw",
+   "extract": "瓦盧瓦王朝，是法國卡佩王朝的支系，繼卡佩家族後承繼法國王權，並於1328年至1589年間統治法蘭西王國。家族地位較低的成員在阿朗松、安茹、勃艮第和奧爾良等地建立其支系。"
+  },
+  "波旁王朝": {
+   "title": "波旁王朝",
+   "revid": 94154886,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%A2%E6%97%81%E7%8E%8B%E6%9C%9D&oldid=94154886&variant=zh-tw",
+   "extract": "波旁王朝起源於法蘭西王國，是卡佩家族的分支。"
+  },
+  "法國大革命": {
+   "title": "法國大革命",
+   "revid": 95234566,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E5%9B%BD%E5%A4%A7%E9%9D%A9%E5%91%BD&oldid=95234566&variant=zh-tw",
+   "extract": "法國大革命是法國歷史上的重大政治與社會變革，始於1789年召開三級會議，終於1799年拿破崙發動霧月政變。這場革命對法國以及全世界都留下了深遠影響，其諸多構想被視為是「民主自由」的基石，至今仍在法國政治中舉足輕重。"
+  },
+  "法蘭西第三共和國": {
+   "title": "法蘭西第三共和國",
+   "revid": 95234450,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E5%85%B0%E8%A5%BF%E7%AC%AC%E4%B8%89%E5%85%B1%E5%92%8C%E5%9B%BD&oldid=95234450&variant=zh-tw",
+   "extract": "法蘭西第三共和國是近代法國於1870年法蘭西第二帝國崩潰至1940年7月10日維琪法國成立間的政體，為議會共和國。"
+  },
+  "維琪法國": {
+   "title": "維琪法國",
+   "revid": 94668039,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BB%B4%E5%B8%8C%E6%B3%95%E5%9B%BD&oldid=94668039&variant=zh-tw",
+   "extract": "維琪法國，正式國名為法蘭西國，是第二次世界大戰期間菲利普·貝當領導的國家政權，以其事實首都維琪為名。該國屬於獨立的武裝中立國，但由於與德國嚴苛的停戰協議，有一半的本土領土被軍事佔領。"
+  },
+  "法蘭西第四共和國": {
+   "title": "法蘭西第四共和國",
+   "revid": 95197116,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E5%85%B0%E8%A5%BF%E7%AC%AC%E5%9B%9B%E5%85%B1%E5%92%8C%E5%9B%BD&oldid=95197116&variant=zh-tw",
+   "extract": "法蘭西第四共和國是1946年至1958年間法國的共和制政體，上承法蘭西共和國臨時政府，下啟由夏爾·戴高樂主導建立的法蘭西第五共和國。"
+  },
+  "法蘭西第五共和國": {
+   "title": "法蘭西第五共和國",
+   "revid": 94497940,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E8%98%AD%E8%A5%BF%E7%AC%AC%E4%BA%94%E5%85%B1%E5%92%8C%E5%9C%8B&oldid=94497940&variant=zh-tw",
+   "extract": "法蘭西第五共和國是法國現行共和政體制度的政權，在1958年10月4日由夏爾·戴高樂主導的法國第五共和國憲法施行後建立。相較於第四共和國，第五共和國削弱議會權力，同時增加總統的權力。"
+  },
+  "低地國": {
+   "title": "低地國",
+   "revid": 94788274,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BD%8E%E5%9C%B0%E5%9B%BD%E5%AE%B6&oldid=94788274&variant=zh-tw",
+   "extract": "低地國，又稱低地諸國、尼德蘭，是對歐洲西北沿海地區的稱呼，廣義包括荷蘭、比利時、盧森堡，以及法國北部與德國西部；狹義上則僅指荷蘭、比利時、盧森堡三國，合稱「比荷盧」或「荷比盧」。"
+  },
+  "下日耳曼尼亞": {
+   "title": "下日耳曼尼亞",
+   "revid": 94697176,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%8B%E6%97%A5%E8%80%B3%E6%9B%BC%E5%B0%BC%E4%BA%9E&oldid=94697176&variant=zh-tw",
+   "extract": "下日耳曼尼亞，是一個羅馬帝國行省，位於萊茵河的左方，在現今的盧森堡，荷蘭的南方，比利時的一部分，萊茵河左方的北萊因-威斯伐倫。"
+  },
+  "神聖羅馬帝國": {
+   "title": "神聖羅馬帝國",
+   "revid": 95201517,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%A5%9E%E5%9C%A3%E7%BD%97%E9%A9%AC%E5%B8%9D%E5%9B%BD&oldid=95201517&variant=zh-tw",
+   "extract": "神聖羅馬帝國是位於歐洲中西部的一個政治實體，萌芽於800年或962年，直至1806年拿破崙戰爭期間解體。"
+  },
+  "勃艮第尼德蘭": {
+   "title": "勃根地尼德蘭",
+   "revid": 93017078,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8B%83%E8%89%AE%E7%AC%AC%E5%B0%BC%E5%BE%B7%E5%85%B0&oldid=93017078&variant=zh-tw",
+   "extract": "勃根地尼德蘭，即勃根地低地國家，是一系列神聖羅馬帝國以及法蘭西王國的低地地區領土，於1384年到1482年間由瓦盧瓦勃根地王朝的勃根地公爵統治。其後，低地國家轉由哈布斯堡王朝繼承。"
+  },
+  "哈布斯堡尼德蘭": {
+   "title": "哈布斯堡尼德蘭",
+   "revid": 94736786,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%93%88%E5%B8%83%E6%96%AF%E5%A0%A1%E5%B0%BC%E5%BE%B7%E5%85%B0&oldid=94736786&variant=zh-tw",
+   "extract": "哈布斯堡尼德蘭是哈布斯堡家族控制下的神聖羅馬帝國和低地國家組成的一個采邑制共主邦聯，之後成為西班牙帝國下的西屬尼德蘭。1482年隨著瓦盧瓦王朝的勃艮第公爵勇士查理去世，勃艮第統治尼德蘭時代也隨之結束。"
+  },
+  "荷蘭共和國": {
+   "title": "荷蘭共和國",
+   "revid": 95258882,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8D%B7%E8%98%AD%E5%85%B1%E5%92%8C%E5%9C%8B&oldid=95258882&variant=zh-tw",
+   "extract": "尼德蘭七省聯合共和國，又稱聯省，史稱荷蘭共和國，是於1581年至1795年間位於現在的荷蘭及比利時北部地區（法蘭德斯地區）的國家。其前身是1579年成立的烏特勒支同盟。"
+  },
+  "巴達維亞共和國": {
+   "title": "巴達維亞共和國",
+   "revid": 93072323,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B7%B4%E9%81%94%E7%B6%AD%E4%BA%9E%E5%85%B1%E5%92%8C%E5%9C%8B&oldid=93072323&variant=zh-tw",
+   "extract": "巴達維亞共和國是1795年到1806年期間，在現在的荷蘭領土上建立的一個法蘭西第一共和國的傀儡國，其前身是荷蘭共和國。1806年，改制為荷蘭王國，拿破崙的弟弟路易·波拿巴任國王。但是四年之後，荷蘭王國被併入法蘭西帝國。"
+  },
+  "尼德蘭聯合王國": {
+   "title": "荷蘭聯合王國",
+   "revid": 89990253,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8D%B7%E8%98%AD%E8%81%AF%E5%90%88%E7%8E%8B%E5%9C%8B&oldid=89990253&variant=zh-tw",
+   "extract": "1815年至1839年間的尼德蘭王國因領有法國大革命前的荷蘭共和國、奧屬尼德蘭（即南尼德蘭，今比利時北部）、盧森堡公國以及列日采邑主教區，又被稱為尼德蘭聯合王國，領土範圍囊括現代荷蘭、比利時及盧森堡三國。"
+  },
+  "比荷盧": {
+   "title": "比荷盧聯盟",
+   "revid": 93172550,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%AF%94%E8%8D%B7%E7%9B%A7%E8%81%AF%E7%9B%9F&oldid=93172550&variant=zh-tw",
+   "extract": "比荷盧聯盟，前稱比荷盧經濟聯盟，中文中更經常稱呼為荷比盧聯盟，是由3個相鄰的君主立憲西歐國家：荷蘭、比利時和盧森堡組成的聯盟，為低地國。原名Benelux是一混成詞，由三國的名稱首2至3個字母所組成。"
+  },
+  "北歐歷史": {
+   "title": "北歐",
+   "revid": 88876173,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8C%97%E6%AD%90&oldid=88876173&variant=zh-tw",
+   "extract": "北歐是地理上對歐洲北部的簡稱，北歐地處高緯，氣溫偏低，因北大西洋暖流經過，使其氣候比同緯度地區暖濕。",
+   "matchedBy": "search"
+  },
+  "北歐青銅時代": {
+   "title": "青銅時代",
+   "revid": 93850194,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%9D%92%E9%93%9C%E6%97%B6%E4%BB%A3&oldid=93850194&variant=zh-tw",
+   "extract": "青銅時代，又稱青銅器時代、青銅文明，在考古學上是以使用青銅器為標誌的人類文化發展的一個階段。",
+   "matchedBy": "search"
+  },
+  "北歐鐵器時代": {
+   "title": "北歐多神教",
+   "revid": 88694375,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8C%97%E6%AC%A7%E5%A4%9A%E7%A5%9E%E6%95%99&oldid=88694375&variant=zh-tw",
+   "extract": "北歐多神教，或稱古北歐宗教、古斯堪地那維亞宗教、古挪威宗教等，是指北歐地區的居民在維京時代直至普遍皈依基督宗教前的宗教傳統和習俗的術語—這一時期從7世紀延續到14世紀。 北歐宗教是一種民間宗教，強調儀式和社會聯繫。",
+   "matchedBy": "search"
+  },
+  "維京時代": {
+   "title": "維京時代",
+   "revid": 94740432,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%B6%AD%E4%BA%AC%E6%99%82%E4%BB%A3&oldid=94740432&variant=zh-tw",
+   "extract": "維京時代又稱北歐海盜時代，是從8世紀維京擴張算起，包括朗納爾·洛德布羅克入侵西法蘭克王國（今法國）和盎格魯-撒克遜英格蘭（今英國）以及9世紀無骨人伊瓦爾、「勇士」比約恩、白衫哈夫丹和「蛇眼」西格德率領的異教徒大軍征伐、10世紀諾曼征服南義大利、11世紀黑斯廷斯戰役以及諾曼征服英格蘭的一段歷史時期，也是歐洲歷史的重要組成部分。"
+  },
+  "斯堪的納維亞歷史": {
+   "title": "斯堪地那維亞歷史",
+   "revid": 94978723,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%AF%E5%A0%AA%E7%9A%84%E7%BA%B3%E7%BB%B4%E4%BA%9A%E5%8E%86%E5%8F%B2&oldid=94978723&variant=zh-tw",
+   "extract": "斯堪地那維亞歷史是斯堪地那維亞地理區域及當地人民的歷史。該地區位於北歐，包括丹麥、挪威和瑞典。芬蘭和冰島有時也被視為斯堪地那維亞的一部分，尤其是在英語環境中。"
+  },
+  "卡爾馬聯盟": {
+   "title": "卡爾馬聯盟",
+   "revid": 95108047,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%A1%E5%B0%94%E9%A9%AC%E8%81%94%E7%9B%9F&oldid=95108047&variant=zh-tw",
+   "extract": "卡爾馬聯盟是1397年至1523年由斯堪地那維亞的丹麥、瑞典（包括芬蘭）和挪威（包括冰島、法羅群島、格陵蘭、設得蘭和奧克尼）為主組成的共主邦聯。"
+  },
+  "丹麥－挪威": {
+   "title": "丹麥-挪威",
+   "revid": 94249171,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%B9%E9%BA%A5-%E6%8C%AA%E5%A8%81&oldid=94249171&variant=zh-tw",
+   "extract": "丹麥—挪威是存在於1537年至1814年間的一個北歐君主制國家，由卡爾馬聯盟（1397年—1537年）演變而來。1523年瑞典獨立後，挪威繼續與丹麥聯合。"
+  },
+  "北歐國家": {
+   "title": "北歐五國",
+   "revid": 94784122,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8C%97%E6%AD%90%E4%BA%94%E5%9C%8B&oldid=94784122&variant=zh-tw",
+   "extract": "北歐五國是位於丹麥、瑞典、芬蘭、挪威和冰島及其附屬領土如屬於丹麥的法羅群島、格陵蘭，屬於芬蘭的奧蘭群島和屬於挪威的斯瓦巴群島的統稱。而由於地理位置原因，挪威南極領地通常不被視為北歐五國的一部分。"
+  },
   "歐洲歷史": {
    "title": "歐洲歷史",
    "revid": 94574373,
@@ -1619,6 +1922,7 @@
   }
  },
  "missing": [
-  "達莫特王國"
+  "第一中間期 (埃及)",
+  "波旁復辟"
  ]
 }
