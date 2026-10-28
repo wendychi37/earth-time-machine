@@ -5,13 +5,13 @@ on:
   workflow_dispatch:
   push:
     branches: [claude/project-thread-k3xwgm]
-    paths: [scripts/fetch-country-chronologies.mts, src/lib/chronology/sources.ts, src/lib/chronology/extract.ts]
+    paths: [scripts/fetch-country-chronologies.mts, scripts/wiki.mjs, src/lib/chronology/sources.ts, src/lib/chronology/extract.ts]
 permissions:
   contents: write
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
