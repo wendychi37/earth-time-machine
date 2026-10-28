@@ -31,13 +31,14 @@ export const COUNTRY_CHRONOLOGIES: CountryChronologySource[] = [
 ];
 
 /**
- * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前三國都是英文版最完整）。
+ * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前美國、印度、俄羅斯與澳洲都是英文版最完整）。
  * 內容翻成台灣繁體中文（data/chronology/translations/en.json），並標明譯自英文維基百科。
  */
 const US = { iso: "USA", lang: "en", fallback: { lat: 38.9, lon: -77.04, label: "美國（以華盛頓示意）" } } as const;
 export const FOREIGN_CHRONOLOGIES: CountryChronologySource[] = [
   { page: "Timeline of Russian history", iso: "RUS", lang: "en", fallback: { lat: 55.75, lon: 37.62, label: "俄羅斯（以莫斯科示意）" } },
   { page: "Timeline of Indian history", iso: "IND", lang: "en", fallback: { lat: 28.61, lon: 77.21, label: "印度（以新德里示意）" } },
+  { page: "Timeline of Australian history", iso: "AUS", lang: "en", fallback: { lat: -35.28, lon: 149.13, label: "澳洲（以坎培拉示意）" } },
   { page: "Timeline of pre–United States history", ...US },
   { page: "Timeline of the history of the United States (1790–1819)", ...US },
   { page: "Timeline of the history of the United States (1820–1859)", ...US },

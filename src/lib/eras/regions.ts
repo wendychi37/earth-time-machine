@@ -304,6 +304,21 @@ export const REGIONS: Region[] = [
       { name: "美國", start: 1776, end: 2027, wiki: "美國" },
     ],
   },
+  {
+    id: "au",
+    name: "澳洲",
+    color: "#e0855a",
+    anchor: { lat: -25, lon: 134 },
+    boxes: [[112, -44, 154, -10]],
+    source: "澳大利亞歷史",
+    eras: [
+      // 條目：人類約四萬至七萬年前就在澳洲定居，時間軸從西元前 3000 年開始
+      { name: "原住民族", start: bc(3000), end: 1788, wiki: "澳大利亞原住民" },
+      // 1788 年 1 月 26 日建立新南威爾斯殖民地；1901 年 1 月 1 日各殖民地組成澳洲聯邦
+      { name: "英國殖民地", start: 1788, end: 1901, wiki: ["新南威爾斯殖民地", "澳大利亞殖民史"] },
+      { name: "澳大利亞聯邦", start: 1901, end: 2027, wiki: ["澳大利亞聯邦成立", "澳大利亞"] },
+    ],
+  },
 ];
 
 export const regionById = (id: string) => REGIONS.find((r) => r.id === id);
