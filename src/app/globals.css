@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* 只掃描 src 找 class：data/ 與 public/data 的大型 JSON 會讓 Vercel 上的 Tailwind 掃描逾時 */
+@import "tailwindcss" source("../");
 
 :root {
   --background: #05070d;
@@ -25,4 +26,77 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* 地球上的國名、行政區名、海洋名（由 MapLabels 產生） */
+.map-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: #2b2f38;
+  paint-order: stroke fill;
+  -webkit-text-stroke: 3px rgb(255 255 255 / 0.85);
+  will-change: transform;
+}
+.map-label[data-kind="admin1"] {
+  font-weight: 500;
+  font-size: 11px;
+  color: #59606e;
+}
+.map-label[data-kind="marine"] {
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  color: #2f6a99;
+  -webkit-text-stroke: 0;
+}
+.map-label[data-tone="light"] {
+  color: #fff;
+  -webkit-text-stroke: 3px rgb(0 0 0 / 0.6);
+}
+.map-label[data-tone="light"][data-kind="admin1"] {
+  color: #e4e8ef;
+}
+.map-label[data-tone="light"][data-kind="marine"] {
+  color: #b9dcff;
+  -webkit-text-stroke: 0;
+  text-shadow: 0 1px 2px rgb(0 0 0 / 0.7);
+}
+/* 考古文化：左邊的圓點對準位置，文字往右延伸；可點選 */
+.map-label[data-kind="culture"] {
+  pointer-events: auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 8px 3px 3px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgb(160 82 20 / 0.88);
+  -webkit-text-stroke: 0;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+.map-label[data-kind="culture"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+  background: #ffd9a8;
+  border: 2px solid #fff;
+}
+.map-label[data-kind="culture"][hidden] {
+  display: none;
+}
+.map-label[data-kind="culture"]:hover,
+.map-label[data-kind="culture"]:focus-visible {
+  background: rgb(190 100 25);
+  outline: 2px solid #fff;
 }

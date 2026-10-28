@@ -13,7 +13,7 @@ import { useModernCountries } from "./useModernCountries";
 export function SelectionPanel() {
   const selection = useAppStore((s) => s.selection);
   const select = useAppStore((s) => s.select);
-  const showModern = useAppStore((s) => s.layers.modernBorders);
+  const showModern = useAppStore((s) => s.layers.labels);
   const countries = useModernCountries();
   const boundaries = useBoundariesAtYear();
 

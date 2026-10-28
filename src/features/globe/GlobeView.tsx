@@ -7,7 +7,6 @@ import { useBoundariesAtYear } from "@/features/boundaries/useBoundariesAtYear";
 import { useEventsNearYear } from "@/features/events/useEvents";
 import { isWebGLAvailable } from "./webgl";
 import { GlobeErrorBoundary } from "./GlobeErrorBoundary";
-import { useModernCountries } from "./useModernCountries";
 
 const GlobeCanvas = dynamic(() => import("./GlobeCanvas"), {
   ssr: false,
@@ -30,7 +29,6 @@ const MAX_RESTORE_ATTEMPTS = 5;
 /** 3D 地球的進入點：只在瀏覽器端載入 WebGL，並處理不支援的情況。 */
 export function GlobeView() {
   const webgl = useSyncExternalStore(noopSubscribe, isWebGLAvailable, () => null);
-  const modernCountries = useModernCountries();
   const { displayed } = useBoundariesAtYear();
   const events = useEventsNearYear();
   // 畫布被回收時換一個 key，讓 React 重新建立整個 3D 畫面
@@ -60,7 +58,6 @@ export function GlobeView() {
   return (
     <GlobeErrorBoundary key={canvasKey} onError={handleContextLost}>
       <GlobeCanvas
-        modernCountries={modernCountries}
         boundaries={displayed?.features ?? null}
         events={events}
         onContextLost={handleContextLost}

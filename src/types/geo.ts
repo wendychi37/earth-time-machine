@@ -8,3 +8,59 @@ export interface ModernCountryProps {
 }
 
 export type ModernCountry = Feature<Geometry, ModernCountryProps>;
+
+/** 「地圖模式」用的國家面（Natural Earth 1:50m），只用來上色與畫國界。 */
+export interface MapCountryProps {
+  iso: string;
+  nameZh: string;
+  /** Natural Earth MAPCOLOR7（1–7），相鄰國家不同色 */
+  color: number;
+}
+
+export type MapCountry = Feature<Geometry, MapCountryProps>;
+
+/** 地圖上的文字標籤（國名、行政區名、海洋名）。 */
+export interface MapLabel {
+  name: string;
+  lat: number;
+  lon: number;
+  /** Natural Earth 建議開始顯示的網頁地圖縮放等級 */
+  minZoom: number;
+}
+
+export interface MapLabelData {
+  countries: MapLabel[];
+  admin1: MapLabel[];
+  marine: MapLabel[];
+}
+
+/** 一級行政區界線：整數座標（乘上 precision），每條線第一點為絕對值、之後為差值。 */
+export interface AdminLineData {
+  precision: number;
+  lines: number[][];
+}
+
+/** 考古文化（沒有國家的年代，各地的史前文化）。年代與來源見 public/data/archaeology/cultures.json。 */
+export interface ArchaeologicalCulture {
+  id: string;
+  name: string;
+  /** 天文年號；距今以西元 1950 年為基準換算 */
+  start: number;
+  end: number;
+  /** 維基百科條目中寫出年代的原文（逐字） */
+  dateQuote: string[];
+  /** 年代出處的維基百科條目 */
+  sourcePage: string;
+  /** 介紹這個文化的維基百科條目（沒有條目時為 null） */
+  article: string | null;
+  lat: number;
+  lon: number;
+  locationNote: string;
+  continent: "asia" | "europe" | "africa" | "americas" | "oceania";
+}
+
+export interface CultureData {
+  note: string;
+  cultures: ArchaeologicalCulture[];
+  sources: Record<string, { revid: number; license: string }>;
+}

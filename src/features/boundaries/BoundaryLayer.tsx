@@ -9,6 +9,8 @@ import type { BoundaryFeature } from "@/types/boundary";
 
 interface BoundaryLayerProps {
   features: BoundaryFeature[];
+  /** 填色透明度；地圖模式底下已有國家色塊，填色要淡一點 */
+  fillOpacity?: number;
 }
 
 /** 未標示政權的區域不填色也不畫框，避免看起來像一個國家 */
@@ -18,7 +20,7 @@ const isNamed = (f: BoundaryFeature) => !!f.properties.name;
  * 歷史疆域：依政權上色的半透明面 + 邊界線。
  * 近似、中等或未標示精度的邊界用虛線，依國際法確定的邊界（精度 3）用實線。
  */
-export function BoundaryLayer({ features }: BoundaryLayerProps) {
+export function BoundaryLayer({ features, fillOpacity = 0.32 }: BoundaryLayerProps) {
   const fill = useMemo(() => {
     const { positions, colors } = buildFillArrays(features, (f) =>
       isNamed(f) ? colorForName(f.properties.subjecto ?? f.properties.name!) : null,
@@ -47,7 +49,7 @@ export function BoundaryLayer({ features }: BoundaryLayerProps) {
   return (
     <group raycast={() => null}>
       <mesh geometry={fill} raycast={() => null} renderOrder={1}>
-        <meshBasicMaterial vertexColors transparent opacity={0.32} depthWrite={false} side={DoubleSide} />
+        <meshBasicMaterial vertexColors transparent opacity={fillOpacity} depthWrite={false} side={DoubleSide} />
       </mesh>
       <lineSegments
         geometry={approxLines}

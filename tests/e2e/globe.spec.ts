@@ -39,7 +39,7 @@ test("顯示 3D 地球，可拖曳旋轉與縮放", async ({ page }, info) => {
 
 test("點擊地球顯示經緯度與現代國家（參考）", async ({ page }, info) => {
   await waitForGlobe(page);
-  await page.getByLabel("現代國界（參考）").check();
+  await page.getByLabel("國名與行政區（現代）").check();
   const c = await center(page);
   if (info.project.name === "mobile") await page.touchscreen.tap(c.x, c.y);
   else await page.mouse.click(c.x, c.y);

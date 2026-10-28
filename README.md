@@ -16,6 +16,7 @@ npm run test:e2e   # Playwright（桌面 1440×900、手機 390×844），需先
 ```bash
 npm run data:boundaries  # 匯入 historical-basemaps 疆域快照
 npm run data:modern      # 匯入 Natural Earth 現代國界
+npm run data:map         # 匯入地圖模式用的國家、行政區、海洋名稱（Natural Earth）
 npm run data:textures    # 產生地球貼圖（需要 ImageMagick）
 ```
 

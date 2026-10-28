@@ -1,8 +1,8 @@
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
 import type { BoundaryFeature, BoundaryIndex, BoundaryProps } from "@/types/boundary";
-import type { HistoricalEvent } from "@/types/event";
 import type { ModernCountry, ModernCountryProps } from "@/types/geo";
+import { unpackChronology, type CompactChronology } from "@/lib/chronology/compact";
 import type { Repository } from "./repository";
 
 async function fetchJson<T>(path: string): Promise<T> {
@@ -48,8 +48,15 @@ export const staticRepository: Repository = {
   },
 
   getEvents() {
-    // 世界史年表（取自維基百科，見 scripts/build-world-chronology.mts）；示範事件只保留給 Supabase seed 與測試
-    const path = "/data/chronology/world-chronology.json";
-    return cached(path, async () => (await fetchJson<{ events: HistoricalEvent[] }>(path)).events);
+    // 〈世界史年表〉與各國歷史年表（取自維基百科，見 scripts/build-world-chronology.mts）；示範事件只保留給 Supabase seed 與測試
+    const world = "/data/chronology/world-chronology.json";
+    const countries = "/data/chronology/country-chronologies.json";
+    return cached("events", async () => {
+      const [a, b] = await Promise.all([
+        fetchJson<CompactChronology>(world).then(unpackChronology),
+        fetchJson<CompactChronology>(countries).then(unpackChronology, () => []),
+      ]);
+      return [...a, ...b];
+    });
   },
 };
