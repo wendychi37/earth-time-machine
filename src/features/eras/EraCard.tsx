@@ -96,8 +96,8 @@ export function EraCard() {
           ) : (
             <p className="text-muted">{t.summaryPending}</p>
           )}
-          <a href={article?.url ?? wikiUrl(wikiTitle)} target="_blank" rel="noreferrer" className="mt-1 inline-block underline">
-            {t.readMore}〈{article?.title ?? wikiTitle}〉
+          <a href={found?.url ?? wikiUrl(wikiTitle)} target="_blank" rel="noreferrer" className="mt-1 inline-block underline">
+            {t.readMore}〈{found?.title ?? wikiTitle}〉
           </a>
         </section>
 
