@@ -53,7 +53,9 @@ export function EraCard() {
   if (!ref || !resolved) return null;
   const { region, era } = resolved;
   const wikiTitle = era.wiki ?? era.name;
-  const article = summaries?.articles[wikiTitle];
+  // 用站內搜尋找到的條目還沒人工確認，先不顯示介紹文字
+  const found = summaries?.articles[wikiTitle];
+  const article = found && !found.matchedBy ? found : undefined;
   const periodArticle = summaries?.articles[region.source];
   const others = REGIONS.filter((r) => r.id !== region.id)
     .map((r) => ({ r, index: eraIndexAt(r, atYear) }))

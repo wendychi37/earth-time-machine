@@ -128,6 +128,7 @@ describe("維基百科開頭擷取", () => {
   it("中文括號裡沒有外文時保留", () => {
     expect(dropForeignParentheses("唐朝（618年－907年）是")).toBe("唐朝（618年－907年）是");
     expect(dropForeignParentheses("蘇美（Sumer）是")).toBe("蘇美是");
+    expect(dropForeignParentheses("阿契美尼德王朝（古波斯語：，波斯語：هخامنشی）或")).toBe("阿契美尼德王朝或");
   });
 
   it("第一句就超過上限時仍保留第一句", () => {

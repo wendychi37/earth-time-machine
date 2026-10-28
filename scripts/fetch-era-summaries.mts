@@ -28,11 +28,30 @@ for (const r of REGIONS) {
   for (const e of r.eras) titles.add(e.wiki ?? e.name);
 }
 
+/**
+ * 條目名稱先用 query + converttitles 解析（繁簡轉換、重新導向），
+ * 找不到時再用站內搜尋取第一筆；搜尋到的會標記 matchedBy: "search"，維護時要人工確認是否正確。
+ */
+async function resolveTitle(key: string): Promise<{ title: string; matchedBy: "title" | "search" } | null> {
+  const q = await api({ action: "query", titles: key, converttitles: "1", redirects: "1" });
+  const page = q.query?.pages?.[0];
+  if (page && !page.missing && !page.invalid) return { title: page.title, matchedBy: "title" };
+  const s = await api({ action: "query", list: "search", srsearch: key, srlimit: "1", srnamespace: "0" });
+  const hit = s.query?.search?.[0];
+  return hit ? { title: hit.title, matchedBy: "search" } : null;
+}
+
 const articles: Record<string, EraArticle> = {};
 const missing: string[] = [];
 for (const key of titles) {
   await new Promise((r) => setTimeout(r, 200)); // 放慢速度，避免被維基百科限速
-  const r = await api({ action: "parse", page: key, prop: "text|revid|displaytitle|properties", section: "0", variant: "zh-tw", redirects: "1" });
+  const resolved = await resolveTitle(key);
+  if (!resolved) {
+    missing.push(key);
+    console.log(`找不到：${key}`);
+    continue;
+  }
+  const r = await api({ action: "parse", page: resolved.title, prop: "text|revid|displaytitle|properties", section: "0", variant: "zh-tw", redirects: "1" });
   if (r.error) {
     missing.push(key);
     console.log(`找不到：${key}（${r.error.code}）`);
@@ -53,8 +72,9 @@ for (const key of titles) {
     revid: r.parse.revid,
     url: `https://zh.wikipedia.org/w/index.php?title=${encodeURIComponent(r.parse.title)}&oldid=${r.parse.revid}&variant=zh-tw`,
     extract,
+    ...(resolved.matchedBy === "search" ? { matchedBy: "search" as const } : {}),
   };
-  console.log(`${key} → ${title}：${extract.slice(0, 40)}…`);
+  console.log(`${key} → ${title}${resolved.matchedBy === "search" ? "（搜尋）" : ""}：${extract.slice(0, 40)}…`);
 }
 
 const out: EraSummaries = {

@@ -14,7 +14,7 @@ const decode = (s: string) =>
     .replace(/&amp;/g, "&");
 
 /** 介紹文字最多幾個字（句子不會被切斷，超過時少放一句） */
-export const MAX_EXTRACT_CHARS = 160;
+export const MAX_EXTRACT_CHARS = 110;
 
 export function firstParagraph(html: string): string | null {
   const clean = html
@@ -29,11 +29,14 @@ export function firstParagraph(html: string): string | null {
   return null;
 }
 
-/** 刪掉含外文字母的括號（拼音、英文原名、發音），以及刪節後留下的空括號 */
+/** 外文字母（拉丁、希臘、西里爾、希伯來、阿拉伯、天城文等）或「某某語：」的原文對照 */
+const FOREIGN = "[A-Za-zÀ-ɏͰ-ϿЀ-ӿ֐-ۿऀ-ॿ]|語[：:]|语[：:]";
+
+/** 刪掉外文原名、發音等括號，以及刪節後留下的空括號 */
 export function dropForeignParentheses(text: string): string {
   return text
-    .replace(/（[^（）]*[A-Za-zÀ-ɏ][^（）]*）/g, "")
-    .replace(/\([^()]*[A-Za-zÀ-ɏ][^()]*\)/g, "")
+    .replace(new RegExp(`（[^（）]*(?:${FOREIGN})[^（）]*）`, "g"), "")
+    .replace(new RegExp(`\\([^()]*(?:${FOREIGN})[^()]*\\)`, "g"), "")
     .replace(/（\s*[，、；]?\s*）|\(\s*\)/g, "")
     .replace(/\s+([，。、；])/g, "$1")
     .trim();

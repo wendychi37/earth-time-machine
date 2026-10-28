@@ -6,6 +6,8 @@ export interface EraArticle {
   url: string;
   /** 條目開頭第一段的前幾句，原文照錄 */
   extract: string;
+  /** 條目名稱找不到、改用站內搜尋第一筆時為 "search"（需人工確認） */
+  matchedBy?: "search";
 }
 
 export interface EraSummaries {
