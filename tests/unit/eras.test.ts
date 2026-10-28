@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { extractLead, dropForeignParentheses, leadSentences } from "@/lib/eras/extract";
 import { bandWindow, displaySpan, eraAt, geometryCenter, regionAt, regionForPolity, regionShade } from "@/lib/eras/query";
-import { REGIONS, bc, regionById } from "@/lib/eras/regions";
+import { REGIONS, REGION_CONTINENT, bc, filterRegions, regionById } from "@/lib/eras/regions";
 
 const region = (id: string) => regionById(id)!;
 
@@ -18,6 +18,13 @@ describe("朝代資料", () => {
   it("地區代號與顏色不重複", () => {
     expect(new Set(REGIONS.map((r) => r.id)).size).toBe(REGIONS.length);
     expect(new Set(REGIONS.map((r) => r.color)).size).toBe(REGIONS.length);
+  });
+
+  it("每個地區都有所屬大洲，篩選時依原本順序留下勾選的地區", () => {
+    for (const r of REGIONS) expect(REGION_CONTINENT[r.id], r.name).toBeDefined();
+    expect(filterRegions(null)).toBe(REGIONS);
+    expect(filterRegions(["es", "tw"]).map((r) => r.id)).toEqual(["tw", "es"]);
+    expect(filterRegions([])).toEqual([]);
   });
 
   it("名稱不使用中國大陸譯名", () => {

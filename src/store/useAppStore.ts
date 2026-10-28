@@ -50,6 +50,9 @@ interface AppState {
   /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
   countryFilter: string[] | null;
   setCountryFilter: (isos: string[] | null) => void;
+  /** 「各地朝代」只顯示這些地區（地區代號）；null 表示全部顯示 */
+  regionFilter: string[] | null;
+  setRegionFilter: (ids: string[] | null) => void;
 }
 
 const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MIN_YEAR, Math.round(year)));
@@ -80,4 +83,6 @@ export const useAppStore = create<AppState>((set) => ({
   setPanelOpen: (panelOpen) => set({ panelOpen }),
   countryFilter: null,
   setCountryFilter: (countryFilter) => set({ countryFilter }),
+  regionFilter: null,
+  setRegionFilter: (regionFilter) => set({ regionFilter }),
 }));

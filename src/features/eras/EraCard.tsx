@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useAllEvents } from "@/features/events/useEvents";
 import { eraIndexAt, regionAt, resolveEra } from "@/lib/eras/query";
-import { REGIONS, wikiCandidates, type Era } from "@/lib/eras/regions";
+import { filterRegions, wikiCandidates, type Era } from "@/lib/eras/regions";
 import { wikiUrl } from "@/lib/eras/summaries";
 import { PRESENT_YEAR } from "@/lib/time/constants";
 import { formatYear } from "@/lib/time/format";
@@ -23,6 +23,7 @@ export function eraYears(era: Era): string {
 export function EraCard() {
   const ref = useAppStore((s) => s.selectedEra);
   const year = useAppStore((s) => s.year);
+  const regionFilter = useAppStore((s) => s.regionFilter);
   const setYear = useAppStore((s) => s.setYear);
   const selectEra = useAppStore((s) => s.selectEra);
   const selectEvent = useAppStore((s) => s.selectEvent);
@@ -57,7 +58,8 @@ export function EraCard() {
   const found = summaries?.articles[wikiTitle];
   const article = found && !found.matchedBy ? found : undefined;
   const periodArticle = summaries?.articles[region.source];
-  const others = REGIONS.filter((r) => r.id !== region.id)
+  const others = filterRegions(regionFilter)
+    .filter((r) => r.id !== region.id)
     .map((r) => ({ r, index: eraIndexAt(r, atYear) }))
     .filter(({ index }) => index >= 0);
 

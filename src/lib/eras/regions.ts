@@ -1,3 +1,4 @@
+import type { Continent } from "@/types/event";
 import type { AstronomicalYear } from "@/types/time";
 
 /**
@@ -716,3 +717,15 @@ export const regionById = (id: string) => REGIONS.find((r) => r.id === id);
 
 /** 條目候選名稱（依序嘗試）；第一個同時是介紹文字資料的鍵 */
 export const wikiCandidates = (era: Era): string[] => (Array.isArray(era.wiki) ? era.wiki : [era.wiki ?? era.name]);
+
+/** 各地區所在的大洲（篩選地區時分組用） */
+export const REGION_CONTINENT: Record<string, Continent> = {
+  tw: "asia", kr: "asia", jp: "asia", vn: "asia", kh: "asia", th: "asia", mm: "asia", my: "asia", ph: "asia", id: "asia", cn: "asia", in: "asia", wa: "asia",
+  eg: "africa", et: "africa", nb: "africa", nf: "africa", wf: "africa", ng: "africa", cg: "africa", sw: "africa", sa: "africa",
+  gr: "europe", pt: "europe", es: "europe", fr: "europe", nl: "europe", sc: "europe", eu: "europe",
+  mx: "americas", an: "americas", na: "americas",
+  au: "oceania",
+};
+
+/** 依篩選條件留下的地區（null 表示全部） */
+export const filterRegions = (filter: string[] | null): Region[] => (filter ? REGIONS.filter((r) => filter.includes(r.id)) : REGIONS);

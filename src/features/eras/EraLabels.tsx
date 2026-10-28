@@ -21,6 +21,7 @@ export function EraLabels() {
   const year = useAppStore((s) => s.year);
   const selectedEra = useAppStore((s) => s.selectedEra);
   const selectEra = useAppStore((s) => s.selectEra);
+  const regionFilter = useAppStore((s) => s.regionFilter);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
   const normals = useMemo(() => REGIONS.map((r) => latLonToVector3(r.anchor.lat, r.anchor.lon, 1).normalize()), []);
   const toCamera = useMemo(() => new Vector3(), []);
@@ -39,6 +40,7 @@ export function EraLabels() {
   return (
     <group>
       {REGIONS.map((region, i) => {
+        if (regionFilter && !regionFilter.includes(region.id)) return null;
         const index = eraIndexAt(region, year);
         const era = region.eras[index];
         const selected = selectedEra?.regionId === region.id && selectedEra.index === index;
