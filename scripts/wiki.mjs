@@ -40,8 +40,10 @@ export async function fetchPage(title, lang = "zh") {
 }
 
 /** 查詢連結條目的座標、座標類型與 Wikidata 項目 */
-export async function queryLinkInfo(titles, host = "zh.wikipedia.org") {
+export async function queryLinkInfo(allTitles, host = "zh.wikipedia.org") {
   const linkInfo = {};
+  // 含「|」等字元的不是有效條目名稱，放進查詢會被拆成兩個值而超過 50 個的上限
+  const titles = allTitles.filter((t) => !/[|#<>[\]{}]/.test(t));
   for (let i = 0; i < titles.length; i += 50) {
     const batch = titles.slice(i, i + 50);
     const r = await api({ action: "query", titles: batch.join("|"), prop: "coordinates|pageprops", coprop: "type|dim|country", ppprop: "wikibase_item", redirects: "1", colimit: "max" }, host);
