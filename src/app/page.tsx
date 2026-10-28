@@ -2,6 +2,7 @@ import { AppHeader } from "@/components/AppHeader";
 import { BoundaryGapBanner } from "@/features/boundaries/BoundaryStatus";
 import { GlobeView } from "@/features/globe/GlobeView";
 import { LayerToggles } from "@/features/globe/LayerToggles";
+import { SameEraPanel } from "@/features/chronology/SameEraPanel";
 import { EventList } from "@/features/events/EventList";
 import { SelectedEventCard } from "@/features/events/SelectedEventCard";
 import { SelectionPanel } from "@/features/globe/SelectionPanel";
@@ -30,6 +31,10 @@ export default function Home() {
         <div className="pointer-events-auto sm:fixed sm:right-6 sm:top-24">
           <SelectionPanel />
           <SelectedEventCard />
+        </div>
+        {/* 手機：在時間軸上方；桌面：固定在左側 */}
+        <div className="flex flex-col sm:fixed sm:bottom-56 sm:left-6 sm:top-28 sm:w-80 lg:w-96">
+          <SameEraPanel />
         </div>
         <div className="pointer-events-auto mx-auto w-full max-w-5xl">
           <TimelinePanel />

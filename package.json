@@ -14,6 +14,7 @@
     "data:modern": "node scripts/import-natural-earth.mts",
     "data:boundaries": "node scripts/import-historical-basemaps.mts",
     "data:textures": "./scripts/fetch-textures.sh",
+    "data:chronology": "tsx scripts/build-world-chronology.mts",
     "db:seed": "node scripts/generate-seed.mts",
     "db:boundaries-sql": "node scripts/export-boundaries-sql.mts"
   },
@@ -47,6 +48,7 @@
     "tailwindcss": "^4",
     "topojson-server": "^3.0.1",
     "topojson-simplify": "^3.0.3",
+    "tsx": "^4.23.15",
     "typescript": "^5",
     "vitest": "^5.0.5"
   }
