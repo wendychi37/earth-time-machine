@@ -115,14 +115,20 @@ describe("英文年表日期轉換", () => {
     ]);
   });
 
+  it("第一個標題之前的導覽清單不沿用單獨一行的年份", () => {
+    const html = `<ul><li>11th century</li><li>Events</li><li>Sites</li></ul><h2>1840s</h2><ul><li>1840</li><li>Settlers arrive.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["1840年：Settlers arrive."]);
+  });
+
   it("寫了完整日期的項目之後，只寫「日 月」的項目沿用它的年份", () => {
     const html = `<h2>1840s</h2><ul><li>22 January: Settlers arrive.</li><li>27 September 1841: A school is founded.</li>
-      <li>10 October: Settlers reach Nelson.</li><li>Main body of settlers arrive.</li></ul>
+      <li>10 October: Settlers reach Nelson.</li><li>December, 1844 – Own year in another format.</li><li>Main body of settlers arrive.</li></ul>
       <h3>1965</h3><ul><li>3 March 1964: Earlier note.</li><li>1 April: Something happens.</li></ul>`;
     expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
       "1840年－1849年：22 January: Settlers arrive.",
       "1841年9月27日：A school is founded.",
       "1841年：10 October: Settlers reach Nelson.",
+      "1840年－1849年：December, 1844 – Own year in another format.",
       "1840年－1849年：Main body of settlers arrive.",
       "1964年3月3日：Earlier note.",
       "1965年：1 April: Something happens.",

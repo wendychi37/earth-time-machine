@@ -128,7 +128,8 @@ interface LooseDate {
 }
 
 const EN_MONTH = "(?:January|February|March|April|May|June|July|August|September|October|November|December)";
-const DAY_MONTH_START = new RegExp(`^(?:\\d{1,2}(?:[–-]\\d{1,2})?\\s+${EN_MONTH}|${EN_MONTH}(?:\\s+\\d{1,2})?)\\b`);
+// 只認「13 December: …」「April – …」這種緊接分隔符號的寫法；「December, 1844 – …」「1 November 1857 …」自己寫了年份，不能沿用
+const DAY_MONTH_START = new RegExp(`^(?:\\d{1,2}(?:[–-]\\d{1,2})?\\s+${EN_MONTH}|${EN_MONTH}(?:\\s+\\d{1,2})?)\\s*(?::|[–—-]\\s)`);
 
 /** 清單項目：子清單沿用上層的日期（例如「1687年」底下列了幾件事） */
 function extractLists(html: string, section: () => string | null, out: ExtractedItem[], rules: DateRules, headingDate: string | null = null) {
@@ -176,7 +177,8 @@ function emit(
   const [own, ...sub] = frame.html.split("\u0000SUBLIST\u0000");
   const { text, links } = textAndLinks(own);
   if (!text) return;
-  const topLevel = parents.length === 0 && rules === EN;
+  // 第一個標題之前是導言與側邊導覽框（例如「History of Canada」的分類清單），不沿用單獨一行的年份
+  const topLevel = parents.length === 0 && rules === EN && section !== null;
   const split = rules.split(text);
   // 「2000年：（民國89年）：」這種只有註記的上層項目，內容在子項目裡
   if (split && !/^[（(][^）)]*[）)][：:\s]*$/.test(split.body)) {
