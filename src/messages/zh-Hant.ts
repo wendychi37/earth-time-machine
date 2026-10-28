@@ -89,8 +89,6 @@ export const messages = {
   chronology: {
     title: "同一時期的世界",
     range: (from: string, to: string) => `${from}～${to}`,
-    open: "打開「同一時期的世界」",
-    close: "收起",
     empty: "這段時間年表裡沒有記載",
     continents: { asia: "亞洲", europe: "歐洲", africa: "非洲", americas: "美洲", oceania: "大洋洲" } as Record<string, string>,
     other: "其他／跨洲",
@@ -149,6 +147,15 @@ export const messages = {
     license: "維基百科，CC BY-SA 4.0",
     note: "沒有文字記錄的時代，年代是考古學家依出土物推估的，不同研究可能有不同說法。",
     close: "關閉",
+  },
+  panel: {
+    label: "控制面板",
+    tabs: { time: "年份", sameEra: "同一時期", layers: "圖層", details: "介紹" },
+    collapse: "收起面板",
+    expand: "打開面板",
+    layersTitle: "圖層與底圖",
+    detailsEmpty: "點一下地球上的地點、歷史大事、考古文化或朝代名牌，這裡就會出現介紹。",
+    globe: "3D 地球",
   },
   selection: {
     title: "選取位置",

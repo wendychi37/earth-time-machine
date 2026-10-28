@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { openTab, tapGlobe } from "./helpers";
 
 async function waitForGlobe(page: Page) {
   await page.goto("/");
@@ -39,10 +40,11 @@ test("顯示 3D 地球，可拖曳旋轉與縮放", async ({ page }, info) => {
 
 test("點擊地球顯示經緯度與現代國家（參考）", async ({ page }, info) => {
   await waitForGlobe(page);
+  await openTab(page, "layers");
   await page.getByLabel("國名與行政區（現代）").check();
-  const c = await center(page);
-  if (info.project.name === "mobile") await page.touchscreen.tap(c.x, c.y);
-  else await page.mouse.click(c.x, c.y);
+  if (info.project.name === "mobile") await openTab(page, "time");
+  // 中南半島（避開地球正中央可點的朝代名牌）
+  await tapGlobe(page, info, 15, 103);
   await expect(page.getByTestId("selection-coords")).toContainText("緯");
   await expect(page.getByTestId("selection-modern-country")).toBeVisible();
   await page.screenshot({ path: `test-results/globe-${info.project.name}-selected.png` });

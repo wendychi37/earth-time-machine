@@ -1,9 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-
-async function goToYear(page: Page, text: string) {
-  await page.getByTestId("year-input").fill(text);
-  await page.getByTestId("year-input").press("Enter");
-}
+import { expect, test } from "@playwright/test";
+import { goToYear, openTab } from "./helpers";
 
 test("各地朝代：名牌隨年份改變，點色帶打開朝代介紹卡", async ({ page }) => {
   await page.goto("/");
@@ -12,7 +8,8 @@ test("各地朝代：名牌隨年份改變，點色帶打開朝代介紹卡", as
   await goToYear(page, "1100");
   await expect(page.getByTestId("era-label-cn")).toHaveText("北宋");
 
-  // 色帶預設收起
+  // 色帶在「同一時期」分頁，預設收起
+  await openTab(page, "sameEra");
   await expect(page.getByTestId("era-bands")).toBeHidden();
   await page.getByTestId("era-bands-open").click();
   const bands = page.getByTestId("era-bands");
@@ -34,6 +31,7 @@ test("各地朝代：名牌隨年份改變，點色帶打開朝代介紹卡", as
 test("關閉各地朝代圖層後，名牌與色帶都不顯示", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByTestId("era-label-cn")).toBeAttached();
+  await openTab(page, "layers");
   await page.getByLabel("各地朝代（依年份）").uncheck();
   await expect(page.getByTestId("era-label-cn")).toHaveCount(0);
   await expect(page.getByTestId("era-bands")).toHaveCount(0);

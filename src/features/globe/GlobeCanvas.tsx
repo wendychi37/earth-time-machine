@@ -2,7 +2,7 @@
 
 import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
-import { Suspense, useMemo, useRef } from "react";
+import { Suspense, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
@@ -20,16 +20,8 @@ import { messages } from "@/messages/zh-Hant";
 import { culturesAtYear } from "@/lib/map/labels";
 import { useAdminLines, useCultures, useMapCountries, useMapLabels } from "./useMapData";
 import { SelectionMarker } from "./SelectionMarker";
-
-const FOV = 45;
-const INITIAL_VIEW = { lat: 22, lon: 112 }; // 東亞上空
-
-/** 直式手機螢幕較窄，拉遠相機讓整顆地球放得進畫面寬度。 */
-function initialDistance(): number {
-  const aspect = window.innerWidth / window.innerHeight;
-  const fitWidth = 1 / (0.8 * Math.tan((FOV / 2) * (Math.PI / 180)) * aspect);
-  return Math.min(5, Math.max(3.2, fitWidth));
-}
+import { FOV, INITIAL_VIEW, initialDistance } from "./initialView";
+import { KeepGlobeSize } from "./KeepGlobeSize";
 
 interface GlobeCanvasProps {
   boundaries: BoundaryFeature[] | null;
@@ -71,62 +63,70 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
     [],
   );
 
-  const cameraPosition = useMemo(
-    () => latLonToVector3(INITIAL_VIEW.lat, INITIAL_VIEW.lon, initialDistance()).toArray(),
-    [],
-  );
+  // 地球有自己的視窗，依視窗（不是整個螢幕）的長寬比決定初始距離
+  const frame = useRef<HTMLDivElement>(null);
+  const [cameraPosition, setCameraPosition] = useState<[number, number, number] | null>(null);
+  useLayoutEffect(() => {
+    const el = frame.current;
+    if (!el) return;
+    const aspect = el.clientWidth / Math.max(1, el.clientHeight);
+    setCameraPosition(latLonToVector3(INITIAL_VIEW.lat, INITIAL_VIEW.lon, initialDistance(aspect)).toArray());
+  }, []);
 
   return (
-    <div className="relative h-full w-full">
-      <Canvas
-        camera={{ position: cameraPosition, fov: FOV, near: 0.01, far: 100 }}
-        dpr={[1, 2]}
-        // 只在畫面有變化（拖曳、縮放、資料更新）時才重畫，省電也讓手機更順
-        frameloop="demand"
-        gl={{ antialias: true }}
-        style={{ touchAction: "none" }}
-        data-testid="globe-canvas"
-        onCreated={({ gl }) => {
-          gl.domElement.addEventListener("webglcontextlost", (e) => {
-            e.preventDefault();
-            onContextLost?.();
-          });
-          onCreated?.();
-        }}
-      >
-        <color attach="background" args={["#05070d"]} />
-        <ambientLight intensity={0.55} />
-        <CameraLight />
-        <Stars radius={50} depth={30} count={3000} factor={2.5} fade />
-        {/* 大氣層與地球一起出現，避免貼圖載入前只看到光暈 */}
-        <Suspense fallback={null}>
-          <Earth quality={quality} countries={mapCountries} />
-          <Atmosphere />
-        </Suspense>
-        {showHistorical && boundaries && (
-          <BoundaryLayer
-            features={boundaries}
-            fillOpacity={(baseMap === "map" ? 0.22 : 0.32) + (showEras ? 0.18 : 0)}
-            colorByRegion={showEras}
-          />
-        )}
-        {(showLabels || baseMap === "map") && (
-          <MapBorders countries={mapCountries} adminLines={showLabels ? adminLines : null} tone={tone} />
-        )}
-        {((showLabels && labels) || cultures.length > 0) && (
-          <MapLabels
-            data={showLabels ? labels : null}
-            cultures={cultures}
-            onSelectCulture={selectCulture}
-            container={labelRoot}
-            tone={tone}
-          />
-        )}
-        {showEvents && <EventMarkers events={events} />}
-        {showEras && <EraLabels />}
-        <SelectionMarker />
-        <GlobeControls />
-      </Canvas>
+    <div ref={frame} className="relative h-full w-full">
+      {cameraPosition && (
+        <Canvas
+          camera={{ position: cameraPosition, fov: FOV, near: 0.01, far: 100 }}
+          dpr={[1, 2]}
+          // 只在畫面有變化（拖曳、縮放、資料更新）時才重畫，省電也讓手機更順
+          frameloop="demand"
+          gl={{ antialias: true }}
+          style={{ touchAction: "none" }}
+          data-testid="globe-canvas"
+          onCreated={({ gl }) => {
+            gl.domElement.addEventListener("webglcontextlost", (e) => {
+              e.preventDefault();
+              onContextLost?.();
+            });
+            onCreated?.();
+          }}
+        >
+          <color attach="background" args={["#05070d"]} />
+          <ambientLight intensity={0.55} />
+          <CameraLight />
+          <KeepGlobeSize />
+          <Stars radius={50} depth={30} count={3000} factor={2.5} fade />
+          {/* 大氣層與地球一起出現，避免貼圖載入前只看到光暈 */}
+          <Suspense fallback={null}>
+            <Earth quality={quality} countries={mapCountries} />
+            <Atmosphere />
+          </Suspense>
+          {showHistorical && boundaries && (
+            <BoundaryLayer
+              features={boundaries}
+              fillOpacity={(baseMap === "map" ? 0.22 : 0.32) + (showEras ? 0.18 : 0)}
+              colorByRegion={showEras}
+            />
+          )}
+          {(showLabels || baseMap === "map") && (
+            <MapBorders countries={mapCountries} adminLines={showLabels ? adminLines : null} tone={tone} />
+          )}
+          {((showLabels && labels) || cultures.length > 0) && (
+            <MapLabels
+              data={showLabels ? labels : null}
+              cultures={cultures}
+              onSelectCulture={selectCulture}
+              container={labelRoot}
+              tone={tone}
+            />
+          )}
+          {showEvents && <EventMarkers events={events} />}
+          {showEras && <EraLabels />}
+          <SelectionMarker />
+          <GlobeControls />
+        </Canvas>
+      )}
       <div
         ref={labelRoot}
         role="group"

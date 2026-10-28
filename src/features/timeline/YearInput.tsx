@@ -39,7 +39,7 @@ export function YearInput() {
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           inputMode="text"
-          className="w-40 rounded-md border border-panel-border bg-black/30 px-2 py-1.5 text-sm placeholder:text-muted focus:border-accent focus:outline-none sm:w-48"
+          className="min-w-0 flex-1 rounded-md border border-panel-border bg-black/30 px-2 py-1.5 text-sm placeholder:text-muted focus:border-accent focus:outline-none sm:w-48 sm:flex-none"
           data-testid="year-input"
         />
         <button

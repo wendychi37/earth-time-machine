@@ -19,6 +19,9 @@ export interface LayerVisibility {
 /** 底圖：像地球儀的政治地圖，或衛星照片（地形） */
 export type BaseMap = "map" | "satellite";
 
+/** 控制面板的分頁；「年份」只在手機出現（桌面的時間軸固定在地球下方） */
+export type PanelTab = "time" | "sameEra" | "layers" | "details";
+
 interface AppState {
   /** 目前選取的年份（天文年號） */
   year: AstronomicalYear;
@@ -38,12 +41,21 @@ interface AppState {
   selectEra: (era: EraRef | null) => void;
   toggleLayer: (layer: keyof LayerVisibility) => void;
   setBaseMap: (baseMap: BaseMap) => void;
+  panelTab: PanelTab;
+  /** 手機的下方面板是否打開；收起時地球佔滿畫面 */
+  panelOpen: boolean;
+  /** 點分頁：切到該分頁並打開面板；手機上再點一次目前的分頁則收起面板 */
+  pressTab: (tab: PanelTab) => void;
+  setPanelOpen: (open: boolean) => void;
   /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
   countryFilter: string[] | null;
   setCountryFilter: (isos: string[] | null) => void;
 }
 
 const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MIN_YEAR, Math.round(year)));
+
+/** 在地球或對照表上點了東西：切到「介紹」分頁並打開面板 */
+const showDetails = (picked: unknown) => (picked ? { panelTab: "details" as const, panelOpen: true } : {});
 
 export const useAppStore = create<AppState>((set) => ({
   year: DEFAULT_YEAR,
@@ -54,12 +66,18 @@ export const useAppStore = create<AppState>((set) => ({
   layers: { events: true, labels: true, historical: true, cultures: true, eras: true },
   baseMap: "map",
   setYear: (year) => set({ year: clampYear(year) }),
-  select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null, selectedEra: null }),
-  selectEvent: (selectedEventId) => set({ selectedEventId, selection: null, selectedCultureId: null, selectedEra: null }),
-  selectCulture: (selectedCultureId) => set({ selectedCultureId, selection: null, selectedEventId: null, selectedEra: null }),
-  selectEra: (selectedEra) => set({ selectedEra, selection: null, selectedEventId: null, selectedCultureId: null }),
+  select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null, selectedEra: null, ...showDetails(selection) }),
+  selectEvent: (selectedEventId) =>
+    set({ selectedEventId, selection: null, selectedCultureId: null, selectedEra: null, ...showDetails(selectedEventId) }),
+  selectCulture: (selectedCultureId) =>
+    set({ selectedCultureId, selection: null, selectedEventId: null, selectedEra: null, ...showDetails(selectedCultureId) }),
+  selectEra: (selectedEra) => set({ selectedEra, selection: null, selectedEventId: null, selectedCultureId: null, ...showDetails(selectedEra) }),
   toggleLayer: (layer) => set((s) => ({ layers: { ...s.layers, [layer]: !s.layers[layer] } })),
   setBaseMap: (baseMap) => set({ baseMap }),
+  panelTab: "time",
+  panelOpen: true,
+  pressTab: (tab) => set((s) => (s.panelTab === tab && s.panelOpen ? { panelOpen: false } : { panelTab: tab, panelOpen: true })),
+  setPanelOpen: (panelOpen) => set({ panelOpen }),
   countryFilter: null,
   setCountryFilter: (countryFilter) => set({ countryFilter }),
 }));

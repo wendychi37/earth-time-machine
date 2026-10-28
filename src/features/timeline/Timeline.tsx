@@ -67,7 +67,7 @@ export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTic
   };
 
   return (
-    <div className="px-2 pb-6 pt-3">
+    <div className="px-2 pb-6 pt-1 sm:pt-3">
       <div
         ref={trackRef}
         className="relative h-8 cursor-pointer touch-none select-none"

@@ -1,9 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
+import { goToYear, openTab, tapGlobe } from "./helpers";
 
-async function goToYear(page: Page, text: string) {
-  await page.getByTestId("year-input").fill(text);
-  await page.getByTestId("year-input").press("Enter");
-}
 
 async function globeShot(page: Page) {
   await page.waitForTimeout(1500);
@@ -32,6 +29,7 @@ test("疆域圖層依年份切換，並標示快照與來源", async ({ page }, 
 
 test("沒有可靠資料的年份顯示資料不足，且不畫疆域", async ({ page }, info) => {
   await page.goto("/");
+  await openTab(page, "layers");
   await expect(page.getByTestId("boundary-legend")).toBeVisible({ timeout: 30_000 });
   await goToYear(page, "西元前2500");
   await expect(page.getByTestId("data-gap")).toContainText("西元前 2500 年尚無可靠的疆域資料");
@@ -45,11 +43,8 @@ test("點擊區域顯示歷史疆域名稱、精度與來源", async ({ page }, 
   await page.goto("/");
   await expect(page.getByTestId("boundary-legend")).toContainText("的快照", { timeout: 30_000 });
   await page.waitForTimeout(2000);
-  const box = await page.getByTestId("globe-canvas").locator("canvas").boundingBox();
-  if (!box) throw new Error("找不到地球");
-  const c = { x: box.x + box.width / 2, y: box.y + box.height / 2 };
-  if (info.project.name === "mobile") await page.touchscreen.tap(c.x, c.y);
-  else await page.mouse.click(c.x, c.y);
+  // 中南半島（避開地球正中央可點的朝代名牌）
+  await tapGlobe(page, info, 15, 103);
   const region = page.getByTestId("region-info");
   await expect(region).toBeVisible();
   await expect(region).toContainText("近似");

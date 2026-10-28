@@ -37,7 +37,7 @@ export function groupByContinent(events: HistoricalEvent[]): Column[] {
 
 /**
  * 「同一時期的世界」：選取年份前後的年表大事，依大洲並排，方便孩子比較同一個時代各地發生了什麼。
- * 桌面版在左側依大洲分段排列；手機版以分頁切換大洲，預設收起以免擋住地球。
+ * 放在地球旁邊（手機在地球下方）的面板分頁裡；手機以分頁切換大洲，桌面各洲依序排列。
  */
 export function SameEraPanel() {
   const t = messages.chronology;
@@ -46,16 +46,10 @@ export function SameEraPanel() {
   const selectEvent = useAppStore((s) => s.selectEvent);
   const events = useEventsNearYear();
   const columns = useMemo(() => groupByContinent(events), [events]);
-  // null：預設（桌面打開、手機收起），使用者按過之後依使用者選擇
-  const [open, setOpen] = useState<boolean | null>(null);
   const [tab, setTab] = useState<ColumnId>("asia");
   const span = eventWindowYears(year);
   const range = t.range(formatYear(year - span), formatYear(year + span));
   const activeTab = columns.find((c) => c.id === tab) ?? columns[0];
-  // 手機畫面小：看事件卡片時先把對照表藏起來
-  const mobileHidden = selectedEventId ? "max-sm:hidden" : "";
-  const buttonVisibility = open === null ? "sm:hidden" : open ? "hidden" : "";
-  const panelVisibility = open === null ? "hidden sm:flex" : open ? "flex" : "hidden";
 
   const list = (column: Column) =>
     column.events.length === 0 ? (
@@ -79,70 +73,50 @@ export function SameEraPanel() {
     );
 
   return (
-    <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={`${buttonVisibility} ${mobileHidden} pointer-events-auto self-start rounded-full border border-panel-border bg-panel px-4 py-2 text-sm font-medium backdrop-blur hover:bg-white/10`}
-        aria-label={t.open}
-        data-testid="same-era-open"
-      >
-        🌏 {t.title}（{events.length}）
-      </button>
-      <section
-        aria-label={t.title}
-        className={`${panelVisibility} ${mobileHidden} pointer-events-auto max-h-full flex-col rounded-xl border border-panel-border bg-panel p-3 text-sm backdrop-blur`}
-        data-testid="same-era-panel"
-      >
-        <header className="mb-2 flex items-start justify-between gap-2">
-          <h2 className="font-semibold">
-            🌏 {t.title}
-            <span className="block text-xs font-normal text-muted">{range}</span>
-          </h2>
-          <button type="button" onClick={() => setOpen(false)} className="shrink-0 text-xs text-muted hover:text-foreground">
-            {t.close}
-          </button>
-        </header>
-        <div className="mb-2">
-          <CountryPicker />
-        </div>
+    <section aria-label={t.title} className="flex flex-col text-sm" data-testid="same-era-panel">
+      <header className="mb-2">
+        <h2 className="font-semibold">
+          🌏 {t.title}（{events.length}）
+          <span className="block text-xs font-normal text-muted">{range}</span>
+        </h2>
+      </header>
+      <div className="mb-2">
+        <CountryPicker />
+      </div>
 
-        {/* 手機：大洲分頁 */}
-        <div className="sm:hidden">
-          <div role="tablist" className="mb-2 flex gap-1 overflow-x-auto">
-            {columns.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                role="tab"
-                aria-selected={c.id === activeTab.id}
-                onClick={() => setTab(c.id)}
-                className={`shrink-0 rounded-full border px-2.5 py-1 text-xs ${c.id === activeTab.id ? "border-transparent text-black" : "border-panel-border"}`}
-                style={c.id === activeTab.id ? { backgroundColor: c.color } : undefined}
-              >
-                {c.label} {c.events.length}
-              </button>
-            ))}
-          </div>
-          <div role="tabpanel" className="max-h-[24dvh] overflow-y-auto">
-            {list(activeTab)}
-          </div>
-        </div>
-
-        {/* 桌面：各洲依序排列，同一時期一眼看完 */}
-        <div className="hidden min-h-0 flex-1 space-y-2 overflow-y-auto pr-1 sm:block" data-testid="same-era-columns">
+      {/* 手機：大洲分頁 */}
+      <div className="sm:hidden">
+        <div role="tablist" className="mb-2 flex gap-1 overflow-x-auto">
           {columns.map((c) => (
-            <div key={c.id} className="rounded-lg border-l-4 bg-white/[0.03] py-1 pl-2" style={{ borderColor: c.color }}>
-              <h3 className="flex items-center gap-1.5 px-1.5 text-xs font-semibold">
-                {c.label}
-                <span className="font-normal text-muted">{t.count(c.events.length)}</span>
-              </h3>
-              {list(c)}
-            </div>
+            <button
+              key={c.id}
+              type="button"
+              role="tab"
+              aria-selected={c.id === activeTab.id}
+              onClick={() => setTab(c.id)}
+              className={`shrink-0 rounded-full border px-2.5 py-1 text-xs ${c.id === activeTab.id ? "border-transparent text-black" : "border-panel-border"}`}
+              style={c.id === activeTab.id ? { backgroundColor: c.color } : undefined}
+            >
+              {c.label} {c.events.length}
+            </button>
           ))}
         </div>
-        <p className="mt-2 text-[11px] text-muted">{t.source}</p>
-      </section>
-    </>
+        <div role="tabpanel">{list(activeTab)}</div>
+      </div>
+
+      {/* 桌面：各洲依序排列，同一時期一眼看完 */}
+      <div className="hidden space-y-2 sm:block" data-testid="same-era-columns">
+        {columns.map((c) => (
+          <div key={c.id} className="rounded-lg border-l-4 bg-white/[0.03] py-1 pl-2" style={{ borderColor: c.color }}>
+            <h3 className="flex items-center gap-1.5 px-1.5 text-xs font-semibold">
+              {c.label}
+              <span className="font-normal text-muted">{t.count(c.events.length)}</span>
+            </h3>
+            {list(c)}
+          </div>
+        ))}
+      </div>
+      <p className="mt-2 text-[11px] text-muted">{t.source}</p>
+    </section>
   );
 }
