@@ -1,9 +1,11 @@
-# 暫時用：探查各國歷史年表頁面（完成後刪除）
+# 暫時用：下載各國歷史年表頁面（完成後刪除）
 name: probe-country-chronologies
 on:
   push:
     branches: [claude/project-thread-k3xwgm]
     paths: [scripts/probe-country-chronologies.mjs, .github/workflows/probe-country-chronologies.yml]
+permissions:
+  contents: write
 jobs:
   probe:
     runs-on: ubuntu-latest
@@ -13,3 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
       - run: node scripts/probe-country-chronologies.mjs
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/chronology/pages
+          git commit -m "暫時：各國歷史年表頁面原始 HTML" || echo "沒有變更"
+          git push
