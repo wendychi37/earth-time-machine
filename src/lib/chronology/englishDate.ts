@@ -96,6 +96,11 @@ export function englishDateToZh(raw: string): string | null {
   for (const alt of alternatives) {
     const parts = alt.split(/\s*(?:–|—|\bto\b|(?<=\d|BCE|BC|CE|AD)\s*-\s*(?=\d|c\.)|\s-\s)\s*/i).filter(Boolean);
     if (parts.length === 0 || parts.length > 2) return null;
+    // 「1601–03」「1688–97」：後半段省略了世紀
+    if (!allBce && parts.length === 2 && /^\d{3,4}$/.test(parts[0]) && /^\d{1,2}$/.test(parts[1])) {
+      const full = parts[0].slice(0, parts[0].length - parts[1].length) + parts[1];
+      if (Number(full) > Number(parts[0])) parts[1] = full;
+    }
     const points = parts.map((p) => point(p, allBce));
     if (points.some((p) => !p)) return null;
     // 「March 4–6, 1793」：前半段缺年份時不猜測
