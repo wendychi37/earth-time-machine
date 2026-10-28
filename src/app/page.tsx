@@ -29,8 +29,8 @@ export default function Home() {
         </div>
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex flex-col gap-3 p-3 sm:p-6">
-        {/* 手機：選取資訊在時間軸上方；桌面：固定在右上角 */}
-        <div className="pointer-events-auto sm:fixed sm:right-6 sm:top-24">
+        {/* 手機：選取資訊在時間軸上方；桌面：固定在右側「圖層」面板下方，避免蓋住開關 */}
+        <div className="pointer-events-auto sm:fixed sm:right-6 sm:top-52" data-label-avoid>
           <SelectionPanel />
           <SelectedEventCard />
           <CultureCard />

@@ -82,6 +82,6 @@ test("關閉事件標記圖層後不顯示清單", async ({ page }) => {
   await goToYear(page, "1453");
   const list = page.getByRole("navigation", { name: "此時期的事件" });
   await expect(list.getByRole("button", { name: /攻陷拜占庭/ })).toHaveCount(1);
-  await page.getByLabel("事件標記").uncheck();
+  await page.getByLabel(/^歷史大事/).uncheck();
   await expect(list.getByRole("button", { name: /攻陷拜占庭/ })).toHaveCount(0);
 });

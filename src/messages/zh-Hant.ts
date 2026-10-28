@@ -110,7 +110,7 @@ export const messages = {
   },
   layers: {
     title: "圖層",
-    events: "事件標記",
+    events: "歷史大事（世界與各國年表）",
     labels: "國名與行政區（現代）",
     historical: "古代疆域（依年份）",
     cultures: "考古文化（依年份）",
