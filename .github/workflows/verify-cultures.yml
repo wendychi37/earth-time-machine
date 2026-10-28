@@ -3,7 +3,7 @@ name: verify-cultures
 on:
   workflow_dispatch:
   push:
-    paths: [data/archaeology/**, scripts/verify-cultures.mjs, .github/workflows/verify-cultures.yml]
+    paths: [public/data/archaeology/**, scripts/verify-cultures.mjs, .github/workflows/verify-cultures.yml]
 jobs:
   verify:
     runs-on: ubuntu-latest

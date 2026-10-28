@@ -1,9 +1,11 @@
 import type { MapLabel } from "@/types/geo";
 
-export type LabelKind = "country" | "admin1" | "marine";
+export type LabelKind = "country" | "admin1" | "marine" | "culture";
 
 export interface LabelCandidate extends MapLabel {
   kind: LabelKind;
+  /** 可點選的標籤（考古文化）對應的資料 id */
+  id?: string;
   /** 單位球面上的位置 */
   x: number;
   y: number;
@@ -31,6 +33,9 @@ export function zoomForDistance(distance: number): number {
 /** 各種標籤在此縮放等級是否該列入候選。 */
 export function isCandidateAtZoom(kind: LabelKind, minZoom: number, zoom: number): boolean {
   switch (kind) {
+    case "culture":
+      // 考古文化依年份篩選，不論遠近都顯示
+      return true;
     case "marine":
       return minZoom <= zoom + 1;
     case "country":
@@ -41,14 +46,18 @@ export function isCandidateAtZoom(kind: LabelKind, minZoom: number, zoom: number
   }
 }
 
-export const LABEL_FONT_PX: Record<LabelKind, number> = { country: 14, admin1: 11, marine: 12 };
+/** 考古文化標籤左側圓點的中心，距離標籤左緣的像素 */
+export const CULTURE_ANCHOR_PX = 10;
+
+export const LABEL_FONT_PX: Record<LabelKind, number> = { country: 14, admin1: 11, marine: 12, culture: 13 };
 
 /** 估計標籤寬高（中文字約等寬），用來避免文字重疊。 */
 export function labelSize(name: string, kind: LabelKind): { w: number; h: number } {
   const font = LABEL_FONT_PX[kind];
   let units = 0;
   for (const ch of name) units += /[\u0000-ÿ]/.test(ch) ? 0.6 : 1;
-  return { w: units * font + 6, h: font * 1.35 };
+  // 考古文化標籤有左右內距與圓點
+  return { w: units * font + (kind === "culture" ? 28 : 6), h: font * (kind === "culture" ? 1.8 : 1.35) };
 }
 
 export interface Rect {
@@ -94,11 +103,18 @@ export function placeLabels(candidates: LabelCandidate[], opts: PlaceOptions): P
     const p = project(c);
     if (!p) continue;
     const { w, h } = labelSize(c.name, c.kind);
-    const rect = { x0: p.sx - w / 2, y0: p.sy - h / 2, x1: p.sx + w / 2, y1: p.sy + h / 2 };
+    // 考古文化的圓點對準位置、文字往右延伸；其他標籤置中
+    const x0 = c.kind === "culture" ? p.sx - CULTURE_ANCHOR_PX : p.sx - w / 2;
+    const rect = { x0, y0: p.sy - h / 2, x1: x0 + w, y1: p.sy + h / 2 };
     if (rect.x0 < 0 || rect.y0 < 0 || rect.x1 > width || rect.y1 > height) continue;
     if (rects.some((r) => overlaps(r, rect))) continue;
     rects.push(rect);
     placed.push({ candidate: c, sx: p.sx, sy: p.sy, opacity: Math.min(1, (facing - horizon - 0.04) / 0.12) });
   }
   return placed;
+}
+
+/** 選取年份時存在的考古文化 */
+export function culturesAtYear<T extends { start: number; end: number }>(cultures: T[], year: number): T[] {
+  return cultures.filter((c) => c.start <= year && year <= c.end);
 }

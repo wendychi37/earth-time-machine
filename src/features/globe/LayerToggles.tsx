@@ -9,6 +9,7 @@ export function LayerToggles() {
   const items = [
     { key: "labels", label: messages.layers.labels },
     { key: "historical", label: messages.layers.historical },
+    { key: "cultures", label: messages.layers.cultures },
     { key: "events", label: messages.layers.events },
   ] as const;
 

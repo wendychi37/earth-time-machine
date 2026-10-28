@@ -39,3 +39,28 @@ export interface AdminLineData {
   precision: number;
   lines: number[][];
 }
+
+/** 考古文化（沒有國家的年代，各地的史前文化）。年代與來源見 public/data/archaeology/cultures.json。 */
+export interface ArchaeologicalCulture {
+  id: string;
+  name: string;
+  /** 天文年號；距今以西元 1950 年為基準換算 */
+  start: number;
+  end: number;
+  /** 維基百科條目中寫出年代的原文（逐字） */
+  dateQuote: string[];
+  /** 年代出處的維基百科條目 */
+  sourcePage: string;
+  /** 介紹這個文化的維基百科條目（沒有條目時為 null） */
+  article: string | null;
+  lat: number;
+  lon: number;
+  locationNote: string;
+  continent: "asia" | "europe" | "africa" | "americas" | "oceania";
+}
+
+export interface CultureData {
+  note: string;
+  cultures: ArchaeologicalCulture[];
+  sources: Record<string, { revid: number; license: string }>;
+}

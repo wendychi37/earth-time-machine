@@ -66,3 +66,36 @@ body {
   -webkit-text-stroke: 0;
   text-shadow: 0 1px 2px rgb(0 0 0 / 0.7);
 }
+/* 考古文化：左邊的圓點對準位置，文字往右延伸；可點選 */
+.map-label[data-kind="culture"] {
+  pointer-events: auto;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 8px 3px 3px;
+  border-radius: 999px;
+  color: #fff;
+  background: rgb(160 82 20 / 0.88);
+  -webkit-text-stroke: 0;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+}
+.map-label[data-kind="culture"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  flex: none;
+  border-radius: 50%;
+  background: #ffd9a8;
+  border: 2px solid #fff;
+}
+.map-label[data-kind="culture"][hidden] {
+  display: none;
+}
+.map-label[data-kind="culture"]:hover,
+.map-label[data-kind="culture"]:focus-visible {
+  background: rgb(190 100 25);
+  outline: 2px solid #fff;
+}

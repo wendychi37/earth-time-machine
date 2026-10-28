@@ -1,8 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { adminLinePositions } from "@/lib/map/adminLines";
-import { isCandidateAtZoom, labelSize, placeLabels, zoomForDistance, type LabelCandidate } from "@/lib/map/labels";
+import {
+  culturesAtYear,
+  isCandidateAtZoom,
+  labelSize,
+  placeLabels,
+  zoomForDistance,
+  type LabelCandidate,
+} from "@/lib/map/labels";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import labels from "../../public/data/modern/map-labels.json";
+import cultureJson from "../../public/data/archaeology/cultures.json";
+import type { CultureData } from "@/types/geo";
+
+const cultureData = cultureJson as unknown as CultureData;
 
 function candidate(name: string, lat: number, lon: number, kind: LabelCandidate["kind"] = "country"): LabelCandidate {
   const v = latLonToVector3(lat, lon);
@@ -80,5 +91,29 @@ describe("placeLabels 避開介面面板", () => {
       blocked: [{ x0: 400, y0: 400, x1: 600, y1: 600 }],
     });
     expect(placed).toHaveLength(0);
+  });
+});
+
+describe("考古文化資料", () => {
+  it("每一筆都有年代原文、來源與合理的年代", () => {
+    for (const c of cultureData.cultures) {
+      expect(c.dateQuote.length).toBeGreaterThan(0);
+      expect(c.start).toBeLessThanOrEqual(c.end);
+      expect(cultureData.sources[c.sourcePage]?.revid).toBeGreaterThan(0);
+      expect(Math.abs(c.lat)).toBeLessThanOrEqual(90);
+      expect(Math.abs(c.lon)).toBeLessThanOrEqual(180);
+    }
+    expect(new Set(cultureData.cultures.map((c) => c.id)).size).toBe(cultureData.cultures.length);
+  });
+
+  it("包含臺灣的大坌坑、圓山、十三行文化", () => {
+    const names = cultureData.cultures.map((c) => c.name);
+    expect(names).toEqual(expect.arrayContaining(["大坌坑文化", "圓山文化", "十三行文化"]));
+  });
+
+  it("依年份篩選：西元前 1000 年有圓山文化，西元 1000 年有十三行文化", () => {
+    expect(culturesAtYear(cultureData.cultures, -1000).map((c) => c.name)).toContain("圓山文化");
+    expect(culturesAtYear(cultureData.cultures, 1000).map((c) => c.name)).toContain("十三行文化");
+    expect(culturesAtYear(cultureData.cultures, 1000).map((c) => c.name)).not.toContain("圓山文化");
   });
 });

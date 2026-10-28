@@ -1,5 +1,5 @@
 /**
- * 核對 data/archaeology/cultures.json：每一筆的年代原文（dateQuote）都必須逐字出現在
+ * 核對 public/data/archaeology/cultures.json：每一筆的年代原文（dateQuote）都必須逐字出現在
  * 所列的維基百科條目（臺灣正體）中，並取得各條目目前的版本號（revid）。
  * 沙箱無法連線維基百科，此腳本由 GitHub Actions 執行（.github/workflows/verify-cultures.yml）。
  * 用法：node scripts/verify-cultures.mjs   → 印出 REVIDS {...}；有任何一筆對不上就失敗
@@ -7,7 +7,7 @@
 import { readFileSync } from "node:fs";
 
 const UA = { "User-Agent": "EarthTimeMachine/0.1 (https://github.com/wendychi37/earth-time-machine)" };
-const { cultures } = JSON.parse(readFileSync("data/archaeology/cultures.json", "utf8"));
+const { cultures } = JSON.parse(readFileSync("public/data/archaeology/cultures.json", "utf8"));
 
 async function api(params) {
   const url = "https://zh.wikipedia.org/w/api.php?" + new URLSearchParams({ format: "json", formatversion: "2", ...params });

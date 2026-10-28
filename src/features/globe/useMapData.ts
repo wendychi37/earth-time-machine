@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { feature } from "topojson-client";
 import type { GeometryCollection, Topology } from "topojson-specification";
-import type { AdminLineData, MapCountry, MapCountryProps, MapLabelData } from "@/types/geo";
+import type { AdminLineData, CultureData, MapCountry, MapCountryProps, MapLabelData } from "@/types/geo";
 
 /** 同一路徑只下載一次；失敗時移除快取以便下次重試 */
 const cache = new Map<string, Promise<unknown>>();
@@ -33,6 +33,7 @@ const loaders = {
     }),
   labels: () => load<MapLabelData>("/data/modern/map-labels.json"),
   adminLines: () => load<AdminLineData>("/data/modern/ne_10m_admin1_lines.json"),
+  cultures: () => load<CultureData>("/data/archaeology/cultures.json"),
 };
 
 /** 載入地圖模式用的現代資料；enabled 為 false 時不下載。 */
@@ -53,3 +54,4 @@ function useLoaded<K extends keyof typeof loaders>(key: K, enabled = true) {
 export const useMapCountries = (enabled = true) => useLoaded("countries", enabled);
 export const useMapLabels = (enabled = true) => useLoaded("labels", enabled);
 export const useAdminLines = (enabled = true) => useLoaded("adminLines", enabled);
+export const useCultures = (enabled = true) => useLoaded("cultures", enabled);

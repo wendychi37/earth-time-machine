@@ -1,5 +1,5 @@
 {
- "note": "考古文化年代皆取自所列維基百科條目的原文（dateQuote），距今以西元1950年為基準換算；位置為代表遺址附近的約略位置。",
+ "note": "考古文化年代皆取自所列維基百科條目的原文（dateQuote，已由 scripts/verify-cultures.mjs 逐字核對；revid 為核對時的版本）。距今以西元1950年為基準換算成年份；位置為代表遺址或分布中心的約略位置。",
  "cultures": [
   {
    "id": "tw-changbin",
@@ -904,5 +904,155 @@
    "locationNote": "代表遺址或分布中心（約略位置）",
    "continent": "europe"
   }
- ]
+ ],
+ "sources": {
+  "臺灣史前時期": {
+   "revid": 91188636,
+   "license": "CC BY-SA 4.0"
+  },
+  "奥尔梅克文明": {
+   "revid": 86517986,
+   "license": "CC BY-SA 4.0"
+  },
+  "小北文明": {
+   "revid": 86412648,
+   "license": "CC BY-SA 4.0"
+  },
+  "多尔塞特文化": {
+   "revid": 93588001,
+   "license": "CC BY-SA 4.0"
+  },
+  "密西西比文化": {
+   "revid": 94847115,
+   "license": "CC BY-SA 4.0"
+  },
+  "霍普韦尔文化": {
+   "revid": 94303164,
+   "license": "CC BY-SA 4.0"
+  },
+  "霍霍坎文化": {
+   "revid": 94387238,
+   "license": "CC BY-SA 4.0"
+  },
+  "查文文化": {
+   "revid": 94738078,
+   "license": "CC BY-SA 4.0"
+  },
+  "帕拉卡斯文化": {
+   "revid": 94984538,
+   "license": "CC BY-SA 4.0"
+  },
+  "納斯卡文明": {
+   "revid": 93763842,
+   "license": "CC BY-SA 4.0"
+  },
+  "莫切文化": {
+   "revid": 94784038,
+   "license": "CC BY-SA 4.0"
+  },
+  "瓦里文明": {
+   "revid": 95012747,
+   "license": "CC BY-SA 4.0"
+  },
+  "蒂亞瓦納科文化": {
+   "revid": 94694290,
+   "license": "CC BY-SA 4.0"
+  },
+  "新克罗文化": {
+   "revid": 92775030,
+   "license": "CC BY-SA 4.0"
+  },
+  "大津巴布韦": {
+   "revid": 94852382,
+   "license": "CC BY-SA 4.0"
+  },
+  "马蓬古布韦": {
+   "revid": 94894487,
+   "license": "CC BY-SA 4.0"
+  },
+  "拉皮塔文化": {
+   "revid": 95085185,
+   "license": "CC BY-SA 4.0"
+  },
+  "仰韶文化": {
+   "revid": 94932933,
+   "license": "CC BY-SA 4.0"
+  },
+  "大汶口文化": {
+   "revid": 94909937,
+   "license": "CC BY-SA 4.0"
+  },
+  "红山文化": {
+   "revid": 94714765,
+   "license": "CC BY-SA 4.0"
+  },
+  "良渚文化": {
+   "revid": 94862501,
+   "license": "CC BY-SA 4.0"
+  },
+  "龙山文化": {
+   "revid": 94260392,
+   "license": "CC BY-SA 4.0"
+  },
+  "二里頭文化": {
+   "revid": 95177775,
+   "license": "CC BY-SA 4.0"
+  },
+  "三星堆遗址": {
+   "revid": 95257526,
+   "license": "CC BY-SA 4.0"
+  },
+  "彌生時代": {
+   "revid": 95163923,
+   "license": "CC BY-SA 4.0"
+  },
+  "栉文土器时代": {
+   "revid": 90280217,
+   "license": "CC BY-SA 4.0"
+  },
+  "印度河流域文明": {
+   "revid": 94933549,
+   "license": "CC BY-SA 4.0"
+  },
+  "和平文化": {
+   "revid": 94848162,
+   "license": "CC BY-SA 4.0"
+  },
+  "東山文化 (越南)": {
+   "revid": 87801686,
+   "license": "CC BY-SA 4.0"
+  },
+  "沙黄文化": {
+   "revid": 95044287,
+   "license": "CC BY-SA 4.0"
+  },
+  "烏魯克時期": {
+   "revid": 94856206,
+   "license": "CC BY-SA 4.0"
+  },
+  "克克塔尼文化": {
+   "revid": 95029684,
+   "license": "CC BY-SA 4.0"
+  },
+  "绳纹器文化": {
+   "revid": 89997464,
+   "license": "CC BY-SA 4.0"
+  },
+  "钟形杯文化": {
+   "revid": 94284712,
+   "license": "CC BY-SA 4.0"
+  },
+  "米诺斯文明": {
+   "revid": 94419229,
+   "license": "CC BY-SA 4.0"
+  },
+  "哈尔施塔特文化": {
+   "revid": 94283178,
+   "license": "CC BY-SA 4.0"
+  },
+  "拉坦诺文化": {
+   "revid": 90401004,
+   "license": "CC BY-SA 4.0"
+  }
+ }
 }

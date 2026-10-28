@@ -15,7 +15,9 @@ import { Earth } from "./Earth";
 import { GlobeControls } from "./GlobeControls";
 import { MapBorders } from "./MapBorders";
 import { MapLabels } from "./MapLabels";
-import { useAdminLines, useMapCountries, useMapLabels } from "./useMapData";
+import { messages } from "@/messages/zh-Hant";
+import { culturesAtYear } from "@/lib/map/labels";
+import { useAdminLines, useCultures, useMapCountries, useMapLabels } from "./useMapData";
 import { SelectionMarker } from "./SelectionMarker";
 
 const FOV = 45;
@@ -46,6 +48,18 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
   const mapCountries = useMapCountries(baseMap === "map" || showLabels);
   const labels = useMapLabels(showLabels);
   const adminLines = useAdminLines(showLabels);
+  const showCultures = useAppStore((s) => s.layers.cultures);
+  const year = useAppStore((s) => s.year);
+  const selectCulture = useAppStore((s) => s.selectCulture);
+  const cultureData = useCultures(showCultures);
+  const visibleCultures = useMemo(
+    () => (showCultures && cultureData ? culturesAtYear(cultureData.cultures, year) : []),
+    [showCultures, cultureData, year],
+  );
+  // 拖曳時間軸時年份每格都變，但文化名單通常不變；名單相同就沿用舊陣列，避免重排所有標籤
+  const cultureKey = visibleCultures.map((c) => c.id).join("|");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const cultures = useMemo(() => visibleCultures, [cultureKey]);
   const labelRoot = useRef<HTMLDivElement>(null);
   const quality = useMemo<"2k" | "4k">(
     () =>
@@ -93,14 +107,23 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
         {(showLabels || baseMap === "map") && (
           <MapBorders countries={mapCountries} adminLines={showLabels ? adminLines : null} tone={tone} />
         )}
-        {showLabels && labels && <MapLabels data={labels} container={labelRoot} tone={tone} />}
+        {((showLabels && labels) || cultures.length > 0) && (
+          <MapLabels
+            data={showLabels ? labels : null}
+            cultures={cultures}
+            onSelectCulture={selectCulture}
+            container={labelRoot}
+            tone={tone}
+          />
+        )}
         {showEvents && <EventMarkers events={events} />}
         <SelectionMarker />
         <GlobeControls />
       </Canvas>
       <div
         ref={labelRoot}
-        aria-hidden
+        role="group"
+        aria-label={messages.cultures.labelsGroup}
         className="pointer-events-none absolute inset-0 overflow-hidden"
         data-testid="map-labels"
       />

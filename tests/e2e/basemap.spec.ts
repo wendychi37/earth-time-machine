@@ -22,5 +22,5 @@ test("地圖模式顯示繁體中文國名，可切換到地形（衛星）模�
 
   // 關掉「國名與行政區」後標籤消失
   await page.getByLabel("國名與行政區（現代）").uncheck();
-  await expect(labels).toHaveCount(0);
+  await expect(labels.and(page.locator(":not([data-kind=\"culture\"])"))).toHaveCount(0);
 });
