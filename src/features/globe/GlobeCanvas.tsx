@@ -6,6 +6,7 @@ import { Suspense, useMemo } from "react";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
+import { EraLabels } from "@/features/eras/EraLabels";
 import { EventMarkers } from "@/features/events/EventMarkers";
 import type { BoundaryFeature } from "@/types/boundary";
 import type { HistoricalEvent } from "@/types/event";
@@ -40,6 +41,7 @@ interface GlobeCanvasProps {
 export default function GlobeCanvas({ modernCountries, boundaries, events, onContextLost, onCreated }: GlobeCanvasProps) {
   const showModern = useAppStore((s) => s.layers.modernBorders);
   const showEvents = useAppStore((s) => s.layers.events);
+  const showEras = useAppStore((s) => s.layers.eras);
   const quality = useMemo<"2k" | "4k">(
     () => (Math.max(window.screen.width, window.screen.height) * window.devicePixelRatio >= 2400 && window.innerWidth >= 1024 ? "4k" : "2k"),
     [],
@@ -74,9 +76,10 @@ export default function GlobeCanvas({ modernCountries, boundaries, events, onCon
         <Earth quality={quality} />
         <Atmosphere />
       </Suspense>
-      {boundaries && <BoundaryLayer features={boundaries} />}
+      {boundaries && <BoundaryLayer features={boundaries} colorByRegion={showEras} />}
       {showModern && modernCountries && <ModernBorders countries={modernCountries} />}
       {showEvents && <EventMarkers events={events} />}
+      {showEras && <EraLabels />}
       <SelectionMarker />
       <GlobeControls />
     </Canvas>
