@@ -62,7 +62,7 @@ describe("示範事件資料", () => {
 
 describe("eventsNearYear", () => {
   it("只回傳選取年份 ± 50 年內的事件", () => {
-    const titles = eventsNearYear(demo.events, 1453).map((e) => e.title);
+    const titles = eventsNearYear(demo.events, 1453, 50).map((e) => e.title);
     expect(titles).toContain("君士坦丁堡陷落");
     expect(titles).toContain("鄭和第一次下西洋"); // 1405–1407，距 1453 年 46 年
     expect(titles).not.toContain("薩拉熱窩事件"); // 1914

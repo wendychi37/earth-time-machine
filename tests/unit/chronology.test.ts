@@ -1,16 +1,21 @@
 import { readFileSync } from "node:fs";
+import { feature } from "topojson-client";
+import type { GeometryCollection, Topology } from "topojson-specification";
 import { describe, expect, it } from "vitest";
+import { countryOptions } from "@/features/chronology/CountryPicker";
 import { groupByContinent } from "@/features/chronology/SameEraPanel";
-import { spreadMarkers } from "@/lib/events/spread";
+import { CLUSTER_DEGREES, clusterMarkers, markerScale } from "@/lib/events/cluster";
 import { buildChronology, locateItem, tidy, titleOf, type RawChronology } from "@/lib/chronology/build";
+import { packChronology, unpackChronology, type CompactChronology } from "@/lib/chronology/compact";
 import { continentAt } from "@/lib/chronology/continent";
-import { eventsNearYear, eventWindowYears } from "@/lib/events/visible";
-import type { HistoricalEvent } from "@/types/event";
+import { makeCountryLocator } from "@/lib/chronology/country";
+import { capPerCountry, eventsNearYear, eventWindowYears, filterByCountry } from "@/lib/events/visible";
+import type { ModernCountry, ModernCountryProps } from "@/types/geo";
 
-const data = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as {
-  license: string;
-  events: HistoricalEvent[];
-};
+const worldFile = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as CompactChronology;
+const countryFile = JSON.parse(readFileSync("public/data/chronology/country-chronologies.json", "utf8")) as CompactChronology;
+const data = { license: worldFile.license, events: unpackChronology(worldFile) };
+const countryEvents = unpackChronology(countryFile);
 
 describe("continentAt", () => {
   it.each([
@@ -113,6 +118,15 @@ describe("buildChronology", () => {
     expect(events[2]).toMatchObject({ locationLabel: "義大利", locationPrecision: "approximate" });
   });
 
+  it("各國年表不用人物出生地當事件地點，改用該國的代表位置", () => {
+    const page = { ...raw.pages[0], title: "某國年表", items: [raw.pages[0].items[1]] };
+    const { events: own } = buildChronology(
+      { ...raw, pages: [page] },
+      { pageCountry: () => ({ country: { iso: "TWN", nameZh: "台灣" }, fallback: { lat: 25.03, lon: 121.56, label: "台灣（以台北示意）" } }) },
+    );
+    expect(own[0]).toMatchObject({ locationLabel: "台灣（以台北示意）", location: { lat: 25.03, lon: 121.56 } });
+  });
+
   it("所在地點是大區域時只算區域示意；沒有座標的朝代用首都代表", () => {
     expect(events[4]).toMatchObject({ locationLabel: "秦朝（首都咸陽）", locationPrecision: "region", location: { lat: 34.33, lon: 108.71 } });
   });
@@ -139,6 +153,7 @@ describe("buildChronology", () => {
 
   it("標題取第一個分句", () => {
     expect(titleOf("唐朝連新羅滅百濟。")).toBe("唐朝連新羅滅百濟");
+    expect(titleOf("穆罕默德二世（征服者穆罕默德，1432年－1481年）即位，攻城")).toBe("穆罕默德二世（征服者穆罕默德，1432年－1481年）即位");
   });
 });
 
@@ -169,11 +184,12 @@ describe("產生的世界史年表資料", () => {
 
 describe("eventWindowYears", () => {
   it("越古老視窗越寬", () => {
-    expect(eventWindowYears(1950)).toBe(10);
-    expect(eventWindowYears(1600)).toBe(25);
-    expect(eventWindowYears(1000)).toBe(50);
-    expect(eventWindowYears(-500)).toBe(100);
-    expect(eventWindowYears(-2500)).toBe(250);
+    expect(eventWindowYears(1950)).toBe(5);
+    expect(eventWindowYears(1600)).toBe(10);
+    expect(eventWindowYears(1000)).toBe(20);
+    expect(eventWindowYears(500)).toBe(25);
+    expect(eventWindowYears(-500)).toBe(50);
+    expect(eventWindowYears(-2500)).toBe(150);
   });
 });
 
@@ -186,12 +202,83 @@ describe("groupByContinent", () => {
   });
 });
 
-describe("spreadMarkers", () => {
-  it("同一位置的標記會分開，沒有地點的不顯示", () => {
-    const base = data.events.find((e) => e.location)!;
-    const events = [base, { ...base, id: "b" }, { ...base, id: "c", location: null }];
-    const markers = spreadMarkers(events);
-    expect(markers).toHaveLength(2);
-    expect(markers[0].lat !== markers[1].lat || markers[0].lon !== markers[1].lon).toBe(true);
+describe("clusterMarkers", () => {
+  const base = data.events.find((e) => e.location)!;
+  const at = (id: string, lat: number, lon: number) => ({ ...base, id, location: { lat, lon } });
+
+  it("靠得太近的標記合併成一群，遠的分開；沒有地點的不顯示", () => {
+    const events = [at("a", 23, 120), at("b", 23.5, 120.5), at("c", 35, 139), { ...base, id: "d", location: null }];
+    const clusters = clusterMarkers(events, CLUSTER_DEGREES);
+    expect(clusters.map((c) => c.events.map((e) => e.id))).toEqual([["a", "b"], ["c"]]);
+  });
+
+  it("拉近地球後門檻變小，原本合併的標記會分開", () => {
+    const events = [at("a", 23, 120), at("b", 23.5, 120.5)];
+    expect(clusterMarkers(events, CLUSTER_DEGREES * markerScale(1.25))).toHaveLength(2);
+  });
+});
+
+describe("依國家篩選", () => {
+  const topo = JSON.parse(readFileSync("public/data/modern/ne_110m_admin0.topojson", "utf8")) as Topology<{
+    countries: GeometryCollection<ModernCountryProps>;
+  }>;
+  const countryAt = makeCountryLocator(feature(topo, topo.objects.countries).features as ModernCountry[]);
+
+  it("依位置找出今日國家，海岸附近也找得到", () => {
+    expect(countryAt(48.86, 2.35)?.nameZh).toBe("法國");
+    expect(countryAt(35.68, 139.69)?.iso).toBe("JPN");
+    expect(countryAt(41.01, 28.98)?.iso).toBe("TUR"); // 伊斯坦堡
+    expect(countryAt(37.57, 126.98)?.iso).toBe("KOR");
+    expect(countryAt(0, -30)).toBeNull(); // 大西洋中間
+  });
+
+  it("產生的年表每個有位置的事件幾乎都有國家", () => {
+    const located = data.events.filter((e) => e.location);
+    expect(located.filter((e) => e.country).length / located.length).toBeGreaterThan(0.95);
+  });
+
+  it("勾選國家後只顯示那些國家的事件；null 為全部", () => {
+    const near = eventsNearYear(data.events, 1600);
+    expect(filterByCountry(near, null)).toBe(near);
+    const jp = filterByCountry(near, ["JPN"]);
+    expect(jp.length).toBeGreaterThan(0);
+    expect(jp.every((e) => e.country?.iso === "JPN")).toBe(true);
+    expect(filterByCountry(near, [])).toEqual([]);
+  });
+
+  it("國家清單依大洲分組、事件多的在前", () => {
+    const options = countryOptions(data.events);
+    expect(options[0].continent).toBe("asia");
+    expect(options.find((o) => o.iso === "FRA")?.continent).toBe("europe");
+    const asia = options.filter((o) => o.continent === "asia");
+    expect(asia[0].count).toBeGreaterThanOrEqual(asia[1].count);
+  });
+});
+
+describe("各國歷史年表", () => {
+  it("每份年表都有事件，事件都歸屬該國並有地點", () => {
+    expect(countryEvents.length).toBeGreaterThan(3000);
+    for (const e of countryEvents) {
+      expect(e.country).not.toBeNull();
+      expect(e.location).not.toBeNull();
+      expect(e.sources[0].url).toMatch(/oldid=\d+/);
+    }
+    const isos = new Set(countryEvents.map((e) => e.country!.iso));
+    for (const iso of ["CHN", "TWN", "JPN", "KOR", "GBR", "DEU", "FRA", "TUR", "ITA", "NGA", "MYS"]) expect(isos).toContain(iso);
+  });
+
+  it("精簡格式可以還原成原本的事件", () => {
+    const { events } = buildChronology(raw);
+    const packed = packChronology({ notice: "", license: "CC BY-SA 4.0", fetchedAt: "" }, events);
+    expect(unpackChronology(JSON.parse(JSON.stringify(packed)))).toEqual(events);
+  });
+
+  it("每國最多顯示 8 件，記載特別多的年表不會蓋過其他地方", () => {
+    const all = [...data.events, ...countryEvents];
+    const shown = capPerCountry(eventsNearYear(all, 0), 0);
+    const perCountry = new Map<string, number>();
+    for (const e of shown) perCountry.set(e.country?.iso ?? "", (perCountry.get(e.country?.iso ?? "") ?? 0) + 1);
+    expect(Math.max(...perCountry.values())).toBeLessThanOrEqual(8);
+    expect(perCountry.get("ITA")).toBe(8);
   });
 });

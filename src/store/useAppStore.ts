@@ -32,6 +32,9 @@ interface AppState {
   selectCulture: (id: string | null) => void;
   toggleLayer: (layer: keyof LayerVisibility) => void;
   setBaseMap: (baseMap: BaseMap) => void;
+  /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
+  countryFilter: string[] | null;
+  setCountryFilter: (isos: string[] | null) => void;
 }
 
 const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MIN_YEAR, Math.round(year)));
@@ -49,4 +52,6 @@ export const useAppStore = create<AppState>((set) => ({
   selectCulture: (selectedCultureId) => set({ selectedCultureId, selection: null, selectedEventId: null }),
   toggleLayer: (layer) => set((s) => ({ layers: { ...s.layers, [layer]: !s.layers[layer] } })),
   setBaseMap: (baseMap) => set({ baseMap }),
+  countryFilter: null,
+  setCountryFilter: (countryFilter) => set({ countryFilter }),
 }));
