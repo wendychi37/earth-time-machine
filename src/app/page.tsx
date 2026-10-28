@@ -3,6 +3,7 @@ import { BoundaryGapBanner } from "@/features/boundaries/BoundaryStatus";
 import { BaseMapToggle } from "@/features/globe/BaseMapToggle";
 import { GlobeView } from "@/features/globe/GlobeView";
 import { LayerToggles } from "@/features/globe/LayerToggles";
+import { SameEraPanel } from "@/features/chronology/SameEraPanel";
 import { EventList } from "@/features/events/EventList";
 import { SelectedEventCard } from "@/features/events/SelectedEventCard";
 import { SelectionPanel } from "@/features/globe/SelectionPanel";
@@ -32,8 +33,12 @@ export default function Home() {
           <SelectionPanel />
           <SelectedEventCard />
         </div>
-        {/* 像 Google 地圖左下角的「地圖／地形」切換 */}
-        <div className="pointer-events-auto self-start" data-label-avoid>
+        {/* 手機：在時間軸上方；桌面：固定在左側 */}
+        <div className="flex flex-col sm:fixed sm:bottom-56 sm:left-6 sm:top-28 sm:w-80 lg:w-96" data-label-avoid>
+          <SameEraPanel />
+        </div>
+        {/* 像 Google 地圖的「地圖／地形」切換：手機在左下，桌面在右下（左側是「同一時期的世界」） */}
+        <div className="pointer-events-auto self-start sm:self-end" data-label-avoid>
           <BaseMapToggle />
         </div>
         <div className="pointer-events-auto mx-auto w-full max-w-5xl" data-label-avoid>

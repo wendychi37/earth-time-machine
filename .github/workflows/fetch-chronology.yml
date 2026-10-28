@@ -1,0 +1,24 @@
+# 重新下載維基百科〈世界史年表〉與 Wikidata 座標，並更新 data/chronology/raw.json 與網站用的年表檔。
+# 在 GitHub 的 Actions 頁面選擇此 workflow，按「Run workflow」並選擇要更新的分支。
+name: fetch-chronology
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: node scripts/fetch-world-chronology.mjs
+      - run: npm run data:chronology
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/chronology/raw.json public/data/chronology/world-chronology.json
+          git commit -m "更新世界史年表資料（自動下載）" || echo "沒有變更"
+          git push

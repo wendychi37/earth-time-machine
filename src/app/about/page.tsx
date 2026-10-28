@@ -7,6 +7,21 @@ export const metadata: Metadata = { title: `資料來源與限制｜${messages.a
 
 const SOURCES = [
   {
+    name: "維基百科〈世界史年表〉",
+    url: "https://zh.wikipedia.org/zh-tw/%E4%B8%96%E7%95%8C%E5%8F%B2%E5%B9%B4%E8%A1%A8",
+    use: "「同一時期的世界」與地球上的歷史大事（約 730 條，原文照錄）",
+    license: "CC BY-SA 4.0（衍生的年表資料同樣以 CC BY-SA 4.0 釋出）",
+    limits:
+      "維基百科由志願者編寫，年表偏重中國與歐洲。地點由原文連結條目在 Wikidata 的座標推算，以國家為準的事件只標在該國的代表位置；大洲依標記位置判斷，邊界附近可能分錯。",
+  },
+  {
+    name: "Wikidata",
+    url: "https://www.wikidata.org/",
+    use: "年表事件的地點座標",
+    license: "CC0（公有領域）",
+    limits: "只用來推算位置，不提供事件內容。",
+  },
+  {
     name: "historical-basemaps",
     url: "https://github.com/aourednik/historical-basemaps",
     use: "歷史疆域（西元前 3000 年至 2010 年的 49 個年份快照）",

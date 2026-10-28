@@ -48,7 +48,8 @@ export const staticRepository: Repository = {
   },
 
   getEvents() {
-    const path = "/data/events/demo-events.json";
+    // 世界史年表（取自維基百科，見 scripts/build-world-chronology.mts）；示範事件只保留給 Supabase seed 與測試
+    const path = "/data/chronology/world-chronology.json";
     return cached(path, async () => (await fetchJson<{ events: HistoricalEvent[] }>(path)).events);
   },
 };

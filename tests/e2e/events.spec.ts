@@ -1,6 +1,12 @@
+import { readFileSync } from "node:fs";
 import { expect, test, type Page } from "@playwright/test";
 import { PerspectiveCamera } from "three";
+import { eventsNearYear } from "../../src/lib/events/visible";
+import { spreadMarkers } from "../../src/lib/events/spread";
 import { latLonToVector3 } from "../../src/lib/geo/sphere";
+import type { HistoricalEvent } from "../../src/types/event";
+
+const { events } = JSON.parse(readFileSync("public/data/chronology/world-chronology.json", "utf8")) as { events: HistoricalEvent[] };
 
 async function goToYear(page: Page, text: string) {
   await page.getByTestId("year-input").fill(text);
@@ -20,26 +26,34 @@ function projectInitialView(lat: number, lon: number, width: number, height: num
   return { x: ((p.x + 1) / 2) * width, y: ((1 - p.y) / 2) * height };
 }
 
-test("點擊地球上的事件標記，開啟事件卡片", async ({ page }, info) => {
+test("點擊地球上的年表大事，開啟事件卡片與出處", async ({ page }, info) => {
+  const year = 1600;
+  // 選一個離初始視角中心（東亞）最近、且附近沒有其他標記的事件
+  const markers = spreadMarkers(eventsNearYear(events, year));
+  const distance = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => Math.hypot(a.lat - b.lat, a.lon - b.lon);
+  const target = markers
+    .filter((m) => markers.every((o) => o === m || distance(o, m) > 4))
+    .sort((a, b) => distance(a, { lat: 22, lon: 112 }) - distance(b, { lat: 22, lon: 112 }))[0];
+  expect(target).toBeTruthy();
+
   await page.goto("/");
   await expect(page.getByTestId("globe-canvas").locator("canvas")).toBeVisible({ timeout: 30_000 });
-  await goToYear(page, "前221");
+  await goToYear(page, String(year));
   await expect(page.getByTestId("boundary-legend")).toContainText("的快照", { timeout: 30_000 });
   await page.waitForTimeout(2500);
 
   const viewport = page.viewportSize()!;
-  const { x, y } = projectInitialView(34.33, 108.71, viewport.width, viewport.height);
+  const { x, y } = projectInitialView(target.lat, target.lon, viewport.width, viewport.height);
   if (info.project.name === "mobile") await page.touchscreen.tap(x, y);
   else await page.mouse.click(x, y);
 
   const card = page.getByTestId("event-card");
   await expect(card).toBeVisible();
-  await expect(page.getByTestId("event-title")).toHaveText("秦統一六國");
-  await expect(card).toContainText("示範資料");
-  await expect(page.getByTestId("event-date")).toHaveText("西元前 221 年");
-  await expect(card).toContainText("原始紀年：秦王政二十六年");
-  await expect(card).toContainText("咸陽");
-  await expect(page.getByTestId("wiki-zh")).toHaveAttribute("href", /zh\.wikipedia\.org/);
+  await expect(page.getByTestId("event-title")).toHaveText(target.event.title);
+  await expect(card).toContainText(target.event.summary);
+  await expect(card).toContainText("世界史年表");
+  await expect(card.getByRole("link", { name: /世界史年表/ })).toHaveAttribute("href", /zh\.wikipedia\.org.+oldid=\d+/);
+  await expect(card).not.toContainText("示範資料");
   await page.screenshot({ path: `test-results/events-${info.project.name}-card.png` });
 
   await card.getByRole("button", { name: "關閉" }).click();
@@ -49,16 +63,18 @@ test("點擊地球上的事件標記，開啟事件卡片", async ({ page }, inf
 test("鍵盤使用者可從事件清單開啟卡片", async ({ page }) => {
   await page.goto("/");
   await goToYear(page, "1453");
-  const item = page.getByRole("button", { name: /君士坦丁堡陷落/ });
+  const item = page.getByRole("navigation", { name: "此時期的事件" }).getByRole("button", { name: /君士坦丁堡/ });
   await item.focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByTestId("event-date")).toHaveText("西元 1453 年 5 月 29 日（儒略曆）");
+  await expect(page.getByTestId("event-date")).toHaveText("西元 1453 年");
+  await expect(page.getByTestId("event-card")).toContainText("原始紀年：1453年");
 });
 
 test("關閉事件標記圖層後不顯示清單", async ({ page }) => {
   await page.goto("/");
   await goToYear(page, "1453");
-  await expect(page.getByRole("button", { name: /君士坦丁堡陷落/ })).toHaveCount(1);
+  const list = page.getByRole("navigation", { name: "此時期的事件" });
+  await expect(list.getByRole("button", { name: /君士坦丁堡/ })).toHaveCount(1);
   await page.getByLabel("事件標記").uncheck();
-  await expect(page.getByRole("button", { name: /君士坦丁堡陷落/ })).toHaveCount(0);
+  await expect(list.getByRole("button", { name: /君士坦丁堡/ })).toHaveCount(0);
 });
