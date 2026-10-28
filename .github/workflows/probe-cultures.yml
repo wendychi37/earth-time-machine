@@ -1,0 +1,15 @@
+# 暫時的探查 workflow（之後會刪除）
+name: probe-cultures
+on:
+  push:
+    branches: [claude/project-thread-xv8kxk]
+    paths: [scripts/probe/**, .github/workflows/probe-cultures.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/probe/cultures.mjs
