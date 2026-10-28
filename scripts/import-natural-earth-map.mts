@@ -11,6 +11,7 @@ import { quantize } from "topojson-client";
 import { presimplify, quantile, simplify } from "topojson-simplify";
 import type { Feature, FeatureCollection, Geometry, Position } from "geojson";
 import type { Objects, Topology } from "topojson-specification";
+import { TAIWAN_NAMES } from "./taiwan-names";
 
 // 固定 commit，與 import-natural-earth.mts 相同，確保每次匯入結果一致
 const COMMIT = "ca96624a56bd078437bca8184e78163e5039ad19";
@@ -37,6 +38,8 @@ const SHORT_NAMES: Record<string, string> = {
   SGS: "南喬治亞",
   ATF: "法屬南部領地",
   HMD: "赫德島",
+  // 中國大陸譯名改用臺灣譯名
+  ...TAIWAN_NAMES,
 };
 
 /** 不顯示名稱的小區域（無人居住或爭議冰川） */

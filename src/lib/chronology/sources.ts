@@ -8,6 +8,10 @@ export interface CountryChronologySource {
   lang?: "en";
   iso: string;
   fallback: { lat: number; lon: number; label: string };
+  /** 這段年份（含頭尾）已由中文年表收錄，不重複收錄 */
+  skipYears?: [number, number];
+  /** 地圖資料沒有的小國（例如新加坡）用的國名 */
+  nameZh?: string;
 }
 
 export const COUNTRY_CHRONOLOGIES: CountryChronologySource[] = [
@@ -31,7 +35,7 @@ export const COUNTRY_CHRONOLOGIES: CountryChronologySource[] = [
 ];
 
 /**
- * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前美國、印度、俄羅斯與澳洲都是英文版最完整）。
+ * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前都是英文版最完整）。
  * 內容翻成台灣繁體中文（data/chronology/translations/en.json），並標明譯自英文維基百科。
  */
 const US = { iso: "USA", lang: "en", fallback: { lat: 38.9, lon: -77.04, label: "美國（以華盛頓示意）" } } as const;
@@ -39,6 +43,23 @@ export const FOREIGN_CHRONOLOGIES: CountryChronologySource[] = [
   { page: "Timeline of Russian history", iso: "RUS", lang: "en", fallback: { lat: 55.75, lon: 37.62, label: "俄羅斯（以莫斯科示意）" } },
   { page: "Timeline of Indian history", iso: "IND", lang: "en", fallback: { lat: 28.61, lon: 77.21, label: "印度（以新德里示意）" } },
   { page: "Timeline of Australian history", iso: "AUS", lang: "en", fallback: { lat: -35.28, lon: 149.13, label: "澳洲（以坎培拉示意）" } },
+  // 東南亞（越南 1945–2002 年已有中文〈越南現代史年表〉，不重複收錄）
+  { page: "Timeline of Vietnamese history", iso: "VNM", lang: "en", skipYears: [1945, 2002], fallback: { lat: 21.03, lon: 105.85, label: "越南（以河內示意）" } },
+  { page: "Timeline of Thai history", iso: "THA", lang: "en", fallback: { lat: 13.75, lon: 100.5, label: "泰國（以曼谷示意）" } },
+  { page: "Timeline of Burmese history", iso: "MMR", lang: "en", fallback: { lat: 16.8, lon: 96.15, label: "緬甸（以仰光示意）" } },
+  { page: "Timeline of Indonesian history", iso: "IDN", lang: "en", fallback: { lat: -6.2, lon: 106.85, label: "印尼（以雅加達示意）" } },
+  { page: "Timeline of Philippine history", iso: "PHL", lang: "en", fallback: { lat: 14.6, lon: 120.98, label: "菲律賓（以馬尼拉示意）" } },
+  { page: "Timeline of Singaporean history", iso: "SGP", nameZh: "新加坡", lang: "en", fallback: { lat: 1.29, lon: 103.85, label: "新加坡" } },
+  { page: "Timeline of East Timorese history", iso: "TLS", lang: "en", fallback: { lat: -8.56, lon: 125.58, label: "東帝汶（以帝力示意）" } },
+  // 非洲
+  { page: "Timeline of South African history", iso: "ZAF", lang: "en", fallback: { lat: -33.92, lon: 18.42, label: "南非（以開普敦示意）" } },
+  { page: "Timeline of Botswana", iso: "BWA", lang: "en", fallback: { lat: -24.65, lon: 25.91, label: "波札那（以嘉柏隆里示意）" } },
+  { page: "Timeline of Kenya", iso: "KEN", lang: "en", fallback: { lat: -1.29, lon: 36.82, label: "肯亞（以奈洛比示意）" } },
+  { page: "Timeline of Tanzanian history", iso: "TZA", lang: "en", fallback: { lat: -6.8, lon: 39.28, label: "坦尚尼亞（以三蘭港示意）" } },
+  { page: "Timeline of Rwandan history", iso: "RWA", lang: "en", fallback: { lat: -1.95, lon: 30.06, label: "盧安達（以吉佳利示意）" } },
+  { page: "Timeline of Burundian history", iso: "BDI", lang: "en", fallback: { lat: -3.38, lon: 29.36, label: "蒲隆地（以布松布拉示意）" } },
+  { page: "Timeline of Sudanese history", iso: "SDN", lang: "en", fallback: { lat: 15.5, lon: 32.56, label: "蘇丹（以喀土穆示意）" } },
+  { page: "Timeline of Ghanaian history", iso: "GHA", lang: "en", fallback: { lat: 5.6, lon: -0.19, label: "迦納（以阿克拉示意）" } },
   { page: "Timeline of pre–United States history", ...US },
   { page: "Timeline of the history of the United States (1790–1819)", ...US },
   { page: "Timeline of the history of the United States (1820–1859)", ...US },

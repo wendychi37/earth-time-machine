@@ -57,6 +57,8 @@ export function textAndLinks(html: string): { text: string; links: string[] } {
 function clean(html: string): string {
   return html
     .replace(/<sup[^>]*class="[^"]*reference[^"]*"[\s\S]*?<\/sup>/g, "")
+    // 「[citation needed]」等維護標記
+    .replace(/<sup[^>]*class="[^"]*Inline-Template[^"]*"[\s\S]*?<\/sup>/g, "")
     .replace(/<style[\s\S]*?<\/style>/g, "")
     .replace(/<link[^>]*>/g, "")
     .replace(/<span class="mw-editsection[\s\S]*?<\/span>\s*<\/span>/g, "")
@@ -117,7 +119,7 @@ interface Frame {
 }
 
 /** 清單項目：子清單沿用上層的日期（例如「1687年」底下列了幾件事） */
-function extractLists(html: string, section: () => string | null, out: ExtractedItem[], rules: DateRules) {
+function extractLists(html: string, section: () => string | null, out: ExtractedItem[], rules: DateRules, headingDate: string | null = null) {
   const stack: Frame[] = [];
   const re = /<li[^>]*>|<\/li>|<ul[^>]*>|<ol[^>]*>/g;
   let last = 0;
@@ -129,7 +131,7 @@ function extractLists(html: string, section: () => string | null, out: Extracted
       stack.push({ html: "", date: null });
     } else if (m[0] === "</li>") {
       const frame = stack.pop();
-      if (frame) emit(frame, stack, section(), out, rules);
+      if (frame) emit(frame, stack, section(), out, rules, headingDate);
     } else if (stack.length) {
       // 子清單開始：先決定上層的日期，供子項目使用
       const top = stack[stack.length - 1];
@@ -141,7 +143,7 @@ function extractLists(html: string, section: () => string | null, out: Extracted
   }
 }
 
-function emit(frame: Frame, parents: Frame[], section: string | null, out: ExtractedItem[], rules: DateRules) {
+function emit(frame: Frame, parents: Frame[], section: string | null, out: ExtractedItem[], rules: DateRules, headingDate: string | null) {
   const own = frame.html.split("\u0000SUBLIST\u0000")[0];
   const { text, links } = textAndLinks(own);
   if (!text) return;
@@ -153,13 +155,17 @@ function emit(frame: Frame, parents: Frame[], section: string | null, out: Extra
   }
   // 只有日期（底下另有子項目）就不輸出；沒有日期的子項目沿用上層日期
   if (rules.isDate(text)) return;
-  const inherited = [...parents].reverse().find((p) => p.date)?.date;
+  const inherited = [...parents].reverse().find((p) => p.date)?.date ?? headingDate;
   if (inherited) out.push({ section, text: `${inherited}：${text}`, links });
 }
 
 function extractTable(table: string, section: string | null, out: ExtractedItem[], rules: DateRules) {
   const rows = [...table.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((r) => r[1]);
   let columns = 0;
+  // 「Event」欄的位置（表格後面可能還有「Source」等欄）
+  let eventCol = -1;
+  // 年份欄標題寫「Year (BCE)」時，欄內年份都是西元前
+  let bceTable = false;
   let carried: { date: string; left: number } | null = null;
   for (const row of rows) {
     const cells = [...row.matchAll(/<t([dh])([^>]*)>([\s\S]*?)<\/t[dh]>/g)].map((c) => ({
@@ -170,6 +176,8 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
     if (cells.length === 0) continue;
     if (cells.every((c) => c.header)) {
       columns = cells.length;
+      eventCol = cells.findIndex((c) => /^(?:event|events|事件)/i.test(textAndLinks(c.html).text));
+      bceTable = rules === EN && /\(BCE?\)/.test(textAndLinks(cells[0].html).text);
       continue;
     }
     let date: string | null = null;
@@ -178,13 +186,14 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
       date = carried.date;
       carried.left--;
     } else {
-      const first = rules.cell(textAndLinks(cells[0].html).text);
+      const yearText = textAndLinks(cells[0].html).text;
+      const first = rules.cell(bceTable && !/BCE?\b/.test(yearText) ? `${yearText} BCE` : yearText);
       if (!first) continue;
       date = first;
       rest = cells.slice(1);
       carried = cells[0].rowspan > 1 ? { date, left: cells[0].rowspan - 1 } : null;
     }
-    const event = rest[rest.length - 1];
+    const event = eventCol > 0 ? cells[eventCol - (cells.length < columns ? columns - cells.length : 0)] : rest[rest.length - 1];
     if (!event) continue;
     // 英文年表的「Date」欄（例如「May」「8 September」）：只有年份的日期補上月日
     const md = rest.length >= 2 && rules === EN ? englishMonthDay(textAndLinks(rest[0].html).text) : null;
@@ -200,15 +209,20 @@ export function extractChronologyItems(rawHtml: string, lang: ChronologyLang = "
   const html = clean(rawHtml);
   const out: ExtractedItem[] = [];
   let section: string | null = null;
+  // 英文年表常以年份當小標題（例如〈Timeline of South African history〉的「1652」），底下的清單沒寫日期
+  let headingDate: string | null = null;
   // 依序處理標題、表格與表格之間的清單
   const re = /<h([234])[^>]*>([\s\S]*?)<\/h\1>|<table[^>]*class="[^"]*wikitable[^"]*"[^>]*>([\s\S]*?)<\/table>/g;
   let last = 0;
   for (const m of html.matchAll(re)) {
-    extractLists(html.slice(last, m.index), () => section, out, rules);
+    extractLists(html.slice(last, m.index), () => section, out, rules, headingDate);
     last = m.index! + m[0].length;
-    if (m[2] !== undefined) section = textAndLinks(m[2]).text || section;
+    if (m[2] !== undefined) {
+      section = textAndLinks(m[2]).text || section;
+      headingDate = lang === "en" && rules.isDate(section ?? "") ? rules.cell(section ?? "") : null;
+    }
     else extractTable(m[3], section, out, rules);
   }
-  extractLists(html.slice(last), () => section, out, rules);
+  extractLists(html.slice(last), () => section, out, rules, headingDate);
   return out;
 }

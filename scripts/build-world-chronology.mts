@@ -38,8 +38,8 @@ if (existsSync("data/chronology/countries-raw.json")) {
   const byIso = new Map(countries.map((c) => [c.properties.iso, { iso: c.properties.iso, nameZh: c.properties.nameZh }]));
   const pageCountry = (page: RawChronology["pages"][number]) => {
     const source = [...COUNTRY_CHRONOLOGIES, ...FOREIGN_CHRONOLOGIES].find((s) => s.page === page.sourcePage);
-    const country = source && byIso.get(source.iso);
-    return source && country ? { country, fallback: source.fallback } : null;
+    const country = source && (byIso.get(source.iso) ?? (source.nameZh ? { iso: source.iso, nameZh: source.nameZh } : undefined));
+    return source && country ? { country, fallback: source.fallback, skipYears: source.skipYears } : null;
   };
   const built = buildChronology(countriesRaw, {
     countryAt,
@@ -66,7 +66,7 @@ if (existsSync("data/chronology/countries-raw.json")) {
   const packed = packChronology(
     {
       notice:
-        "內容取自中文維基百科各國歷史年表（CC BY-SA 4.0），未經改寫；美國、印度、俄羅斯譯自英文維基百科（AI 翻譯，附原文）。地點由原文連結的 Wikidata 條目推算，找不到時以該國代表位置示意。",
+        "內容取自中文維基百科各國歷史年表（CC BY-SA 4.0），未經改寫；中文維基百科沒有年表的國家譯自英文維基百科（AI 翻譯，附原文）。地點由原文連結的 Wikidata 條目推算，找不到時以該國代表位置示意。",
       license: countriesRaw.license,
       fetchedAt: countriesRaw.fetchedAt,
     },

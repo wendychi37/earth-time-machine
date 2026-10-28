@@ -50,4 +50,17 @@ describe("英文年表日期轉換", () => {
       { section: "10th century", text: "約前11500年：Start of Clovis Culture.", links: [] },
     ]);
   });
+
+  it("表格最後的「Source」欄不當成事件，「Year (BCE)」欄的年份是西元前", () => {
+    const html = `<table class="wikitable"><tr><th>Year (BCE)</th><th>Date</th><th>Event</th><th>Source</th></tr>
+      <tr><th rowspan="2">c.1000</th><td></td><td>Mining began.</td><td>[1]</td></tr>
+      <tr><td></td><td>Jars were made.</td><td></td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["約前1000年：Mining began.", "約前1000年：Jars were made."]);
+  });
+
+  it("以年份當小標題時，底下沒寫日期的項目用小標題的年份", () => {
+    const html = `<h2>The Dutch Cape Colony</h2><h3>1652</h3><ul><li>Cape Town was founded.</li></ul>
+      <h3>Notes</h3><ul><li>Not an event.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["1652年：Cape Town was founded."]);
+  });
 });

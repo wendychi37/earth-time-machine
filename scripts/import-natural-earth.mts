@@ -5,6 +5,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { topology } from "topojson-server";
 import type { Feature, FeatureCollection, Geometry } from "geojson";
+import { TAIWAN_NAMES } from "./taiwan-names";
 
 // 固定 commit，確保每次匯入結果相同
 const COMMIT = "ca96624a56bd078437bca8184e78163e5039ad19";
@@ -23,7 +24,7 @@ const features: Feature<Geometry, { name: string; nameZh: string; iso: string }>
     geometry: f.geometry,
     properties: {
       name: String(f.properties.NAME_EN ?? f.properties.NAME),
-      nameZh: String(f.properties.NAME_ZHT ?? f.properties.NAME),
+      nameZh: TAIWAN_NAMES[String(f.properties.ADM0_A3)] ?? String(f.properties.NAME_ZHT ?? f.properties.NAME),
       iso: String(f.properties.ADM0_A3),
     },
   }));
