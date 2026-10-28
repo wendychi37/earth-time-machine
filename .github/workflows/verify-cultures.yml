@@ -1,0 +1,15 @@
+# 核對考古文化資料的年代原文確實出現在維基百科條目中（沙箱無法連線維基百科，改在 Actions 執行）
+name: verify-cultures
+on:
+  workflow_dispatch:
+  push:
+    paths: [data/archaeology/**, scripts/verify-cultures.mjs, .github/workflows/verify-cultures.yml]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/verify-cultures.mjs

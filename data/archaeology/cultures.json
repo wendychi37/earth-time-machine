@@ -1,0 +1,908 @@
+{
+ "note": "考古文化年代皆取自所列維基百科條目的原文（dateQuote），距今以西元1950年為基準換算；位置為代表遺址附近的約略位置。",
+ "cultures": [
+  {
+   "id": "tw-changbin",
+   "name": "長濱文化",
+   "start": -48050,
+   "end": -18050,
+   "dateQuote": [
+    "長濱文化（距今50,000年至20,000年"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "長濱文化",
+   "lat": 23.3972,
+   "lon": 121.4767,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-dabenkeng",
+   "name": "大坌坑文化",
+   "start": -5050,
+   "end": -2750,
+   "dateQuote": [
+    "大坌坑文化（距今7,000年至4,700年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "大坌坑文化",
+   "lat": 25.15,
+   "lon": 121.41,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-xuntangpu",
+   "name": "訊塘埔文化",
+   "start": -3550,
+   "end": -2550,
+   "dateQuote": [
+    "訊塘埔文化（距今5,500年至4,500年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": null,
+   "lat": 25.14,
+   "lon": 121.42,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-niumatou",
+   "name": "牛罵頭文化",
+   "start": -2550,
+   "end": -1450,
+   "dateQuote": [
+    "牛罵頭文化（距今4,500年至3,400年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "牛罵頭遺址",
+   "lat": 24.2682,
+   "lon": 120.58,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-east-corded",
+   "name": "東部繩紋紅陶文化",
+   "start": -2350,
+   "end": -1450,
+   "dateQuote": [
+    "東部繩紋紅陶文化（距今4,300年至3,400年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": null,
+   "lat": 23.985,
+   "lon": 121.615,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-niuchouzi",
+   "name": "牛稠子文化",
+   "start": -1850,
+   "end": -1350,
+   "dateQuote": [
+    "牛稠子文化（距今3,800年至3,300年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "牛稠子文化",
+   "lat": 22.965,
+   "lon": 120.25,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-zhiwuyuan",
+   "name": "植物園文化",
+   "start": -1550,
+   "end": -50,
+   "dateQuote": [
+    "植物園文化（距今3,500年至2,000年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "植物園遺址",
+   "lat": 25.032,
+   "lon": 121.509,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-zhishanyan",
+   "name": "芝山岩文化",
+   "start": -1650,
+   "end": -1050,
+   "dateQuote": [
+    "芝山岩文化（距今3,600年至3,000年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "芝山岩遺址",
+   "lat": 25.1028,
+   "lon": 121.5305,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-yingpu",
+   "name": "營埔文化",
+   "start": -1550,
+   "end": 450,
+   "dateQuote": [
+    "營埔文化（距今3,500年至1,500年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "營埔文化",
+   "lat": 24.15,
+   "lon": 120.55,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-beinan",
+   "name": "卑南文化",
+   "start": -3350,
+   "end": -350,
+   "dateQuote": [
+    "卑南文化（距今5,300年至2,300年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "卑南文化",
+   "lat": 22.7917,
+   "lon": 121.1197,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-qilin",
+   "name": "麒麟文化",
+   "start": -1550,
+   "end": -50,
+   "dateQuote": [
+    "麒麟文化（距今3,500年至2,000年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "麒麟文化",
+   "lat": 23.12,
+   "lon": 121.38,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-yuanshan",
+   "name": "圓山文化",
+   "start": -1250,
+   "end": -350,
+   "dateQuote": [
+    "圓山文化（距今3,200年至2,300年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "圓山遺址",
+   "lat": 25.0745,
+   "lon": 121.5213,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-shihsanhang",
+   "name": "十三行文化",
+   "start": 150,
+   "end": 1450,
+   "dateQuote": [
+    "十三行文化（距今1,800至500年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "十三行遺址",
+   "lat": 25.1562,
+   "lon": 121.4039,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-fanzaiyuan",
+   "name": "番仔園文化",
+   "start": -50,
+   "end": 1550,
+   "dateQuote": [
+    "番仔園文化（距今2,000年至400年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "番仔園文化",
+   "lat": 24.35,
+   "lon": 120.62,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-niaosung",
+   "name": "蔦松文化",
+   "start": 150,
+   "end": 1450,
+   "dateQuote": [
+    "蔦松文化（距今1,800年至500年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "蔦松文化",
+   "lat": 23.03,
+   "lon": 120.265,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-jingpu",
+   "name": "靜浦文化",
+   "start": -50,
+   "end": 1550,
+   "dateQuote": [
+    "靜浦文化（距今2,000年至400年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": null,
+   "lat": 23.46,
+   "lon": 121.5,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-kiwulan",
+   "name": "淇武蘭遺址",
+   "start": 650,
+   "end": 1850,
+   "dateQuote": [
+    "淇武蘭遺址（距今1,300年至100年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "淇武蘭遺址",
+   "lat": 24.83,
+   "lon": 121.79,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-damalin",
+   "name": "大馬璘文化",
+   "start": -850,
+   "end": -150,
+   "dateQuote": [
+    "大馬璘文化（距今約2,800年至2,100年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "大馬璘遺址",
+   "lat": 23.97,
+   "lon": 120.96,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-fengbitou",
+   "name": "鳳鼻頭遺址",
+   "start": -1350,
+   "end": 50,
+   "dateQuote": [
+    "鳳鼻頭遺址（距今約3,300年至1,900年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "鳳鼻頭遺址",
+   "lat": 22.5106,
+   "lon": 120.3673,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-huagangshan",
+   "name": "花岡山文化",
+   "start": -150,
+   "end": 350,
+   "dateQuote": [
+    "花岡山文化（距今2,100年至1,600年間"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "花岡山遺址",
+   "lat": 23.982,
+   "lon": 121.62,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-beiye",
+   "name": "北葉文化",
+   "start": -450,
+   "end": 1600,
+   "dateQuote": [
+    "北葉文化（距今約2,400年至350年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": null,
+   "lat": 22.7,
+   "lon": 120.65,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-guishan",
+   "name": "龜山文化",
+   "start": -450,
+   "end": 850,
+   "dateQuote": [
+    "龜山文化（距今約2,400年至1,100年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": null,
+   "lat": 22.04,
+   "lon": 120.75,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-lobusbussan",
+   "name": "雅美文化（Lobusbussan文化）",
+   "start": 1150,
+   "end": 1250,
+   "dateQuote": [
+    "雅美文化（距今約800年至700年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": "Lobusbussan文化",
+   "lat": 22.05,
+   "lon": 121.54,
+   "locationNote": "代表遺址附近（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "tw-penghu",
+   "name": "澎湖史前文化",
+   "start": -3050,
+   "end": -2050,
+   "dateQuote": [
+    "澎湖史前文化（距今約5,000年至4,000年間）"
+   ],
+   "sourcePage": "臺灣史前時期",
+   "article": null,
+   "lat": 23.57,
+   "lon": 119.58,
+   "locationNote": "澎湖群島（區域示意）",
+   "continent": "asia"
+  },
+  {
+   "id": "olmec",
+   "name": "奧爾梅克文明",
+   "start": -1199,
+   "end": -399,
+   "dateQuote": [
+    "約西元前1200年至西元前400年"
+   ],
+   "sourcePage": "奥尔梅克文明",
+   "article": "奥尔梅克文明",
+   "lat": 18.1,
+   "lon": -94.04,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "norte-chico",
+   "name": "小北文明（卡勞爾）",
+   "start": -2999,
+   "end": -1700,
+   "dateQuote": [
+    "從公元前30世紀一直延續到公元前18世紀"
+   ],
+   "sourcePage": "小北文明",
+   "article": "小北文明",
+   "lat": -10.89,
+   "lon": -77.52,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "dorset",
+   "name": "多爾塞特文化",
+   "start": -799,
+   "end": 1000,
+   "dateQuote": [
+    "大致從公元前800年起開始興盛，至公元1000年左右開始衰落"
+   ],
+   "sourcePage": "多尔塞特文化",
+   "article": "多尔塞特文化",
+   "lat": 64.23,
+   "lon": -76.53,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "mississippian",
+   "name": "密西西比文化",
+   "start": 901,
+   "end": 1600,
+   "dateQuote": [
+    "約位於公元10至16世紀"
+   ],
+   "sourcePage": "密西西比文化",
+   "article": "密西西比文化",
+   "lat": 38.6539,
+   "lon": -90.0644,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "hopewell",
+   "name": "霍普韋爾文化",
+   "start": -199,
+   "end": 400,
+   "dateQuote": [
+    "約西元前200—西元400年為其全盛時期"
+   ],
+   "sourcePage": "霍普韦尔文化",
+   "article": "霍普韦尔文化",
+   "lat": 39.38,
+   "lon": -83.0,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "hohokam",
+   "name": "霍霍坎文化",
+   "start": -299,
+   "end": 1400,
+   "dateQuote": [
+    "公元前300—公元1400年間"
+   ],
+   "sourcePage": "霍霍坎文化",
+   "article": "霍霍坎文化",
+   "lat": 33.2,
+   "lon": -111.9,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "chavin",
+   "name": "查文文化",
+   "start": -899,
+   "end": -199,
+   "dateQuote": [
+    "公元前900—公元前200年為興盛期"
+   ],
+   "sourcePage": "查文文化",
+   "article": "查文文化",
+   "lat": -9.5938,
+   "lon": -77.1774,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "paracas",
+   "name": "帕拉卡斯文化",
+   "start": -899,
+   "end": 400,
+   "dateQuote": [
+    "其年代約為公元前900—約公元400年"
+   ],
+   "sourcePage": "帕拉卡斯文化",
+   "article": "帕拉卡斯文化",
+   "lat": -13.83,
+   "lon": -76.25,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "nazca",
+   "name": "納斯卡文明",
+   "start": -99,
+   "end": 800,
+   "dateQuote": [
+    "公元前100年至公元800年間"
+   ],
+   "sourcePage": "納斯卡文明",
+   "article": "納斯卡文明",
+   "lat": -14.7167,
+   "lon": -75.1333,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "moche",
+   "name": "莫切文化",
+   "start": 100,
+   "end": 700,
+   "dateQuote": [
+    "這個文明大概在700年左右消亡",
+    "大約公元100年左右"
+   ],
+   "sourcePage": "莫切文化",
+   "article": "莫切文化",
+   "lat": -8.13,
+   "lon": -79.0,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "wari",
+   "name": "瓦里文明",
+   "start": 500,
+   "end": 1000,
+   "dateQuote": [
+    "公元500年到公元1000年之間"
+   ],
+   "sourcePage": "瓦里文明",
+   "article": "瓦里文明",
+   "lat": -13.06,
+   "lon": -74.2,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "tiwanaku",
+   "name": "蒂亞瓦納科文化",
+   "start": 600,
+   "end": 1000,
+   "dateQuote": [
+    "存在於600年—1000年"
+   ],
+   "sourcePage": "蒂亞瓦納科文化",
+   "article": "蒂亞瓦納科文化",
+   "lat": -16.5565,
+   "lon": -68.6739,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "chinchorro",
+   "name": "新克羅文化",
+   "start": -6999,
+   "end": -1499,
+   "dateQuote": [
+    "從公元前7000年到公元前1500年"
+   ],
+   "sourcePage": "新克罗文化",
+   "article": "新克罗文化",
+   "lat": -18.48,
+   "lon": -70.32,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "americas"
+  },
+  {
+   "id": "great-zimbabwe",
+   "name": "大辛巴威",
+   "start": 1101,
+   "end": 1500,
+   "dateQuote": [
+    "此地在12世紀至15世紀間"
+   ],
+   "sourcePage": "大津巴布韦",
+   "article": "大津巴布韦",
+   "lat": -20.2667,
+   "lon": 30.9333,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "africa"
+  },
+  {
+   "id": "mapungubwe",
+   "name": "馬蓬古布韋",
+   "start": 1075,
+   "end": 1220,
+   "dateQuote": [
+    "1075–1220"
+   ],
+   "sourcePage": "马蓬古布韦",
+   "article": "马蓬古布韦",
+   "lat": -22.1925,
+   "lon": 29.2389,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "africa"
+  },
+  {
+   "id": "lapita",
+   "name": "拉皮塔文化",
+   "start": -1599,
+   "end": -499,
+   "dateQuote": [
+    "從公元前1600年至公元前500年"
+   ],
+   "sourcePage": "拉皮塔文化",
+   "article": "拉皮塔文化",
+   "lat": -21.1028,
+   "lon": 164.7989,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "oceania"
+  },
+  {
+   "id": "yangshao",
+   "name": "仰韶文化",
+   "start": -4999,
+   "end": -2699,
+   "dateQuote": [
+    "仰韶文化（公元前5000年—前2700年）"
+   ],
+   "sourcePage": "仰韶文化",
+   "article": "仰韶文化",
+   "lat": 34.8,
+   "lon": 111.77,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "dawenkou",
+   "name": "大汶口文化",
+   "start": -4299,
+   "end": -2499,
+   "dateQuote": [
+    "大汶口文化（公元前4300年～公元前2500年）"
+   ],
+   "sourcePage": "大汶口文化",
+   "article": "大汶口文化",
+   "lat": 35.95,
+   "lon": 117.08,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "hongshan",
+   "name": "紅山文化",
+   "start": -4699,
+   "end": -2899,
+   "dateQuote": [
+    "年代為公元前4700—前2900年"
+   ],
+   "sourcePage": "红山文化",
+   "article": "红山文化",
+   "lat": 42.28,
+   "lon": 118.96,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "liangzhu",
+   "name": "良渚文化",
+   "start": -3350,
+   "end": -2050,
+   "dateQuote": [
+    "距今5300年至4000年期間"
+   ],
+   "sourcePage": "良渚文化",
+   "article": "良渚文化",
+   "lat": 30.3956,
+   "lon": 119.9908,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "longshan",
+   "name": "龍山文化",
+   "start": -2999,
+   "end": -1899,
+   "dateQuote": [
+    "龍山文化（公元前3000年—前1900年）"
+   ],
+   "sourcePage": "龙山文化",
+   "article": "龙山文化",
+   "lat": 36.73,
+   "lon": 117.4,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "erlitou",
+   "name": "二里頭文化",
+   "start": -1749,
+   "end": -1499,
+   "dateQuote": [
+    "2007年測後確定為公元前1750年至公元前1500年"
+   ],
+   "sourcePage": "二里頭文化",
+   "article": "二里頭文化",
+   "lat": 34.7018,
+   "lon": 112.6971,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "sanxingdui",
+   "name": "三星堆文化",
+   "start": -1999,
+   "end": -1399,
+   "dateQuote": [
+    "三星堆文化（古蜀，公元前2,000年至公元前1,400年"
+   ],
+   "sourcePage": "三星堆遗址",
+   "article": "三星堆遗址",
+   "lat": 30.9937,
+   "lon": 104.1998,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "yayoi",
+   "name": "彌生時代（日本）",
+   "start": -999,
+   "end": 250,
+   "dateQuote": [
+    "起源於約前10世紀-前8世紀的九州北部",
+    "一直延續到公元3世紀中期"
+   ],
+   "sourcePage": "彌生時代",
+   "article": "彌生時代",
+   "lat": 33.5,
+   "lon": 130.5,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "jeulmun",
+   "name": "櫛文土器時代（朝鮮半島）",
+   "start": -9999,
+   "end": -1499,
+   "dateQuote": [
+    "約前1萬年至前1500年"
+   ],
+   "sourcePage": "栉文土器时代",
+   "article": "栉文土器时代",
+   "lat": 36.5,
+   "lon": 127.8,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "indus",
+   "name": "印度河流域文明",
+   "start": -3299,
+   "end": -1299,
+   "dateQuote": [
+    "存在於公元前3300年至公元前1300年之間"
+   ],
+   "sourcePage": "印度河流域文明",
+   "article": "印度河流域文明",
+   "lat": 27.3292,
+   "lon": 68.1389,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "hoabinhian",
+   "name": "和平文化（東南亞）",
+   "start": -9999,
+   "end": -1999,
+   "dateQuote": [
+    "年代在約公元前兩千年到一萬年"
+   ],
+   "sourcePage": "和平文化",
+   "article": "和平文化",
+   "lat": 20.81,
+   "lon": 105.34,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "dong-son",
+   "name": "東山文化（越南）",
+   "start": -699,
+   "end": 0,
+   "dateQuote": [
+    "約繁盛於公元前700年到公元前後"
+   ],
+   "sourcePage": "東山文化 (越南)",
+   "article": "東山文化 (越南)",
+   "lat": 19.8,
+   "lon": 105.78,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "sa-huynh",
+   "name": "沙黃文化（越南）",
+   "start": -999,
+   "end": 200,
+   "dateQuote": [
+    "公元前1000年至公元200年期間"
+   ],
+   "sourcePage": "沙黄文化",
+   "article": "沙黄文化",
+   "lat": 15.0,
+   "lon": 108.8,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "uruk",
+   "name": "烏魯克時期（美索不達米亞）",
+   "start": -3999,
+   "end": -3099,
+   "dateQuote": [
+    "約西元前4000年至前3100年"
+   ],
+   "sourcePage": "烏魯克時期",
+   "article": "烏魯克時期",
+   "lat": 31.3242,
+   "lon": 45.6372,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "asia"
+  },
+  {
+   "id": "cucuteni",
+   "name": "克克塔尼文化",
+   "start": -5499,
+   "end": -2749,
+   "dateQuote": [
+    "年代為公元前5500年至公元前2750年"
+   ],
+   "sourcePage": "克克塔尼文化",
+   "article": "克克塔尼文化",
+   "lat": 47.5,
+   "lon": 27.0,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "europe"
+  },
+  {
+   "id": "corded-ware",
+   "name": "繩紋器文化",
+   "start": -2999,
+   "end": -2349,
+   "dateQuote": [
+    "是公元前3000年—2350年之間"
+   ],
+   "sourcePage": "绳纹器文化",
+   "article": "绳纹器文化",
+   "lat": 51.5,
+   "lon": 14.0,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "europe"
+  },
+  {
+   "id": "bell-beaker",
+   "name": "鐘形杯文化",
+   "start": -2799,
+   "end": -1799,
+   "dateQuote": [
+    "起源於公元前2800年左右，一直持續到公元前1800年"
+   ],
+   "sourcePage": "钟形杯文化",
+   "article": "钟形杯文化",
+   "lat": 45.0,
+   "lon": 1.0,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "europe"
+  },
+  {
+   "id": "minoan",
+   "name": "米諾斯文明",
+   "start": -3499,
+   "end": -1099,
+   "dateQuote": [
+    "公元前1100年左右結束",
+    "最早的起源可以追溯到公元前3500年"
+   ],
+   "sourcePage": "米诺斯文明",
+   "article": "米诺斯文明",
+   "lat": 35.2981,
+   "lon": 25.1631,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "europe"
+  },
+  {
+   "id": "hallstatt",
+   "name": "哈爾施塔特文化",
+   "start": -799,
+   "end": -500,
+   "dateQuote": [
+    "公元前8至6世紀中歐占主導地位的文化"
+   ],
+   "sourcePage": "哈尔施塔特文化",
+   "article": "哈尔施塔特文化",
+   "lat": 47.562,
+   "lon": 13.649,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "europe"
+  },
+  {
+   "id": "la-tene",
+   "name": "拉坦諾文化",
+   "start": -449,
+   "end": 0,
+   "dateQuote": [
+    "拉坦諾文化存在於前450年至前1世紀"
+   ],
+   "sourcePage": "拉坦诺文化",
+   "article": "拉坦诺文化",
+   "lat": 47.0069,
+   "lon": 7.0236,
+   "locationNote": "代表遺址或分布中心（約略位置）",
+   "continent": "europe"
+  }
+ ]
+}
