@@ -131,10 +131,19 @@ export const tidy = (text: string) =>
     .replace(/[，、\s]+(?=[。；！？]|$)/g, "")
     .replace(/，{2,}/g, "，");
 
-/** 標題：內容的第一個分句（不改寫原文） */
+/** 標題：內容的第一個分句（不改寫原文）；括號內的逗號不算分句 */
 export function titleOf(body: string): string {
-  const first = body.split(/[，。；;]/)[0].trim();
-  return first.length > 0 ? first : body;
+  let depth = 0;
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i];
+    if (ch === "（" || ch === "(") depth++;
+    else if ((ch === "）" || ch === ")") && depth > 0) depth--;
+    else if (depth === 0 && "，。；;".includes(ch)) {
+      const first = body.slice(0, i).trim();
+      return first.length > 0 ? first : body;
+    }
+  }
+  return body.trim();
 }
 
 const pageUrl = (title: string, revid: number) =>

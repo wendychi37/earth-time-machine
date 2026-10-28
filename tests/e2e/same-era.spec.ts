@@ -16,15 +16,15 @@ test("「同一時期的世界」依大洲並列年表大事，點一條開啟�
   }
   await expect(panel).toBeVisible();
   await expect(panel).toContainText("同一時期的世界");
-  await expect(panel).toContainText("西元 1403 年～西元 1503 年");
+  await expect(panel).toContainText("西元 1433 年～西元 1473 年");
 
   if (info.project.name === "desktop") {
     const columns = page.getByTestId("same-era-columns");
     for (const name of ["亞洲", "歐洲", "非洲", "美洲", "大洋洲"]) await expect(columns).toContainText(name);
-    await columns.getByRole("button", { name: /君士坦丁堡/ }).click();
+    await columns.getByRole("button", { name: /攻陷拜占庭/ }).click();
   } else {
     await panel.getByRole("tab", { name: /歐洲/ }).click();
-    await panel.getByRole("tabpanel").getByRole("button", { name: /君士坦丁堡/ }).click();
+    await panel.getByRole("tabpanel").getByRole("button", { name: /攻陷拜占庭/ }).click();
   }
   const card = page.getByTestId("event-card");
   await expect(card).toBeVisible();

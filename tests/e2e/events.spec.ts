@@ -65,7 +65,7 @@ test("點擊地球上的年表大事，開啟事件卡片與出處", async ({ pa
 test("鍵盤使用者可從事件清單開啟卡片", async ({ page }) => {
   await page.goto("/");
   await goToYear(page, "1453");
-  const item = page.getByRole("navigation", { name: "此時期的事件" }).getByRole("button", { name: /君士坦丁堡/ });
+  const item = page.getByRole("navigation", { name: "此時期的事件" }).getByRole("button", { name: /攻陷拜占庭/ });
   await item.focus();
   await page.keyboard.press("Enter");
   await expect(page.getByTestId("event-date")).toHaveText("西元 1453 年");
@@ -76,7 +76,7 @@ test("關閉事件標記圖層後不顯示清單", async ({ page }) => {
   await page.goto("/");
   await goToYear(page, "1453");
   const list = page.getByRole("navigation", { name: "此時期的事件" });
-  await expect(list.getByRole("button", { name: /君士坦丁堡/ })).toHaveCount(1);
+  await expect(list.getByRole("button", { name: /攻陷拜占庭/ })).toHaveCount(1);
   await page.getByLabel("事件標記").uncheck();
-  await expect(list.getByRole("button", { name: /君士坦丁堡/ })).toHaveCount(0);
+  await expect(list.getByRole("button", { name: /攻陷拜占庭/ })).toHaveCount(0);
 });
