@@ -63,7 +63,7 @@ export function EraCard() {
     <article
       aria-label={`${t.cardLabel}：${era.name}`}
       data-label-avoid
-      className="max-h-[45dvh] w-full overflow-y-auto rounded-lg border border-panel-border bg-panel p-4 text-sm backdrop-blur sm:max-h-[38dvh] sm:w-80"
+      className="max-h-[45dvh] w-full overflow-y-auto rounded-lg border border-panel-border bg-panel p-4 text-sm backdrop-blur sm:max-h-[max(12rem,calc(100dvh-37rem))] sm:w-80"
       data-testid="era-card"
     >
       <header className="mb-2 flex items-start justify-between gap-2">

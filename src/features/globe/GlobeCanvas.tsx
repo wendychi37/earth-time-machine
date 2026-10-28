@@ -106,7 +106,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
         {showHistorical && boundaries && (
           <BoundaryLayer
             features={boundaries}
-            fillOpacity={(baseMap === "map" ? 0.22 : 0.32) + (showEras ? 0.12 : 0)}
+            fillOpacity={(baseMap === "map" ? 0.22 : 0.32) + (showEras ? 0.18 : 0)}
             colorByRegion={showEras}
           />
         )}

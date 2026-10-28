@@ -119,7 +119,7 @@ export const messages = {
   eras: {
     title: "各地朝代",
     bandsTitle: "各地朝代色帶",
-    showBands: "顯示各地朝代色帶",
+    showBands: "打開各地朝代色帶（像歷史書的對照表）",
     hideBands: "收起色帶",
     cardLabel: "朝代介紹",
     close: "關閉",

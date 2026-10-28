@@ -99,3 +99,14 @@ body {
   background: rgb(190 100 25);
   outline: 2px solid #fff;
 }
+
+/* 「各地朝代色帶」打開時底部面板變高：左側對照表往上縮、右側卡片變矮，避免被時間軸蓋住 */
+@media (min-width: 640px) {
+  html[data-era-bands="open"] .era-shift-left {
+    bottom: 31rem;
+  }
+  html[data-era-bands="open"] .era-shift-cards {
+    max-height: max(12rem, calc(100dvh - 15rem - 27rem));
+    overflow-y: auto;
+  }
+}

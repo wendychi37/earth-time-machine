@@ -5,18 +5,16 @@ async function goToYear(page: Page, text: string) {
   await page.getByTestId("year-input").press("Enter");
 }
 
-test("各地朝代：名牌隨年份改變，點色帶打開朝代介紹卡", async ({ page }, info) => {
+test("各地朝代：名牌隨年份改變，點色帶打開朝代介紹卡", async ({ page }) => {
   await page.goto("/");
   await goToYear(page, "前221");
   await expect(page.getByTestId("era-label-cn")).toHaveText("秦");
   await goToYear(page, "1100");
   await expect(page.getByTestId("era-label-cn")).toHaveText("北宋");
 
-  // 手機預設收起色帶
-  if (info.project.name === "mobile") {
-    await expect(page.getByTestId("era-bands")).toBeHidden();
-    await page.getByTestId("era-bands-open").click();
-  }
+  // 色帶預設收起
+  await expect(page.getByTestId("era-bands")).toBeHidden();
+  await page.getByTestId("era-bands-open").click();
   const bands = page.getByTestId("era-bands");
   await expect(bands).toBeVisible();
   await bands.getByRole("button", { name: "平安時代" }).click();

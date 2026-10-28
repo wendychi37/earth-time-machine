@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { bandWindow, displaySpan } from "@/lib/eras/query";
 import { REGIONS } from "@/lib/eras/regions";
 import { formatYear, formatYearShort } from "@/lib/time/format";
@@ -21,8 +21,12 @@ export function EraBands() {
   const show = useAppStore((s) => s.layers.eras);
   const selectedEra = useAppStore((s) => s.selectedEra);
   const selectEra = useAppStore((s) => s.selectEra);
-  // null：預設（桌面打開、手機收起），使用者按過之後依使用者選擇
-  const [open, setOpen] = useState<boolean | null>(null);
+  // 預設收起：色帶會讓底部面板變高，打開時左右兩側的面板會讓出空間（見 globals.css 的 data-era-bands）
+  const [open, setOpen] = useState(false);
+  const visible = show && open;
+  useEffect(() => {
+    document.documentElement.dataset.eraBands = visible ? "open" : "closed";
+  }, [visible]);
   if (!show) return null;
 
   const w = bandWindow(year);
@@ -33,22 +37,29 @@ export function EraBands() {
   const ticks: number[] = [];
   for (let y = Math.ceil(from / step) * step; y <= to; y += step) ticks.push(y);
 
-  const bandsVisibility = open === null ? "hidden sm:block" : open ? "block" : "hidden";
-  const showButton = open === null ? "sm:hidden" : open ? "hidden" : "";
-  const hideButton = open === null ? "hidden sm:inline" : open ? "" : "hidden";
 
   return (
     <div className="border-b border-panel-border pb-2 pt-1" data-label-avoid>
       <div className="flex items-center justify-between gap-2">
-        <h2 className={`text-xs font-semibold text-muted ${bandsVisibility}`}>{t.bandsTitle}</h2>
-        <button type="button" className={`text-xs text-accent underline ${showButton}`} onClick={() => setOpen(true)} data-testid="era-bands-open">
-          {t.showBands}
-        </button>
-        <button type="button" className={`text-xs text-muted underline ${hideButton}`} onClick={() => setOpen(false)} data-testid="era-bands-close">
-          {t.hideBands}
-        </button>
+        {open ? (
+          <>
+            <h2 className="text-xs font-semibold text-muted">{t.bandsTitle}</h2>
+            <button type="button" className="text-xs text-muted underline" onClick={() => setOpen(false)} data-testid="era-bands-close">
+              {t.hideBands}
+            </button>
+          </>
+        ) : (
+          <button
+            type="button"
+            className="rounded-md border border-panel-border px-2 py-0.5 text-xs text-accent hover:bg-white/5"
+            onClick={() => setOpen(true)}
+            data-testid="era-bands-open"
+          >
+            {t.showBands}
+          </button>
+        )}
       </div>
-      <div className={`${bandsVisibility} mt-1 max-h-[34dvh] overflow-y-auto`} data-testid="era-bands">
+      <div className={`${open ? "block" : "hidden"} mt-1 max-h-[34dvh] overflow-y-auto`} data-testid="era-bands">
         <div className="relative">
           {REGIONS.map((region) => (
             <div key={region.id} className="flex h-[17px] items-center gap-1.5 py-px">
