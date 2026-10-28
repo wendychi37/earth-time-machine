@@ -118,20 +118,41 @@ interface Frame {
   date: string | null;
 }
 
+/**
+ * 清單外的年份標示：英文年表常把年份單獨寫成一個清單項目、<dt> 或段落（例如〈Timeline of New Zealand history〉的「1642」），
+ * 底下同一層的項目只寫「13 December: …」。fromEntry：年份取自上一個寫了完整日期的項目，只給以「日 月」開頭的項目沿用。
+ */
+interface LooseDate {
+  date: string;
+  fromEntry: boolean;
+}
+
+const EN_MONTH = "(?:January|February|March|April|May|June|July|August|September|October|November|December)";
+const DAY_MONTH_START = new RegExp(`^(?:\\d{1,2}(?:[–-]\\d{1,2})?\\s+${EN_MONTH}|${EN_MONTH}(?:\\s+\\d{1,2})?)\\b`);
+
 /** 清單項目：子清單沿用上層的日期（例如「1687年」底下列了幾件事） */
 function extractLists(html: string, section: () => string | null, out: ExtractedItem[], rules: DateRules, headingDate: string | null = null) {
   const stack: Frame[] = [];
-  const re = /<li[^>]*>|<\/li>|<ul[^>]*>|<ol[^>]*>/g;
+  const ctx: { loose: LooseDate | null } = { loose: null };
+  const re = /<li[^>]*>|<\/li>|<ul[^>]*>|<ol[^>]*>|<dt(?:\s[^>]*)?>([\s\S]*?)<\/dt>|<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/g;
   let last = 0;
   for (const m of html.matchAll(re)) {
     const chunk = html.slice(last, m.index);
     last = m.index! + m[0].length;
     if (stack.length) stack[stack.length - 1].html += chunk;
-    if (m[0].startsWith("<li")) {
+    if (m[1] !== undefined || m[2] !== undefined) {
+      // <dt> 或段落：清單外只寫年份時，當作後面項目的年份；在清單項目裡就保留原文
+      if (stack.length) stack[stack.length - 1].html += m[0];
+      else if (rules === EN) {
+        const text = textAndLinks(m[1] ?? m[2]).text;
+        const date = text && rules.isDate(text) ? rules.cell(text) : null;
+        if (date) ctx.loose = { date, fromEntry: false };
+      }
+    } else if (m[0].startsWith("<li")) {
       stack.push({ html: "", date: null });
     } else if (m[0] === "</li>") {
       const frame = stack.pop();
-      if (frame) emit(frame, stack, section(), out, rules, headingDate);
+      if (frame) emit(frame, stack, section(), out, rules, headingDate, ctx);
     } else if (stack.length) {
       // 子清單開始：先決定上層的日期，供子項目使用
       const top = stack[stack.length - 1];
@@ -143,19 +164,38 @@ function extractLists(html: string, section: () => string | null, out: Extracted
   }
 }
 
-function emit(frame: Frame, parents: Frame[], section: string | null, out: ExtractedItem[], rules: DateRules, headingDate: string | null) {
-  const own = frame.html.split("\u0000SUBLIST\u0000")[0];
+function emit(
+  frame: Frame,
+  parents: Frame[],
+  section: string | null,
+  out: ExtractedItem[],
+  rules: DateRules,
+  headingDate: string | null,
+  ctx: { loose: LooseDate | null },
+) {
+  const [own, ...sub] = frame.html.split("\u0000SUBLIST\u0000");
   const { text, links } = textAndLinks(own);
   if (!text) return;
+  const topLevel = parents.length === 0 && rules === EN;
   const split = rules.split(text);
   // 「2000年：（民國89年）：」這種只有註記的上層項目，內容在子項目裡
   if (split && !/^[（(][^）)]*[）)][：:\s]*$/.test(split.body)) {
     out.push({ section, text: `${split.dateText}：${split.body}`, links });
+    // 「27 September 1841: …」之後只寫「22 October: …」的項目，年份沿用 1841
+    const year = /^(前?\d+年)\d+月/.exec(split.dateText)?.[1];
+    if (topLevel && year) ctx.loose = { date: year, fromEntry: true };
     return;
   }
-  // 只有日期（底下另有子項目）就不輸出；沒有日期的子項目沿用上層日期
-  if (rules.isDate(text)) return;
-  const inherited = [...parents].reverse().find((p) => p.date)?.date ?? headingDate;
+  // 只有日期（底下另有子項目）就不輸出；沒有子項目、單獨一行的年份，當作後面同一層項目的年份
+  if (rules.isDate(text)) {
+    if (topLevel && sub.length === 0) ctx.loose = { date: rules.cell(text)!, fromEntry: false };
+    return;
+  }
+  // 小標題已經是單一年份時，以小標題為準
+  const headingYear = headingDate !== null && /^前?\d+年$/.test(headingDate);
+  const usable = ctx.loose && (ctx.loose.fromEntry ? !headingYear && DAY_MONTH_START.test(text) : true);
+  const loose = topLevel && usable ? ctx.loose!.date : null;
+  const inherited = [...parents].reverse().find((p) => p.date)?.date ?? loose ?? headingDate;
   if (inherited) out.push({ section, text: `${inherited}：${text}`, links });
 }
 

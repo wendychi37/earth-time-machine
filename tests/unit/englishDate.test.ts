@@ -100,4 +100,32 @@ describe("英文年表日期轉換", () => {
       "770年：Battle of Brávellir; Death of Harald Wartooth",
     ]);
   });
+
+  it("單獨一行的年份（清單項目、<dt> 或段落）是後面同一層項目的年份", () => {
+    const html = `<h2>17th century</h2><dl><dt>1601 onwards</dt></dl><ul><li>Expansion of iwi.</li><li>1642</li>
+      <li>13 December: Abel Tasman sights the South Island.</li><li>19 December: Tasman departs.</li></ul>
+      <h2>1840s</h2><dl><dt>1840</dt></dl><ul><li>22 January: Settlers arrive.</li></ul>
+      <p><b>1843</b></p><ul><li>Wairau Affray.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "17世紀：Expansion of iwi.",
+      "1642年：13 December: Abel Tasman sights the South Island.",
+      "1642年：19 December: Tasman departs.",
+      "1840年：22 January: Settlers arrive.",
+      "1843年：Wairau Affray.",
+    ]);
+  });
+
+  it("寫了完整日期的項目之後，只寫「日 月」的項目沿用它的年份", () => {
+    const html = `<h2>1840s</h2><ul><li>22 January: Settlers arrive.</li><li>27 September 1841: A school is founded.</li>
+      <li>10 October: Settlers reach Nelson.</li><li>Main body of settlers arrive.</li></ul>
+      <h3>1965</h3><ul><li>3 March 1964: Earlier note.</li><li>1 April: Something happens.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "1840年－1849年：22 January: Settlers arrive.",
+      "1841年9月27日：A school is founded.",
+      "1841年：10 October: Settlers reach Nelson.",
+      "1840年－1849年：Main body of settlers arrive.",
+      "1964年3月3日：Earlier note.",
+      "1965年：1 April: Something happens.",
+    ]);
+  });
 });
