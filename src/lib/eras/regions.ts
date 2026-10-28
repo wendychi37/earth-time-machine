@@ -47,7 +47,7 @@ export const REGIONS: Region[] = [
   {
     id: "tw",
     name: "臺灣",
-    color: "#ff9f43",
+    color: "#34c98e",
     anchor: { lat: 23.7, lon: 121 },
     boxes: [[119.3, 21.8, 122.2, 25.4]],
     source: "臺灣歷史",

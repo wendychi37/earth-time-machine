@@ -31,13 +31,16 @@ for (const r of REGIONS) {
 const articles: Record<string, EraArticle> = {};
 const missing: string[] = [];
 for (const key of titles) {
+  await new Promise((r) => setTimeout(r, 200)); // 放慢速度，避免被維基百科限速
   const r = await api({ action: "parse", page: key, prop: "text|revid|displaytitle|properties", section: "0", variant: "zh-tw", redirects: "1" });
   if (r.error) {
     missing.push(key);
     console.log(`找不到：${key}（${r.error.code}）`);
     continue;
   }
-  const props = Object.fromEntries((r.parse.properties ?? []).map((p: { name: string; value: string }) => [p.name, p.value]));
+  // formatversion=2 回傳物件，舊格式回傳 [{ name, value }] 陣列
+  const raw = r.parse.properties ?? {};
+  const props: Record<string, string> = Array.isArray(raw) ? Object.fromEntries(raw.map((p: { name: string; value: string }) => [p.name, p.value])) : raw;
   if ("disambiguation" in props) {
     missing.push(key);
     console.log(`消歧義頁：${key}`);
