@@ -166,6 +166,9 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
   let eventCol = -1;
   // 年份欄標題寫「Year (BCE)」時，欄內年份都是西元前
   let bceTable = false;
+  // 日期不在第一欄的表格（例如〈Timeline of Danish history〉的「Event | Date | Result」）
+  let dateCol = -1;
+  let resultCol = -1;
   let carried: { date: string; left: number } | null = null;
   for (const row of rows) {
     const cells = [...row.matchAll(/<t([dh])([^>]*)>([\s\S]*?)<\/t[dh]>/g)].map((c) => ({
@@ -178,6 +181,18 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
       columns = cells.length;
       eventCol = cells.findIndex((c) => /^(?:event|events|事件)/i.test(textAndLinks(c.html).text));
       bceTable = rules === EN && /\(BCE?\)/.test(textAndLinks(cells[0].html).text);
+      const firstIsDate = /year|date|年|日期/i.test(textAndLinks(cells[0].html).text);
+      dateCol = firstIsDate ? -1 : cells.findIndex((c) => /^(?:date|year)s?$/i.test(textAndLinks(c.html).text));
+      resultCol = cells.findIndex((c) => /^(?:result|outcome)s?$/i.test(textAndLinks(c.html).text));
+      continue;
+    }
+    if (dateCol > 0 && cells.length === columns) {
+      const date = rules.cell(textAndLinks(cells[dateCol].html).text);
+      const event = textAndLinks(cells[eventCol >= 0 ? eventCol : 0].html);
+      const result = resultCol >= 0 ? textAndLinks(cells[resultCol].html) : null;
+      if (!date || !event.text) continue;
+      const text = result?.text ? `${event.text}; ${result.text}` : event.text;
+      out.push({ section, text: `${date}：${text}`, links: [...event.links, ...(result?.links ?? [])] });
       continue;
     }
     let date: string | null = null;

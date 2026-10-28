@@ -64,4 +64,14 @@ describe("英文年表日期轉換", () => {
       <h2>Further reading</h2><h3>1790s</h3><ul><li>Smith, John. Politics in the 1790s. 1963.</li></ul>`;
     expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["1652年：Cape Town was founded."]);
   });
+
+  it("日期在第二欄的表格（Event | Date | Result）", () => {
+    const html = `<table class="wikitable"><tr><th>Event</th><th>Date</th><th>Result</th></tr>
+      <tr><td>Stone Age</td><td>12,000 bc</td><td>starting of the Stone Age</td></tr>
+      <tr><td><a href="https://en.wikipedia.org/wiki/Battle_of_Br%C3%A1vellir">Battle of Brávellir</a></td><td>770</td><td>Death of Harald Wartooth</td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "前12000年：Stone Age; starting of the Stone Age",
+      "770年：Battle of Brávellir; Death of Harald Wartooth",
+    ]);
+  });
 });
