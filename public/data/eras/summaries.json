@@ -7,8 +7,8 @@
  "articles": {
   "臺灣歷史": {
    "title": "臺灣歷史",
-   "revid": 94633364,
-   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E6%AD%B7%E5%8F%B2&oldid=94633364&variant=zh-tw",
+   "revid": 95318445,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E6%AD%B7%E5%8F%B2&oldid=95318445&variant=zh-tw",
    "extract": "臺灣歷史，可追溯至在文獻記載以前，臺灣早已有人類活動。臺東長濱文化是目前考古所知臺灣最早的史前文化之一，較晚近的新石器時代則有南島語族的考古遺跡。"
   },
   "臺灣史前時代": {
@@ -337,8 +337,8 @@
   },
   "中華人民共和國": {
    "title": "中華人民共和國",
-   "revid": 95315762,
-   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD&oldid=95315762&variant=zh-tw",
+   "revid": 95318062,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD&oldid=95318062&variant=zh-tw",
    "extract": "35°N 103°E / 35°N 103°E / 35; 103"
   },
   "印度歷史": {
@@ -551,13 +551,6 @@
    "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E7%8E%8B%E5%9C%8B%E6%99%82%E6%9C%9F&oldid=94516370&variant=zh-tw",
    "extract": "古王國時期（前2686年—前2181年）是古埃及歷史的一個時期，對應於從埃及第三王朝至第六王朝的四個王朝。這一時期也被稱作「金字塔時期」，因為其中的第四王朝以曾修建為數眾多的金字塔建築群而聞名於世。"
   },
-  "第一中間期 (埃及)": {
-   "title": "古埃及歷史",
-   "revid": 88890232,
-   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
-   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
-   "matchedBy": "search"
-  },
   "埃及中王國": {
    "title": "中王國時期",
    "revid": 94721782,
@@ -565,10 +558,10 @@
    "extract": "中王國時期是古埃及歷史上的一個時期，包括第十一、第十二、第十三與第十四王朝，通常劃定在前2133－1786年，但嚴格地說，應該從第十一王朝的孟圖霍特普二世時代（約前2060－2010年）開始。"
   },
   "第二中間期 (埃及)": {
-   "title": "古埃及歷史",
-   "revid": 88890232,
-   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
-   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
+   "title": "古埃及後期",
+   "revid": 94859350,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%90%8E%E6%9C%9F&oldid=94859350&variant=zh-tw",
+   "extract": "古埃及後期是古埃及本土統治者在位的最後一個興盛時期。",
    "matchedBy": "search"
   },
   "埃及新王國": {
@@ -865,7 +858,33 @@
    "revid": 94493404,
    "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BE%8E%E5%9B%BD&oldid=94493404&variant=zh-tw",
    "extract": "美利堅合眾國，簡稱美國、美利堅或合眾國，是位於北美洲的聯邦制共和國。其由50個州、首都華盛頓哥倫比亞特區和326個印第安人保留地組成；在聯邦外，其主張對5個離岸自治領土及若干外島擁有主權。"
+  },
+  "澳大利亞歷史": {
+   "title": "澳洲歷史",
+   "revid": 94641989,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%BE%B3%E5%A4%A7%E5%88%A9%E4%BA%9A%E5%8E%86%E5%8F%B2&oldid=94641989&variant=zh-tw",
+   "extract": "澳洲歷史是從距今40,000至70,000年前人類第一次在澳洲大陸北岸定居開始的。這段時間被定義為澳洲史前時期。有文字記載的澳洲歷史開始於歐洲探險家第一次達到這片土地。"
+  },
+  "澳大利亞原住民": {
+   "title": "澳洲原住民",
+   "revid": 94736199,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%BE%B3%E5%A4%A7%E5%88%A9%E4%BA%9A%E5%8E%9F%E4%BD%8F%E6%B0%91&oldid=94736199&variant=zh-tw",
+   "extract": "澳洲原住民他們還被稱為：First Nation people（意思是第一個在澳洲有國家（部落）的人），是澳洲土著和托列斯海峽島民的總稱，是歐洲人殖民大洋洲之前居住在澳洲大陸及其附近島嶼的原住民族群的後代。"
+  },
+  "新南威爾斯殖民地": {
+   "title": "新南威爾斯殖民地",
+   "revid": 90556263,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E5%8D%97%E5%A8%81%E5%B0%94%E5%A3%AB%E6%AE%96%E6%B0%91%E5%9C%B0&oldid=90556263&variant=zh-tw",
+   "extract": "新南威爾斯殖民地是大英帝國的一個殖民地，存在於1788年—1901年，之後成為澳大利亞聯邦的一個州。"
+  },
+  "澳大利亞聯邦成立": {
+   "title": "澳洲",
+   "revid": 95206298,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%BE%B3%E5%A4%A7%E5%88%A9%E4%BA%9A&oldid=95206298&variant=zh-tw",
+   "extract": "澳大利亞聯邦，通稱澳大利亞、澳洲，是一個位於南半球中北部、東半球東部的議會制君主立憲制、聯邦制國家。全國整體屬於大洋洲（並非自成一洲），是該洲面積最大、南半球面積第二大和全球面積第六大的國家。"
   }
  },
- "missing": []
+ "missing": [
+  "第一中間期 (埃及)"
+ ]
 }
