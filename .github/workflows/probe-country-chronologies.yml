@@ -1,0 +1,15 @@
+# 暫時用：探查各國歷史年表頁面（完成後刪除）
+name: probe-country-chronologies
+on:
+  push:
+    branches: [claude/project-thread-k3xwgm]
+    paths: [scripts/probe-country-chronologies.mjs, .github/workflows/probe-country-chronologies.yml]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node scripts/probe-country-chronologies.mjs
