@@ -8,7 +8,14 @@ export interface RawChronology {
   source: string;
   license: string;
   fetchedAt: string;
-  pages: { title: string; displayTitle: string; revid: number; items: { section: string | null; text: string; links: string[] }[] }[];
+  pages: {
+    title: string;
+    displayTitle: string;
+    revid: number;
+    /** 各國年表：sources.ts 中的頁面名稱 */
+    sourcePage?: string;
+    items: { section: string | null; text: string; links: string[] }[];
+  }[];
   linkInfo: Record<string, { title: string; qid: string | null; coord: { lat: number; lon: number; type: string | null } | null }>;
   wikidata: Record<string, WikidataEntry>;
 }
@@ -133,14 +140,31 @@ export function titleOf(body: string): string {
 const pageUrl = (title: string, revid: number) =>
   `https://zh.wikipedia.org/w/index.php?title=${encodeURIComponent(title)}&oldid=${revid}&variant=zh-tw`;
 
-/** 把維基百科「世界史年表」原始資料轉成網站使用的事件清單。 */
+type Country = { iso: string; nameZh: string };
+
+/** 各國年表：整頁歸屬的國家，以及原文找不到地點時的代表位置 */
+export interface PageCountry {
+  country: Country;
+  fallback: { lat: number; lon: number; label: string };
+}
+
+interface BuildOptions {
+  /** 依位置判斷今日國家 */
+  countryAt?: (lat: number, lon: number) => Country | null;
+  /** 各國年表的頁面歸屬；世界史年表不提供 */
+  pageCountry?: (page: RawChronology["pages"][number]) => PageCountry | null;
+  idPrefix?: string;
+}
+
+/** 把維基百科年表原始資料（〈世界史年表〉或各國歷史年表）轉成網站使用的事件清單。 */
 export function buildChronology(
   raw: RawChronology,
-  countryAt: (lat: number, lon: number) => { iso: string; nameZh: string } | null = () => null,
+  { countryAt = () => null, pageCountry = () => null, idPrefix = "wsc" }: BuildOptions = {},
 ): { events: HistoricalEvent[]; skipped: string[] } {
   const events: HistoricalEvent[] = [];
   const skipped: string[] = [];
   raw.pages.forEach((page, p) => {
+    const owner = pageCountry(page);
     page.items.forEach((item, i) => {
       const split = splitChronologyLine(item.text);
       const parsed = split && parseChronologyDate(split.dateText);
@@ -157,13 +181,18 @@ export function buildChronology(
         calendar: parsed.latest < 1582 ? "julian" : "gregorian",
         originalText: parsed.text,
       };
-      const where = locateItem(raw, item.links);
+      let where = locateItem(raw, item.links);
+      // 各國年表：找不到地點，或只找到「別國」的國家級位置時，改用該國的代表位置
+      if (owner && (!where || (where.precision === "region" && countryAt(where.lat, where.lon)?.iso !== owner.country.iso))) {
+        where = null;
+      }
       const related = item.links
         .filter((l) => !DATE_LINK.test(l))
         .map((title) => ({ title, label: raw.wikidata[raw.linkInfo[title]?.qid ?? ""]?.label ?? title }));
       const sources: EventSource[] = [
         { title: `維基百科〈${page.displayTitle}〉`, url: pageUrl(page.title, page.revid), supports: "overall", note: `${raw.license}，版本 ${page.revid}` },
       ];
+      const fallback = !where && owner ? owner.fallback : null;
       if (where) {
         sources.push({
           title: `Wikidata：${where.label}`,
@@ -173,16 +202,17 @@ export function buildChronology(
         });
       }
       events.push({
-        id: `wsc-${p}-${i}`,
+        id: `${idPrefix}-${p}-${i}`,
         title: titleOf(tidy(split.body)),
         summary: tidy(split.body),
         period: { start, end: null },
-        location: where ? { lat: where.lat, lon: where.lon } : null,
-        locationLabel: where?.label ?? "",
+        location: where ? { lat: where.lat, lon: where.lon } : fallback ? { lat: fallback.lat, lon: fallback.lon } : null,
+        locationLabel: where?.label ?? fallback?.label ?? "",
         locationPrecision: where?.precision ?? "region",
         category: "other",
-        continent: where ? continentAt(where.lat, where.lon) : null,
-        country: where ? countryAt(where.lat, where.lon) : null,
+        continent: where ? continentAt(where.lat, where.lon) : fallback ? continentAt(fallback.lat, fallback.lon) : null,
+        // 各國年表的事件一律歸到該國，即使發生在國外（例如日本年表中的「豐臣秀吉攻朝鮮」）
+        country: owner?.country ?? (where ? countryAt(where.lat, where.lon) : null),
         relatedArticles: related,
         wikidataQid: where?.qid ?? null,
         wikipedia: { zh: where?.link ?? related[0]?.title ?? null, en: null },

@@ -48,8 +48,15 @@ export const staticRepository: Repository = {
   },
 
   getEvents() {
-    // 世界史年表（取自維基百科，見 scripts/build-world-chronology.mts）；示範事件只保留給 Supabase seed 與測試
-    const path = "/data/chronology/world-chronology.json";
-    return cached(path, async () => (await fetchJson<{ events: HistoricalEvent[] }>(path)).events);
+    // 〈世界史年表〉與各國歷史年表（取自維基百科，見 scripts/build-world-chronology.mts）；示範事件只保留給 Supabase seed 與測試
+    const world = "/data/chronology/world-chronology.json";
+    const countries = "/data/chronology/country-chronologies.json";
+    return cached("events", async () => {
+      const [a, b] = await Promise.all([
+        fetchJson<{ events: HistoricalEvent[] }>(world),
+        fetchJson<{ events: HistoricalEvent[] }>(countries).catch(() => ({ events: [] })),
+      ]);
+      return [...a.events, ...b.events];
+    });
   },
 };
