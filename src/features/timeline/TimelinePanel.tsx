@@ -1,4 +1,5 @@
 import { BoundaryLegendBar } from "@/features/boundaries/BoundaryStatus";
+import { EraBands } from "@/features/eras/EraBands";
 import { Timeline } from "./Timeline";
 import { YearDisplay } from "./YearDisplay";
 import { YearInput } from "./YearInput";
@@ -16,6 +17,7 @@ export function TimelinePanel() {
         </div>
       </div>
       <Timeline />
+      <EraBands />
       <div className="min-h-[4.75rem] sm:min-h-[3.25rem] border-t border-panel-border py-2">
         <BoundaryLegendBar />
       </div>

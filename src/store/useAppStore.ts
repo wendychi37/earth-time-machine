@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { EraRef } from "@/lib/eras/query";
 import type { LatLon } from "@/lib/geo/sphere";
 import { DEFAULT_YEAR, PHASE1_MAX_YEAR, PHASE1_MIN_YEAR } from "@/lib/time/constants";
 import type { AstronomicalYear } from "@/types/time";
@@ -11,6 +12,8 @@ export interface LayerVisibility {
   historical: boolean;
   /** 依年份顯示的考古文化 */
   cultures: boolean;
+  /** 各地朝代名牌、朝代色帶，以及依地區上色的疆域 */
+  eras: boolean;
 }
 
 /** 底圖：像地球儀的政治地圖，或衛星照片（地形） */
@@ -24,12 +27,15 @@ interface AppState {
   selectedEventId: string | null;
   /** 選取的考古文化；與地點、事件選取互斥 */
   selectedCultureId: string | null;
+  /** 選取的朝代／時代；與地點、事件、考古文化選取互斥 */
+  selectedEra: EraRef | null;
   layers: LayerVisibility;
   baseMap: BaseMap;
   setYear: (year: AstronomicalYear) => void;
   select: (point: LatLon | null) => void;
   selectEvent: (id: string | null) => void;
   selectCulture: (id: string | null) => void;
+  selectEra: (era: EraRef | null) => void;
   toggleLayer: (layer: keyof LayerVisibility) => void;
   setBaseMap: (baseMap: BaseMap) => void;
   /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
@@ -44,12 +50,14 @@ export const useAppStore = create<AppState>((set) => ({
   selection: null,
   selectedEventId: null,
   selectedCultureId: null,
-  layers: { events: true, labels: true, historical: true, cultures: true },
+  selectedEra: null,
+  layers: { events: true, labels: true, historical: true, cultures: true, eras: true },
   baseMap: "map",
   setYear: (year) => set({ year: clampYear(year) }),
-  select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null }),
-  selectEvent: (selectedEventId) => set({ selectedEventId, selection: null, selectedCultureId: null }),
-  selectCulture: (selectedCultureId) => set({ selectedCultureId, selection: null, selectedEventId: null }),
+  select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null, selectedEra: null }),
+  selectEvent: (selectedEventId) => set({ selectedEventId, selection: null, selectedCultureId: null, selectedEra: null }),
+  selectCulture: (selectedCultureId) => set({ selectedCultureId, selection: null, selectedEventId: null, selectedEra: null }),
+  selectEra: (selectedEra) => set({ selectedEra, selection: null, selectedEventId: null, selectedCultureId: null }),
   toggleLayer: (layer) => set((s) => ({ layers: { ...s.layers, [layer]: !s.layers[layer] } })),
   setBaseMap: (baseMap) => set({ baseMap }),
   countryFilter: null,

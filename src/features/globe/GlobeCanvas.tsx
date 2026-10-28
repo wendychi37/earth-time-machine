@@ -6,6 +6,7 @@ import { Suspense, useMemo, useRef } from "react";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
+import { EraLabels } from "@/features/eras/EraLabels";
 import { EventMarkers } from "@/features/events/EventMarkers";
 import type { BoundaryFeature } from "@/types/boundary";
 import type { HistoricalEvent } from "@/types/event";
@@ -43,6 +44,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
   const showLabels = useAppStore((s) => s.layers.labels);
   const showHistorical = useAppStore((s) => s.layers.historical);
   const showEvents = useAppStore((s) => s.layers.events);
+  const showEras = useAppStore((s) => s.layers.eras);
   const baseMap = useAppStore((s) => s.baseMap);
   const tone = baseMap === "map" ? "dark" : "light";
   const mapCountries = useMapCountries(baseMap === "map" || showLabels);
@@ -102,7 +104,11 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           <Atmosphere />
         </Suspense>
         {showHistorical && boundaries && (
-          <BoundaryLayer features={boundaries} fillOpacity={baseMap === "map" ? 0.22 : 0.32} />
+          <BoundaryLayer
+            features={boundaries}
+            fillOpacity={(baseMap === "map" ? 0.22 : 0.32) + (showEras ? 0.12 : 0)}
+            colorByRegion={showEras}
+          />
         )}
         {(showLabels || baseMap === "map") && (
           <MapBorders countries={mapCountries} adminLines={showLabels ? adminLines : null} tone={tone} />
@@ -117,6 +123,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           />
         )}
         {showEvents && <EventMarkers events={events} />}
+        {showEras && <EraLabels />}
         <SelectionMarker />
         <GlobeControls />
       </Canvas>

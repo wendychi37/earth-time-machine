@@ -3,6 +3,7 @@
 import { useEffect, useMemo } from "react";
 import { BufferAttribute, BufferGeometry, DoubleSide } from "three";
 import { colorForName } from "@/lib/boundaries/colors";
+import { regionForPolity, regionShade } from "@/lib/eras/query";
 import { buildFillArrays } from "@/lib/geo/polygonMesh";
 import { geometryToLinePositions } from "@/lib/geo/ringLines";
 import type { BoundaryFeature } from "@/types/boundary";
@@ -11,6 +12,8 @@ interface BoundaryLayerProps {
   features: BoundaryFeature[];
   /** 填色透明度；地圖模式底下已有國家色塊，填色要淡一點 */
   fillOpacity?: number;
+  /** 開啟「各地朝代」圖層時，同一地區的國家用該地區的色系，和朝代名牌、色帶同色 */
+  colorByRegion?: boolean;
 }
 
 /** 未標示政權的區域不填色也不畫框，避免看起來像一個國家 */
@@ -20,16 +23,19 @@ const isNamed = (f: BoundaryFeature) => !!f.properties.name;
  * 歷史疆域：依政權上色的半透明面 + 邊界線。
  * 近似、中等或未標示精度的邊界用虛線，依國際法確定的邊界（精度 3）用實線。
  */
-export function BoundaryLayer({ features, fillOpacity = 0.32 }: BoundaryLayerProps) {
+export function BoundaryLayer({ features, fillOpacity = 0.32, colorByRegion = false }: BoundaryLayerProps) {
   const fill = useMemo(() => {
-    const { positions, colors } = buildFillArrays(features, (f) =>
-      isNamed(f) ? colorForName(f.properties.subjecto ?? f.properties.name!) : null,
-    );
+    const { positions, colors } = buildFillArrays(features, (f) => {
+      if (!isNamed(f)) return null;
+      const name = f.properties.subjecto ?? f.properties.name!;
+      const region = colorByRegion ? regionForPolity(f.properties.name, f.geometry) : null;
+      return region ? regionShade(region, name) : colorForName(name);
+    });
     const g = new BufferGeometry();
     g.setAttribute("position", new BufferAttribute(positions, 3));
     g.setAttribute("color", new BufferAttribute(colors, 3));
     return g;
-  }, [features]);
+  }, [features, colorByRegion]);
 
   const [approxLines, preciseLines] = useMemo(() => {
     const named = features.filter(isNamed);
