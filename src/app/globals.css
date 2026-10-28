@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* 只掃描 src 找 class：data/ 與 public/data 的大型 JSON 會讓 Vercel 上的 Tailwind 掃描逾時 */
+@import "tailwindcss" source("../");
 
 :root {
   --background: #05070d;
