@@ -1,7 +1,7 @@
 {
  "source": "https://en.wikipedia.org/",
  "license": "CC BY-SA 4.0",
- "fetchedAt": "2026-10-28T07:25:06.082Z",
+ "fetchedAt": "2026-10-28T07:34:45.932Z",
  "pages": [
   {
    "title": "Timeline of Russian history",
@@ -12053,6 +12053,15 @@
      "links": [
       "Cordilleran Ice Sheet",
       "Laurentide Ice Sheet"
+     ]
+    },
+    {
+     "section": "Antiquity",
+     "text": "約前1000年－1000年：Woodland Period of Pre-Columbian Native Americans in Eastern America.",
+     "links": [
+      "Common Era",
+      "Woodland Period",
+      "Pre-Columbian"
      ]
     },
     {
@@ -36915,6 +36924,21 @@
   "Laurentide Ice Sheet": {
    "title": "Laurentide ice sheet",
    "qid": "Q1765405",
+   "coord": null
+  },
+  "Common Era": {
+   "title": "Common Era",
+   "qid": "Q208141",
+   "coord": null
+  },
+  "Woodland Period": {
+   "title": "Woodland period",
+   "qid": "Q2299963",
+   "coord": null
+  },
+  "Pre-Columbian": {
+   "title": "Pre-Columbian era",
+   "qid": "Q202390",
    "coord": null
   },
   "Pyramid of the Sun": {
@@ -79353,6 +79377,35 @@
    ],
    "P31": [
     "Q12599"
+   ]
+  },
+  "Q2299963": {
+   "label": "伍德蘭期",
+   "coord": null,
+   "zhwiki": "疏林时代",
+   "P276": [
+    "Q49"
+   ],
+   "P17": [
+    "Q30"
+   ],
+   "P31": [
+    "Q11514315"
+   ],
+   "P30": [
+    "Q49"
+   ]
+  },
+  "Q202390": {
+   "label": "前哥倫布時期",
+   "coord": null,
+   "zhwiki": "前哥倫布時期",
+   "P276": [
+    "Q828"
+   ],
+   "P31": [
+    "Q6428674",
+    "Q15401633"
    ]
   },
   "Q29238": {
