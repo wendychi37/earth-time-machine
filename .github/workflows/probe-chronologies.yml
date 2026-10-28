@@ -1,0 +1,16 @@
+# 暫時用：查詢各國年表條目數，查完刪除
+name: probe-chronologies
+on:
+  push:
+    branches: [claude/project-thread-x2s0da]
+    paths: [scripts/probe/probe-chronologies.mts]
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx tsx scripts/probe/probe-chronologies.mts
