@@ -20,11 +20,14 @@ export async function api(params, host = "zh.wikipedia.org") {
 /**
  * 取得頁面的 HTML、版本號與標題（中文維基百科轉成繁體 zh-tw）。
  * 用 index.php?action=render（使用解析快取），大頁面不像 action=parse 那樣容易被拒（503）。
+ * 頁面不存在時回傳 null。
  */
 export async function fetchPage(title, lang = "zh") {
   const host = `${lang}.wikipedia.org`;
   const info = await api({ action: "query", titles: title, prop: "revisions|info", rvprop: "ids", inprop: "varianttitles", redirects: "1" }, host);
   const page = info.query.pages[0];
+  // 頁面不存在時回傳 null，由呼叫端決定略過或停止
+  if (page.missing || !page.revisions) return null;
   const url = `https://${host}/w/index.php?` + new URLSearchParams({ title: page.title, action: "render", ...(lang === "zh" ? { variant: "zh-tw" } : {}), oldid: String(page.revisions[0].revid) });
   for (let i = 0; i < 8; i++) {
     const res = await fetch(url, { headers: UA }).catch(() => null);

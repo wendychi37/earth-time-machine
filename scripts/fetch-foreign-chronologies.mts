@@ -14,7 +14,16 @@ const allLinks = new Set<string>();
 for (const source of FOREIGN_CHRONOLOGIES) {
   const lang = source.lang ?? "en";
   const page = await fetchPage(source.page, lang);
+  // 不存在、轉址到一般歷史條目（不是年表），或取不到幾條的頁面就略過
+  if (!page || !/^Timeline\b/i.test(page.title)) {
+    console.log(`${source.page}: 略過（${page ? `轉址到〈${page.title}〉` : "頁面不存在"}）`);
+    continue;
+  }
   const items = extractChronologyItems(page.html, lang);
+  if (items.length < 10) {
+    console.log(`${source.page}: 略過（只取到 ${items.length} 條）`);
+    continue;
+  }
   items.forEach((it) => it.links.forEach((l) => allLinks.add(l)));
   pages.push({ title: page.title, displayTitle: page.title, revid: page.revid, sourcePage: source.page, lang, items });
   console.log(`${source.page}: ${items.length} 條，revid ${page.revid}`);
