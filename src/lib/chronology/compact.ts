@@ -25,6 +25,8 @@ type CompactEvent = Omit<
   loc?: EventSource;
   iso?: string;
   wiki?: string;
+  /** 英文條目（外文年表） */
+  wen?: string;
   /** [條目, 顯示名稱]；名稱與條目相同時只存條目 */
   rel?: (string | [string, string])[];
 };
@@ -45,6 +47,7 @@ export function packChronology(meta: Pick<CompactChronology, "notice" | "license
       ...(location ? { loc: location } : {}),
       ...(country ? { iso: country.iso } : {}),
       ...(wikipedia.zh ? { wiki: wikipedia.zh } : {}),
+      ...(wikipedia.en ? { wen: wikipedia.en } : {}),
       ...(relatedArticles?.length ? { rel: relatedArticles.map((r) => (r.label === r.title ? r.title : [r.title, r.label])) } : {}),
     };
   });
@@ -52,14 +55,14 @@ export function packChronology(meta: Pick<CompactChronology, "notice" | "license
 }
 
 export function unpackChronology(data: CompactChronology): HistoricalEvent[] {
-  return data.events.map(({ src, loc, iso, wiki, rel, ...rest }) => ({
+  return data.events.map(({ src, loc, iso, wiki, wen, rel, ...rest }) => ({
     ...rest,
     category: "other",
     isDemo: false,
     reviewStatus: "unreviewed",
     sources: loc ? [data.sources[src], loc] : [data.sources[src]],
     country: iso ? { iso, nameZh: data.countries[iso] } : null,
-    wikipedia: { zh: wiki ?? null, en: null },
+    wikipedia: { zh: wiki ?? null, en: wen ?? null },
     relatedArticles: (rel ?? []).map((r) => (typeof r === "string" ? { title: r, label: r } : { title: r[0], label: r[1] })),
   }));
 }

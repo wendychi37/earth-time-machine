@@ -27,6 +27,8 @@ export interface HistoricalEvent {
   continent?: Continent | null;
   /** 依標記位置判斷的今日國家（供使用者依國家篩選） */
   country?: { iso: string; nameZh: string } | null;
+  /** 譯自外文年表的事件：原文與翻譯方式（標題與內容為譯文） */
+  translation?: { fromLang: "en"; original: string };
   /** 年表原文中連結到的其他維基百科條目 */
   relatedArticles?: { title: string; label: string }[];
   wikidataQid: string | null;

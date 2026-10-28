@@ -14,6 +14,8 @@ export interface RawChronology {
     revid: number;
     /** 各國年表：sources.ts 中的頁面名稱 */
     sourcePage?: string;
+    /** 外文年表的語言（預設中文） */
+    lang?: "en";
     items: { section: string | null; text: string; links: string[] }[];
   }[];
   linkInfo: Record<string, { title: string; qid: string | null; coord: { lat: number; lon: number; type: string | null } | null }>;
@@ -30,6 +32,8 @@ interface WikidataEntry {
   P19?: string[];
   P31?: string[];
   P36?: string[];
+  /** 對應的中文維基百科條目 */
+  zhwiki?: string;
 }
 
 /** 國家、王朝、帝國等「政權」類型：它們的座標只能當作區域示意 */
@@ -146,8 +150,12 @@ export function titleOf(body: string): string {
   return body.trim();
 }
 
-const pageUrl = (title: string, revid: number) =>
-  `https://zh.wikipedia.org/w/index.php?title=${encodeURIComponent(title)}&oldid=${revid}&variant=zh-tw`;
+const pageUrl = (title: string, revid: number, lang = "zh") =>
+  lang === "zh"
+    ? `https://zh.wikipedia.org/w/index.php?title=${encodeURIComponent(title)}&oldid=${revid}&variant=zh-tw`
+    : `https://${lang}.wikipedia.org/w/index.php?title=${encodeURIComponent(title)}&oldid=${revid}`;
+
+const LANG_NAME = { en: "英文" } as const;
 
 type Country = { iso: string; nameZh: string };
 
@@ -163,12 +171,14 @@ interface BuildOptions {
   /** 各國年表的頁面歸屬；世界史年表不提供 */
   pageCountry?: (page: RawChronology["pages"][number]) => PageCountry | null;
   idPrefix?: string;
+  /** 外文年表：取得原文的繁體中文翻譯；沒有翻譯的條目不收錄 */
+  translate?: (original: string) => string | null;
 }
 
 /** 把維基百科年表原始資料（〈世界史年表〉或各國歷史年表）轉成網站使用的事件清單。 */
 export function buildChronology(
   raw: RawChronology,
-  { countryAt = () => null, pageCountry = () => null, idPrefix = "wsc" }: BuildOptions = {},
+  { countryAt = () => null, pageCountry = () => null, idPrefix = "wsc", translate = () => null }: BuildOptions = {},
 ): { events: HistoricalEvent[]; skipped: string[] } {
   const events: HistoricalEvent[] = [];
   const skipped: string[] = [];
@@ -190,16 +200,35 @@ export function buildChronology(
         calendar: parsed.latest < 1582 ? "julian" : "gregorian",
         originalText: parsed.text,
       };
+      const original = tidy(split.body);
+      const foreign = page.lang ? LANG_NAME[page.lang] : null;
+      const translated = foreign ? translate(original) : null;
+      if (foreign && !translated) {
+        skipped.push(`（未翻譯）${item.text}`);
+        return;
+      }
+      const body = translated ?? original;
       let where = locateItem(raw, item.links);
       // 各國年表：找不到地點，或只找到「別國」的國家級位置時，改用該國的代表位置
       if (owner && (!where || (where.precision === "region" && countryAt(where.lat, where.lon)?.iso !== owner.country.iso))) {
         where = null;
       }
+      const entry = (title: string) => raw.wikidata[raw.linkInfo[title]?.qid ?? ""];
+      // 外文年表的相關條目連到對應的中文條目；沒有中文條目的就不列
       const related = item.links
         .filter((l) => !DATE_LINK.test(l))
-        .map((title) => ({ title, label: raw.wikidata[raw.linkInfo[title]?.qid ?? ""]?.label ?? title }));
+        .flatMap((title) => {
+          if (!foreign) return [{ title, label: entry(title)?.label ?? title }];
+          const zh = entry(title)?.zhwiki;
+          return zh ? [{ title: zh, label: entry(title)?.label ?? zh }] : [];
+        });
       const sources: EventSource[] = [
-        { title: `維基百科〈${page.displayTitle}〉`, url: pageUrl(page.title, page.revid), supports: "overall", note: `${raw.license}，版本 ${page.revid}` },
+        {
+          title: foreign ? `${foreign}維基百科〈${page.displayTitle}〉` : `維基百科〈${page.displayTitle}〉`,
+          url: pageUrl(page.title, page.revid, page.lang),
+          supports: "overall",
+          note: foreign ? `${raw.license}，版本 ${page.revid}；中文為 AI 翻譯` : `${raw.license}，版本 ${page.revid}`,
+        },
       ];
       const fallback = !where && owner ? owner.fallback : null;
       if (where) {
@@ -212,8 +241,9 @@ export function buildChronology(
       }
       events.push({
         id: `${idPrefix}-${p}-${i}`,
-        title: titleOf(tidy(split.body)),
-        summary: tidy(split.body),
+        title: titleOf(body),
+        summary: body,
+        ...(foreign && page.lang ? { translation: { fromLang: page.lang, original } } : {}),
         period: { start, end: null },
         location: where ? { lat: where.lat, lon: where.lon } : fallback ? { lat: fallback.lat, lon: fallback.lon } : null,
         locationLabel: where?.label ?? fallback?.label ?? "",
@@ -224,7 +254,9 @@ export function buildChronology(
         country: owner?.country ?? (where ? countryAt(where.lat, where.lon) : null),
         relatedArticles: related,
         wikidataQid: where?.qid ?? null,
-        wikipedia: { zh: where?.link ?? related[0]?.title ?? null, en: null },
+        wikipedia: foreign
+          ? { zh: (where && entry(where.link)?.zhwiki) ?? related[0]?.title ?? null, en: where?.link ?? null }
+          : { zh: where?.link ?? related[0]?.title ?? null, en: null },
         sources,
         isDemo: false,
         reviewStatus: "unreviewed",

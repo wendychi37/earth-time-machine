@@ -94,7 +94,7 @@ export function englishDateToZh(raw: string): string | null {
   const alternatives = s.split(/\s+or\s+|\s*\/\s*(?=\d)/);
   const out: string[] = [];
   for (const alt of alternatives) {
-    const parts = alt.split(/\s*(?:–|—|\bto\b|(?<=\d)\s*-\s*(?=\d|c\.)|\s-\s)\s*/i).filter(Boolean);
+    const parts = alt.split(/\s*(?:–|—|\bto\b|(?<=\d|BCE|BC|CE|AD)\s*-\s*(?=\d|c\.)|\s-\s)\s*/i).filter(Boolean);
     if (parts.length === 0 || parts.length > 2) return null;
     const points = parts.map((p) => point(p, allBce));
     if (points.some((p) => !p)) return null;

@@ -25,6 +25,11 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
     >
       <header className="mb-2 flex items-start justify-between gap-2">
         <div>
+          {event.translation && (
+            <span className="mb-1 inline-block rounded bg-sky-400/20 px-1.5 py-0.5 text-[11px] font-medium text-sky-200" data-testid="translated-badge">
+              {t.translatedBadge}
+            </span>
+          )}
           {event.isDemo && (
             <span className="mb-1 inline-block rounded bg-amber-400/20 px-1.5 py-0.5 text-[11px] font-medium text-amber-200">
               {t.demoBadge}
@@ -66,6 +71,16 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
         <div>
           <dt className="text-xs text-muted">{t.summary}</dt>
           <dd className="leading-relaxed">{event.summary}</dd>
+          {event.translation && (
+            <dd>
+              <details className="mt-1 text-xs text-muted">
+                <summary className="cursor-pointer">{t.original}</summary>
+                <p lang={event.translation.fromLang} className="mt-1 leading-relaxed">
+                  {event.translation.original}
+                </p>
+              </details>
+            </dd>
+          )}
         </div>
         <div>
           <dt className="text-xs text-muted">{t.sources}</dt>
@@ -112,7 +127,9 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
           </div>
         )}
       </dl>
-      {event.relatedArticles && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{t.chronologyNote}</p>}
+      {event.relatedArticles && (
+        <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{event.translation ? t.translatedNote : t.chronologyNote}</p>
+      )}
       {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-200/80">{t.demoNote}</p>}
     </article>
   );

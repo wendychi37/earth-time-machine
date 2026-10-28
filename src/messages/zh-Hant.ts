@@ -72,6 +72,9 @@ export const messages = {
     noLocation: "原文沒有提到可以放上地球的地點",
     related: "原文提到的條目",
     chronologyNote: "內容取自中文維基百科的年表頁面（出處見下方），原文照錄、未經改寫；地點由原文連結的條目推算，可能只是大概位置。",
+    translatedBadge: "譯自英文維基百科",
+    translatedNote: "這一條原文是英文，由 AI 翻成台灣繁體中文，可能有翻譯不精確之處；請以下方原文為準。地點由原文連結的條目推算，可能只是大概位置。",
+    original: "英文原文",
   },
   chronology: {
     title: "同一時期的世界",
