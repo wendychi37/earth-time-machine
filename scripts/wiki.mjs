@@ -3,8 +3,8 @@
  */
 export const UA = { "User-Agent": "EarthTimeMachine/0.1 (https://github.com/wendychi37/earth-time-machine)" };
 
-export async function api(params) {
-  const url = "https://zh.wikipedia.org/w/api.php?" + new URLSearchParams({ format: "json", formatversion: "2", ...params });
+export async function api(params, host = "zh.wikipedia.org") {
+  const url = `https://${host}/w/api.php?` + new URLSearchParams({ format: "json", formatversion: "2", ...params });
   // 維基百科偶爾限速並回傳非 JSON 的錯誤頁，多等幾次
   for (let i = 0; i < 8; i++) {
     const res = await fetch(url, { headers: UA }).catch(() => null);
@@ -18,13 +18,14 @@ export async function api(params) {
 }
 
 /**
- * 取得頁面轉成繁體（zh-tw）後的 HTML、版本號與繁體標題。
+ * 取得頁面的 HTML、版本號與標題（中文維基百科轉成繁體 zh-tw）。
  * 用 index.php?action=render（使用解析快取），大頁面不像 action=parse 那樣容易被拒（503）。
  */
-export async function fetchPage(title) {
-  const info = await api({ action: "query", titles: title, prop: "revisions|info", rvprop: "ids", inprop: "varianttitles", redirects: "1" });
+export async function fetchPage(title, lang = "zh") {
+  const host = `${lang}.wikipedia.org`;
+  const info = await api({ action: "query", titles: title, prop: "revisions|info", rvprop: "ids", inprop: "varianttitles", redirects: "1" }, host);
   const page = info.query.pages[0];
-  const url = "https://zh.wikipedia.org/w/index.php?" + new URLSearchParams({ title: page.title, action: "render", variant: "zh-tw", oldid: String(page.revisions[0].revid) });
+  const url = `https://${host}/w/index.php?` + new URLSearchParams({ title: page.title, action: "render", ...(lang === "zh" ? { variant: "zh-tw" } : {}), oldid: String(page.revisions[0].revid) });
   for (let i = 0; i < 8; i++) {
     const res = await fetch(url, { headers: UA }).catch(() => null);
     if (res?.ok) {
@@ -39,11 +40,11 @@ export async function fetchPage(title) {
 }
 
 /** 查詢連結條目的座標、座標類型與 Wikidata 項目 */
-export async function queryLinkInfo(titles) {
+export async function queryLinkInfo(titles, host = "zh.wikipedia.org") {
   const linkInfo = {};
   for (let i = 0; i < titles.length; i += 50) {
     const batch = titles.slice(i, i + 50);
-    const r = await api({ action: "query", titles: batch.join("|"), prop: "coordinates|pageprops", coprop: "type|dim|country", ppprop: "wikibase_item", redirects: "1", colimit: "max" });
+    const r = await api({ action: "query", titles: batch.join("|"), prop: "coordinates|pageprops", coprop: "type|dim|country", ppprop: "wikibase_item", redirects: "1", colimit: "max" }, host);
     const redirects = new Map();
     for (const n of r.query.normalized ?? []) redirects.set(n.from, n.to);
     for (const d of r.query.redirects ?? []) redirects.set(d.from, d.to);
@@ -68,7 +69,7 @@ export async function queryLinkInfo(titles) {
 // Wikidata：座標（P625）、所在地點（P276）、所在行政區（P131）、國家（P17）、國籍（P27）、出生地（P19）、類型（P31）、所在大洲（P30）、首都（P36）
 const PROPS = ["P625", "P276", "P131", "P17", "P27", "P19", "P31", "P30", "P36"];
 async function wbget(ids) {
-  const url = "https://www.wikidata.org/w/api.php?" + new URLSearchParams({ action: "wbgetentities", ids: ids.join("|"), props: "claims|labels", languages: "zh-tw|zh-hant|zh|en", format: "json" });
+  const url = "https://www.wikidata.org/w/api.php?" + new URLSearchParams({ action: "wbgetentities", ids: ids.join("|"), props: "claims|labels|sitelinks", sitefilter: "zhwiki", languages: "zh-tw|zh-hant|zh|en", format: "json" });
   for (let i = 0; i < 4; i++) {
     const res = await fetch(url, { headers: UA });
     if (res.ok) return (await res.json()).entities ?? {};
@@ -90,6 +91,8 @@ async function loadEntities(wikidata, qids) {
       const coord = mainValue(e.claims, "P625")[0];
       const label = e.labels?.["zh-tw"]?.value ?? e.labels?.["zh-hant"]?.value ?? e.labels?.zh?.value ?? e.labels?.en?.value ?? null;
       const entry = { label, coord: coord ? { lat: coord.latitude, lon: coord.longitude } : null };
+      // 中文維基百科條目名稱（外文年表的相關條目連到中文版）
+      if (e.sitelinks?.zhwiki) entry.zhwiki = e.sitelinks.zhwiki.title;
       for (const prop of PROPS.slice(1)) {
         const ids = mainValue(e.claims, prop).map((v) => v.id).filter(Boolean).slice(0, 3);
         if (ids.length) entry[prop] = ids;

@@ -4,6 +4,8 @@
  */
 export interface CountryChronologySource {
   page: string;
+  /** 維基百科語言版本，預設中文；外文年表的內容另外翻成繁體中文 */
+  lang?: "en";
   iso: string;
   fallback: { lat: number; lon: number; label: string };
 }
@@ -26,4 +28,24 @@ export const COUNTRY_CHRONOLOGIES: CountryChronologySource[] = [
   { page: "英國歷史年表", iso: "GBR", fallback: { lat: 51.51, lon: -0.13, label: "英國（以倫敦示意）" } },
   { page: "法国历史年表", iso: "FRA", fallback: { lat: 48.86, lon: 2.35, label: "法國（以巴黎示意）" } },
   { page: "德国历史年表", iso: "DEU", fallback: { lat: 52.52, lon: 13.4, label: "德國（以柏林示意）" } },
+];
+
+/**
+ * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前三國都是英文版最完整）。
+ * 內容翻成台灣繁體中文（data/chronology/translations/en.json），並標明譯自英文維基百科。
+ */
+const US = { iso: "USA", lang: "en", fallback: { lat: 38.9, lon: -77.04, label: "美國（以華盛頓示意）" } } as const;
+export const FOREIGN_CHRONOLOGIES: CountryChronologySource[] = [
+  { page: "Timeline of Russian history", iso: "RUS", lang: "en", fallback: { lat: 55.75, lon: 37.62, label: "俄羅斯（以莫斯科示意）" } },
+  { page: "Timeline of Indian history", iso: "IND", lang: "en", fallback: { lat: 28.61, lon: 77.21, label: "印度（以新德里示意）" } },
+  { page: "Timeline of pre–United States history", ...US },
+  { page: "Timeline of the history of the United States (1790–1819)", ...US },
+  { page: "Timeline of the history of the United States (1820–1859)", ...US },
+  { page: "Timeline of the history of the United States (1860–1899)", ...US },
+  { page: "Timeline of the history of the United States (1900–1929)", ...US },
+  { page: "Timeline of the history of the United States (1930–1949)", ...US },
+  { page: "Timeline of the history of the United States (1950–1969)", ...US },
+  { page: "Timeline of the history of the United States (1970–1989)", ...US },
+  { page: "Timeline of the history of the United States (1990–2009)", ...US },
+  { page: "Timeline of the history of the United States (2010–present)", ...US },
 ];

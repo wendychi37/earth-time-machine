@@ -3,7 +3,11 @@
  * 支援兩種常見寫法：清單（可巢狀，子項沿用上層日期）與表格（年份欄、可有日期欄、事件欄；年份欄可跨列）。
  * 只做字串處理，不改寫內容。
  */
+import { englishDateToZh, englishMonthDay, splitEnglishLine } from "./englishDate";
 import { parseChronologyDate, splitChronologyLine } from "./parseDate";
+
+/** 年表語言：英文年表的日期轉成中文寫法，內容保留英文原文（另外翻譯） */
+export type ChronologyLang = "zh" | "en";
 
 export interface ExtractedItem {
   section: string | null;
@@ -28,7 +32,7 @@ const NON_ARTICLE = /^(Special|File|Help|Wikipedia|Category|Template|Portal|Talk
 /** 一段 HTML 的純文字與條目連結 */
 export function textAndLinks(html: string): { text: string; links: string[] } {
   // action=parse 的連結是 /wiki/…；action=render 的是 https://zh.wikipedia.org/wiki/…
-  const links = [...html.matchAll(/<a [^>]*href="(?:https?:)?(?:\/\/zh\.wikipedia\.org)?\/wiki\/([^"#?]+)[^"]*"[^>]*>/g)]
+  const links = [...html.matchAll(/<a [^>]*href="(?:https?:)?(?:\/\/[a-z-]+\.wikipedia\.org)?\/wiki\/([^"#?]+)[^"]*"[^>]*>/g)]
     .map((a) => {
       try {
         return decodeURIComponent(a[1]).replace(/_/g, " ");
@@ -54,6 +58,7 @@ function clean(html: string): string {
   return html
     .replace(/<sup[^>]*class="[^"]*reference[^"]*"[\s\S]*?<\/sup>/g, "")
     .replace(/<style[\s\S]*?<\/style>/g, "")
+    .replace(/<link[^>]*>/g, "")
     .replace(/<span class="mw-editsection[\s\S]*?<\/span>\s*<\/span>/g, "")
     .replace(/<div class="navbox[\s\S]*$/g, "")
     .replace(/<div[^>]*class="[^"]*(?:reflist|refbegin|toc|hatnote|thumb|navbox)[^"]*"[\s\S]*?<\/div>/g, "");
@@ -87,13 +92,32 @@ export function splitDatedLine(line: string): { dateText: string; body: string }
   return best;
 }
 
+/** 各語言的日期處理：拆出一行的日期、判斷整段是否只是日期、表格年份欄轉成日期 */
+interface DateRules {
+  split(text: string): { dateText: string; body: string } | null;
+  isDate(text: string): boolean;
+  cell(text: string): string | null;
+}
+
+const ZH: DateRules = {
+  split: splitDatedLine,
+  isDate: (t) => Boolean(parseChronologyDate(t)),
+  cell: (t) => (parseChronologyDate(normalizeSlashDate(t)) ? normalizeSlashDate(t) : null),
+};
+
+const EN: DateRules = {
+  split: splitEnglishLine,
+  isDate: (t) => Boolean(englishDateToZh(t)),
+  cell: englishDateToZh,
+};
+
 interface Frame {
   html: string;
   date: string | null;
 }
 
 /** 清單項目：子清單沿用上層的日期（例如「1687年」底下列了幾件事） */
-function extractLists(html: string, section: () => string | null, out: ExtractedItem[]) {
+function extractLists(html: string, section: () => string | null, out: ExtractedItem[], rules: DateRules) {
   const stack: Frame[] = [];
   const re = /<li[^>]*>|<\/li>|<ul[^>]*>|<ol[^>]*>/g;
   let last = 0;
@@ -105,35 +129,35 @@ function extractLists(html: string, section: () => string | null, out: Extracted
       stack.push({ html: "", date: null });
     } else if (m[0] === "</li>") {
       const frame = stack.pop();
-      if (frame) emit(frame, stack, section(), out);
+      if (frame) emit(frame, stack, section(), out, rules);
     } else if (stack.length) {
       // 子清單開始：先決定上層的日期，供子項目使用
       const top = stack[stack.length - 1];
       const { text } = textAndLinks(top.html);
-      const split = splitDatedLine(text);
-      top.date = split ? split.dateText : parseChronologyDate(text) ? text : top.date;
+      const split = rules.split(text);
+      top.date = split ? split.dateText : rules.isDate(text) ? rules.cell(text) : top.date;
       top.html += "\u0000SUBLIST\u0000";
     }
   }
 }
 
-function emit(frame: Frame, parents: Frame[], section: string | null, out: ExtractedItem[]) {
+function emit(frame: Frame, parents: Frame[], section: string | null, out: ExtractedItem[], rules: DateRules) {
   const own = frame.html.split("\u0000SUBLIST\u0000")[0];
   const { text, links } = textAndLinks(own);
   if (!text) return;
-  const split = splitDatedLine(text);
+  const split = rules.split(text);
   // 「2000年：（民國89年）：」這種只有註記的上層項目，內容在子項目裡
   if (split && !/^[（(][^）)]*[）)][：:\s]*$/.test(split.body)) {
     out.push({ section, text: `${split.dateText}：${split.body}`, links });
     return;
   }
   // 只有日期（底下另有子項目）就不輸出；沒有日期的子項目沿用上層日期
-  if (parseChronologyDate(text)) return;
+  if (rules.isDate(text)) return;
   const inherited = [...parents].reverse().find((p) => p.date)?.date;
   if (inherited) out.push({ section, text: `${inherited}：${text}`, links });
 }
 
-function extractTable(table: string, section: string | null, out: ExtractedItem[]) {
+function extractTable(table: string, section: string | null, out: ExtractedItem[], rules: DateRules) {
   const rows = [...table.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map((r) => r[1]);
   let columns = 0;
   let carried: { date: string; left: number } | null = null;
@@ -154,21 +178,25 @@ function extractTable(table: string, section: string | null, out: ExtractedItem[
       date = carried.date;
       carried.left--;
     } else {
-      const first = textAndLinks(cells[0].html).text;
-      if (!parseChronologyDate(normalizeSlashDate(first))) continue;
-      date = normalizeSlashDate(first);
+      const first = rules.cell(textAndLinks(cells[0].html).text);
+      if (!first) continue;
+      date = first;
       rest = cells.slice(1);
       carried = cells[0].rowspan > 1 ? { date, left: cells[0].rowspan - 1 } : null;
     }
     const event = rest[rest.length - 1];
     if (!event) continue;
+    // 英文年表的「Date」欄（例如「May」「8 September」）：只有年份的日期補上月日
+    const md = rest.length >= 2 && rules === EN ? englishMonthDay(textAndLinks(rest[0].html).text) : null;
+    const dated = md && /^\d+年$/.test(date) ? `${date}${md.month}月${md.day ? `${md.day}日` : ""}` : date;
     const { text, links } = textAndLinks(event.html);
-    if (text) out.push({ section, text: `${date}：${text}`, links });
+    if (text) out.push({ section, text: `${dated}：${text}`, links });
   }
 }
 
 /** 取出整頁的年表項目（依頁面順序） */
-export function extractChronologyItems(rawHtml: string): ExtractedItem[] {
+export function extractChronologyItems(rawHtml: string, lang: ChronologyLang = "zh"): ExtractedItem[] {
+  const rules = lang === "en" ? EN : ZH;
   const html = clean(rawHtml);
   const out: ExtractedItem[] = [];
   let section: string | null = null;
@@ -176,11 +204,11 @@ export function extractChronologyItems(rawHtml: string): ExtractedItem[] {
   const re = /<h([234])[^>]*>([\s\S]*?)<\/h\1>|<table[^>]*class="[^"]*wikitable[^"]*"[^>]*>([\s\S]*?)<\/table>/g;
   let last = 0;
   for (const m of html.matchAll(re)) {
-    extractLists(html.slice(last, m.index), () => section, out);
+    extractLists(html.slice(last, m.index), () => section, out, rules);
     last = m.index! + m[0].length;
     if (m[2] !== undefined) section = textAndLinks(m[2]).text || section;
-    else extractTable(m[3], section, out);
+    else extractTable(m[3], section, out, rules);
   }
-  extractLists(html.slice(last), () => section, out);
+  extractLists(html.slice(last), () => section, out, rules);
   return out;
 }

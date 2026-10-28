@@ -1,17 +1,17 @@
-# 重新下載維基百科年表（〈世界史年表〉與各國歷史年表）與 Wikidata 座標，並更新網站用的年表檔。
+# 重新下載維基百科年表（〈世界史年表〉、各國歷史年表與外文國家年表）與 Wikidata 座標，並更新網站用的年表檔。
 # 在 GitHub 的 Actions 頁面選擇此 workflow，按「Run workflow」並選擇要更新的分支。
 name: fetch-chronology
 on:
   workflow_dispatch:
   push:
     branches: [claude/project-thread-k3xwgm]
-    paths: [scripts/fetch-country-chronologies.mts, scripts/wiki.mjs, src/lib/chronology/sources.ts, src/lib/chronology/extract.ts]
+    paths: [scripts/fetch-country-chronologies.mts, scripts/fetch-foreign-chronologies.mts, scripts/wiki.mjs, src/lib/chronology/sources.ts, src/lib/chronology/extract.ts, src/lib/chronology/englishDate.ts]
 permissions:
   contents: write
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,6 +20,7 @@ jobs:
       - if: github.event_name == 'workflow_dispatch'
         run: node scripts/fetch-world-chronology.mjs
       - run: npx tsx scripts/fetch-country-chronologies.mts
+      - run: npx tsx scripts/fetch-foreign-chronologies.mts
       - run: npm run data:chronology
       - run: |
           git config user.name "github-actions[bot]"
