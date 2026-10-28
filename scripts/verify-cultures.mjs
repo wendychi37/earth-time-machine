@@ -9,16 +9,22 @@ import { readFileSync } from "node:fs";
 const UA = { "User-Agent": "EarthTimeMachine/0.1 (https://github.com/wendychi37/earth-time-machine)" };
 const { cultures } = JSON.parse(readFileSync("public/data/archaeology/cultures.json", "utf8"));
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+// 維基百科偶爾限速（429）或回傳錯誤頁，依 Retry-After 或逐次拉長間隔重試
 async function api(params) {
   const url = "https://zh.wikipedia.org/w/api.php?" + new URLSearchParams({ format: "json", formatversion: "2", ...params });
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 8; i++) {
     const res = await fetch(url, { headers: UA });
     const text = await res.text();
-    try {
-      return JSON.parse(text);
-    } catch {
-      await new Promise((r) => setTimeout(r, 3000 * (i + 1)));
+    if (res.ok) {
+      try {
+        return JSON.parse(text);
+      } catch {}
     }
+    const wait = Number(res.headers.get("retry-after")) * 1000 || Math.min(60_000, 5000 * 2 ** i);
+    console.log(`重試 ${i + 1}：HTTP ${res.status}，${wait / 1000} 秒後再試（${params.titles ?? ""}）`);
+    await sleep(wait);
   }
   throw new Error(`API 失敗：${url}`);
 }
@@ -35,6 +41,7 @@ for (const title of pages) {
   if (page.missing) throw new Error(`找不到條目：${title}`);
   texts[title] = normalize(page.extract ?? "");
   revids[title] = { title: page.title, revid: page.revisions?.[0]?.revid };
+  await sleep(500);
 }
 
 let failed = 0;
