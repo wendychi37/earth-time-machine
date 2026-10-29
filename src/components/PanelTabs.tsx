@@ -12,6 +12,7 @@ const icon = (path: ReactNode) => (
 
 const TABS: { id: PanelTab; icon: ReactNode }[] = [
   { id: "time", icon: icon(<><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></>) },
+  { id: "focus", icon: icon(<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" />) },
   { id: "sameEra", icon: icon(<><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9S9.5 5.7 12 3z" /></>) },
   { id: "layers", icon: icon(<><path d="M12 3 3 8l9 5 9-5-9-5z" /><path d="m3 12 9 5 9-5M3 16l9 5 9-5" /></>) },
   { id: "details", icon: icon(<><circle cx="12" cy="12" r="9" /><path d="M12 11v5M12 8h.01" /></>) },
@@ -19,7 +20,7 @@ const TABS: { id: PanelTab; icon: ReactNode }[] = [
 
 /**
  * 分頁列。手機：像 App 一樣固定在最下方，附圖示；再點一次目前的分頁可收起面板，讓地球佔滿畫面。
- * 桌面：在右側面板最上方，沒有「年份」（桌面的時間軸固定在地球下方）。
+ * 桌面：在右側面板最上方，沒有「年份」（桌面的時間軸固定在地球下方），一開始顯示「重點」。
  */
 export function PanelTabs() {
   const t = messages.panel;
@@ -35,8 +36,8 @@ export function PanelTabs() {
       className="flex shrink-0 border-t border-panel-border bg-[#0b0f1a] pb-[env(safe-area-inset-bottom)] sm:col-start-2 sm:row-start-1 sm:border-l sm:border-t-0 sm:border-b sm:bg-panel sm:pb-0"
     >
       {TABS.map(({ id, icon }) => {
-        // 桌面沒有「年份」分頁，此時顯示「同一時期」
-        const active = tab === id || (id === "sameEra" && tab === "time");
+        // 桌面沒有「年份」分頁，此時顯示「重點」
+        const active = tab === id || (id === "focus" && tab === "time");
         const mobileActive = tab === id && open;
         return (
           <button

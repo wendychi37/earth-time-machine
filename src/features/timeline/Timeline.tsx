@@ -4,6 +4,7 @@ import { useRef, type KeyboardEvent, type PointerEvent } from "react";
 import { formatYear } from "@/lib/time/format";
 import { PHASE1_MOBILE_TICKS, PHASE1_SCALE, PHASE1_TICKS, snapYear, type TimeScale } from "@/lib/time/scale";
 import { messages } from "@/messages/zh-Hant";
+import { PeriodBands } from "@/features/curriculum/PeriodBands";
 import { useAppStore } from "@/store/useAppStore";
 import type { AstronomicalYear } from "@/types/time";
 import { TimelineTicks } from "./TimelineTicks";
@@ -68,6 +69,7 @@ export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTic
 
   return (
     <div className="px-2 pb-6 pt-1 sm:pt-3">
+      <PeriodBands scale={scale} />
       <div
         ref={trackRef}
         className="relative h-8 cursor-pointer touch-none select-none"

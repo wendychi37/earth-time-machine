@@ -3,6 +3,7 @@
 import { BoundaryGapBanner, BoundaryLegendBar } from "@/features/boundaries/BoundaryStatus";
 import { CultureCard } from "@/features/archaeology/CultureCard";
 import { SameEraPanel } from "@/features/chronology/SameEraPanel";
+import { FocusPanel } from "@/features/curriculum/FocusPanel";
 import { EraBands } from "@/features/eras/EraBands";
 import { EraCard } from "@/features/eras/EraCard";
 import { SelectedEventCard } from "@/features/events/SelectedEventCard";
@@ -13,16 +14,16 @@ import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 
 /**
- * 面板內容：同一時期的世界、圖層與底圖、點選後的介紹卡。
+ * 面板內容：課綱重點、同一時期的世界、圖層與底圖、點選後的介紹卡。
  * 手機在地球下方的面板裡（「年份」分頁時不顯示），桌面在右側一欄。
  */
 export function ControlPanel() {
   const t = messages.panel;
   const tab = useAppStore((s) => s.panelTab);
   const hasDetails = useAppStore((s) => !!(s.selection || s.selectedEventId || s.selectedCultureId || s.selectedEra));
-  // 「年份」分頁只在手機；桌面此時顯示「同一時期」
-  const shown = (id: "sameEra" | "layers" | "details") =>
-    tab === id ? "block" : id === "sameEra" && tab === "time" ? "hidden sm:block" : "hidden";
+  // 「年份」分頁只在手機；桌面此時顯示「重點」
+  const shown = (id: "focus" | "sameEra" | "layers" | "details") =>
+    tab === id ? "block" : id === "focus" && tab === "time" ? "hidden sm:block" : "hidden";
 
   return (
     <section
@@ -31,6 +32,10 @@ export function ControlPanel() {
     >
       <div className="mb-3 empty:hidden">
         <BoundaryGapBanner />
+      </div>
+
+      <div role="tabpanel" id="panel-focus" className={shown("focus")}>
+        <FocusPanel />
       </div>
 
       <div role="tabpanel" id="panel-sameEra" className={`${shown("sameEra")} space-y-3`}>

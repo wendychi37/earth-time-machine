@@ -12,6 +12,23 @@ export interface EventSource {
   note?: string;
 }
 
+/** 講義〈臺灣史、中國史、世界史對照表〉標出的重點（「課綱重點」圖層） */
+export interface CurriculumTag {
+  keyId: string;
+  track: "tw" | "cn" | "world";
+  /** 講義的說法（年表原文標題較長或較難時，名牌與重點清單用這個） */
+  title: string;
+  /** 講義的年代（天文年號）；年表那一條的日期可能差一兩年 */
+  start: number;
+  end?: number;
+  /** 所屬大時代（lib/curriculum/periods.ts） */
+  periodId: string;
+  /** 對應的「基本架構」條目 */
+  theme?: string;
+  /** 講義的補充說明 */
+  note?: string;
+}
+
 /** 對應資料表 historical_events（來源對應 event_sources）。與疆域資料分開存放。 */
 export interface HistoricalEvent {
   id: string;
@@ -36,4 +53,5 @@ export interface HistoricalEvent {
   sources: EventSource[];
   isDemo: boolean;
   reviewStatus: ReviewStatus;
+  curriculum?: CurriculumTag;
 }

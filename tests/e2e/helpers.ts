@@ -3,7 +3,7 @@ import { PerspectiveCamera } from "three";
 import { FOV, INITIAL_VIEW, initialDistance } from "../../src/features/globe/initialView";
 import { latLonToVector3 } from "../../src/lib/geo/sphere";
 
-type Tab = "time" | "sameEra" | "layers" | "details";
+type Tab = "time" | "focus" | "sameEra" | "layers" | "details";
 
 /** 切到某個分頁（已經在顯示就不再點，避免手機上再點一次把面板收起） */
 export async function openTab(page: Page, tab: Tab) {

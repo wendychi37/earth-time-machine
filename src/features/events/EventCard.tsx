@@ -1,5 +1,6 @@
 "use client";
 
+import { PERIODS, periodLabel } from "@/lib/curriculum/periods";
 import { formatLatLon } from "@/lib/geo/format";
 import { formatHistoricalDate, formatPeriod } from "@/lib/time/formatDate";
 import { messages } from "@/messages/zh-Hant";
@@ -13,6 +14,9 @@ const wikiUrl = (lang: "zh" | "en", title: string) =>
 export function EventCard({ event }: { event: HistoricalEvent }) {
   const selectEvent = useAppStore((s) => s.selectEvent);
   const t = messages.events;
+  const c = messages.curriculum;
+  const key = event.curriculum;
+  const period = key && PERIODS.find((p) => p.id === key.periodId);
   const originals = [event.period.start.originalText, event.period.end?.originalText].filter(Boolean);
   const precisionNote =
     event.locationPrecision === "approximate" ? t.locationApprox : event.locationPrecision === "region" ? t.locationRegion : "";
@@ -25,6 +29,12 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
     >
       <header className="mb-2 flex items-start justify-between gap-2">
         <div>
+          {key && (
+            <span className="mb-1 mr-1 inline-block rounded bg-accent/25 px-1.5 py-0.5 text-[11px] font-bold text-accent" data-testid="key-badge">
+              {c.badge}
+              {period && `・${periodLabel(period)}`}
+            </span>
+          )}
           {event.translation && (
             <span className="mb-1 inline-block rounded bg-sky-400/20 px-1.5 py-0.5 text-[11px] font-medium text-sky-200" data-testid="translated-badge">
               {t.translatedBadge}
@@ -43,6 +53,24 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
           ✕
         </button>
       </header>
+
+      {key && (key.theme || key.note || key.title !== event.title) && (
+        <div className="mb-3 rounded-md border border-accent/30 bg-accent/10 p-2.5 text-[13px] leading-relaxed" data-testid="key-note">
+          {key.title !== event.title && <p className="font-semibold">{key.title}</p>}
+          {key.theme && (
+            <p>
+              <span className="text-xs text-muted">{c.themeLabel}：</span>
+              {key.theme}
+            </p>
+          )}
+          {key.note && (
+            <p>
+              <span className="text-xs text-muted">{c.note}：</span>
+              {key.note}
+            </p>
+          )}
+        </div>
+      )}
 
       <dl className="space-y-2">
         <div>
@@ -68,7 +96,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
             <dd className="text-muted">{t.noLocation}</dd>
           )}
         </div>
-        <div>
+        <div className={event.summary && event.summary !== key?.note ? "" : "hidden"}>
           <dt className="text-xs text-muted">{t.summary}</dt>
           <dd className="leading-relaxed">{event.summary}</dd>
           {event.translation && (
@@ -130,6 +158,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
       {event.relatedArticles && (
         <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{event.translation ? t.translatedNote : t.chronologyNote}</p>
       )}
+      {key && !event.relatedArticles && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{c.addedNote}</p>}
       {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-200/80">{t.demoNote}</p>}
     </article>
   );
