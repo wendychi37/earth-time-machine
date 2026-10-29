@@ -1,0 +1,871 @@
+{
+ "source": {
+  "name": "中文維基百科",
+  "license": "CC BY-SA 4.0",
+  "retrievedAt": "2026-10-28"
+ },
+ "articles": {
+  "臺灣歷史": {
+   "title": "臺灣歷史",
+   "revid": 94633364,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E6%AD%B7%E5%8F%B2&oldid=94633364&variant=zh-tw",
+   "extract": "臺灣歷史，可追溯至在文獻記載以前，臺灣早已有人類活動。臺東長濱文化是目前考古所知臺灣最早的史前文化之一，較晚近的新石器時代則有南島語族的考古遺跡。"
+  },
+  "臺灣史前時代": {
+   "title": "臺灣史前時期",
+   "revid": 91188636,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E5%8F%B2%E5%89%8D%E6%99%82%E6%9C%9F&oldid=91188636&variant=zh-tw",
+   "extract": "臺灣史前時期與歷史時期分界一般以1624年荷蘭人殖民臺灣南部後，因為傳教目的而傳入羅馬拼音給原住民書寫當時平地原住民的語言前後為分界點，時代橫越澎湖水道海域撈獲的舊石器時代早期澎湖原人、舊石器時代晚期至金屬器時代，而這段時期中最著名的考古發掘為臺南市新市區（舊名新港）發現的新港文。"
+  },
+  "臺灣荷西殖民時期": {
+   "title": "臺灣荷西統治時期",
+   "revid": 81705697,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E8%8D%B7%E8%A5%BF%E7%B5%B1%E6%B2%BB%E6%99%82%E6%9C%9F&oldid=81705697&variant=zh-tw",
+   "extract": "臺灣歷史上的荷西統治時期（1624年－1662年），又稱荷西殖民時期，簡稱荷西時期，台灣教科書多稱為大航海時期（包含荷西、明鄭時期）、國際競爭時期（部份版本教科書將該時期起始時間定為1600年），其中涵蓋的時期可以指："
+  },
+  "東寧王國": {
+   "title": "臺灣明鄭時期",
+   "revid": 94878259,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E6%98%8E%E9%84%AD%E6%99%82%E6%9C%9F&oldid=94878259&variant=zh-tw",
+   "extract": "臺灣明鄭時期是指1661年至1683年間由明鄭政權統治臺灣的歷史時期。其統治期間一直奉南明為正朔，前後歷經鄭成功、鄭經及鄭克塽三世統治共二十二年。"
+  },
+  "臺灣清治時期": {
+   "title": "臺灣清治時期",
+   "revid": 95273274,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E6%B8%85%E6%B2%BB%E6%99%82%E6%9C%9F&oldid=95273274&variant=zh-tw",
+   "extract": "臺灣清治時期，又稱為清領臺灣、臺灣清領時期，是指自1683年清朝康熙皇帝派遣施琅消滅鄭氏時期的東寧王國政權，至1895年4月與大日本帝國簽訂《馬關條約》台灣割讓予日本為止，共計212年。"
+  },
+  "臺灣日治時期": {
+   "title": "台灣日治時期",
+   "revid": 95266929,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%B0%E7%81%A3%E6%97%A5%E6%B2%BB%E6%99%82%E6%9C%9F&oldid=95266929&variant=zh-tw",
+   "extract": "台灣日治時期，是台灣歷史上於1895年至1945年間由日本（大日本帝國）統治的時期。"
+  },
+  "臺灣戰後時期": {
+   "title": "臺灣戰後時期",
+   "revid": 95164558,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%87%BA%E7%81%A3%E6%88%B0%E5%BE%8C%E6%99%82%E6%9C%9F&oldid=95164558&variant=zh-tw",
+   "extract": "臺灣戰後時期指臺灣歷史上自1945年第二次世界大戰結束後迄今由中華民國統治的時期，也稱為中華民國時期、民國時期，早期稱國民政府時期。"
+  },
+  "朝鮮半島歷史": {
+   "title": "朝鮮半島歷史",
+   "revid": 94554844,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%9C%9D%E9%B2%9C%E5%8D%8A%E5%B2%9B%E5%8E%86%E5%8F%B2&oldid=94554844&variant=zh-tw",
+   "extract": "朝鮮半島歷史可追溯到遠古時期。其舊石器時代始於公元前50萬年，公元前5千年進入新石器時代，公元前10世紀開始進入青銅器時代。公元前4世紀進入鐵器時代。"
+  },
+  "古朝鮮": {
+   "title": "古朝鮮",
+   "revid": 95221876,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E6%9C%9D%E9%AE%AE&oldid=95221876&variant=zh-tw",
+   "extract": "古朝鮮（傳說紀年公元前2333年 - 公元前108年），原名朝鮮，後人為與後世的朝鮮王朝相區別在其國名前添加了一個「古」字。古朝鮮是朝鮮半島歷史最初的政權國家。"
+  },
+  "朝鮮三國時代": {
+   "title": "三國時代 (朝鮮半島)",
+   "revid": 94712585,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%89%E5%9B%BD%E6%97%B6%E4%BB%A3%20(%E6%9C%9D%E9%B2%9C%E5%8D%8A%E5%B2%9B)&oldid=94712585&variant=zh-tw",
+   "extract": "三國時代是朝鮮半島427年到公元660年之間高句麗（前37年－668年）、百濟（前18年－660年）、新羅（前57年－935年）三國鼎立的歷史時期。三國的文化和語言相通。宗教原本共同崇尚巫覡宗教。"
+  },
+  "統一新羅": {
+   "title": "統一新羅",
+   "revid": 94661630,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BB%9F%E4%B8%80%E6%96%B0%E7%BD%97&oldid=94661630&variant=zh-tw",
+   "extract": "統一新羅，又稱大新羅（대신라／大新羅）、後新羅（후기신라／後期新羅），是朝鮮半島的一個朝代。公元668年，新羅聯合唐朝滅亡百濟和高句麗後，隨後唐在平壤設安東都護府以管轄朝鮮半島，引發唐羅戰爭。"
+  },
+  "高麗王朝": {
+   "title": "高麗",
+   "revid": 95004989,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%AB%98%E9%BA%97&oldid=95004989&variant=zh-tw",
+   "extract": "高麗（ㄌㄧˊ），又稱高麗王朝、王氏高麗、麗朝，是朝鮮半島歷史上的一個朝代。918年，後高句麗統治者弓裔的部將王建推翻弓裔，改國號「高麗」，年號「天授」。"
+  },
+  "朝鮮王朝": {
+   "title": "朝鮮王朝",
+   "revid": 94841880,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%9C%9D%E9%B2%9C%E7%8E%8B%E6%9C%9D&oldid=94841880&variant=zh-tw",
+   "extract": "朝鮮王朝，又稱朝鮮國、大朝鮮國，日本及中華圈亦有稱李氏朝鮮、李朝、鮮朝，是朝鮮半島歷史上最後一個封建王朝。王室本貫為全州李氏，歷經26代君主共505年。國土大致上涵蓋整個朝鮮半島。"
+  },
+  "大韓帝國": {
+   "title": "大韓帝國",
+   "revid": 95312008,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A4%A7%E9%9F%93%E5%B8%9D%E5%9C%8B&oldid=95312008&variant=zh-tw",
+   "extract": "大韓帝國是朝鮮王朝末期君王高宗所建立的二元制君主立憲制國家。國土與原王朝相同（北方以鴨綠江及圖們江與中國為界），國都同為漢城（今首爾）。其廣義上是朝鮮王朝歷史部分，只是國號由「朝鮮國」改為「大韓帝國」，得名於古時三韓。"
+  },
+  "朝鮮日治時期": {
+   "title": "朝鮮日治時期",
+   "revid": 94649913,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%9C%9D%E9%AE%AE%E6%97%A5%E6%B2%BB%E6%99%82%E6%9C%9F&oldid=94649913&variant=zh-tw",
+   "extract": "朝鮮日治時期，大韓民國和朝鮮民主主義人民共和國稱日帝強佔期，是指1910年8月29日至1945年9月2日由大日本帝國統治朝鮮地區的時期。"
+  },
+  "朝鮮半島分裂": {
+   "title": "朝鮮半島南北分治",
+   "revid": 95296778,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%9C%9D%E9%B2%9C%E5%8D%8A%E5%B2%9B%E5%8D%97%E5%8C%97%E5%88%86%E6%B2%BB&oldid=95296778&variant=zh-tw",
+   "extract": "1945年之前的幾個世紀，朝鮮（朝鮮半島）一直處於政治統一狀態。朝鮮南北分治的起源可追溯到日治時期（1910年－1945年）。第二次世界大戰期間，抗擊日本的同盟國領袖在日本投降後考慮了朝鮮的未來問題。"
+  },
+  "日本歷史": {
+   "title": "日本歷史",
+   "revid": 95314833,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%97%A5%E6%9C%AC%E5%8E%86%E5%8F%B2&oldid=95314833&variant=zh-tw",
+   "extract": "據考古研究，日本群島在舊石器時代已有人類活動，較可靠的定居證據可追溯至距今約3.8萬—3.9萬年前。傳統上，日本以公元前660年2月11日神武天皇即位為建國之始，但這主要源自《古事記》與《日本書紀》中的神話，並非信史。"
+  },
+  "繩紋時代": {
+   "title": "繩紋時代",
+   "revid": 94976120,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%B9%A9%E7%B4%8B%E6%99%82%E4%BB%A3&oldid=94976120&variant=zh-tw",
+   "extract": "繩紋時代指日本舊石器時代末期至新石器時代，這一時期以繩紋陶器的逐步使用為主要特徵。關於繩紋時代的開始時間，學術界有不同的觀點，有一萬六千年前、一萬三千年前、一萬年前、五千年前等多種説法。"
+  },
+  "彌生時代": {
+   "title": "彌生時代",
+   "revid": 95163923,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%BD%8C%E7%94%9F%E6%99%82%E4%BB%A3&oldid=95163923&variant=zh-tw",
+   "extract": "彌生時代是日本列島歷史上的一個時代區分，定義為「從日本開始糧食生產到前方後圓墳出現為止的時期」。起源於約前10世紀-前8世紀的九州北部，迅速擴散至伊勢灣沿岸後，逐漸傳播至東北地區，一直延續到公元3世紀中期。"
+  },
+  "古墳時代": {
+   "title": "古墳時代",
+   "revid": 90124692,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9D%9F%E6%97%B6%E4%BB%A3&oldid=90124692&variant=zh-tw",
+   "extract": "古墳時代，為日本歷史的一個階段，日本繼彌生時代之後的時代，從西元3世紀開始，迄於西元592年，因當時統治者大量營建「古墳」而得名。古墳的分布遍及日本本州島幾乎全域，以近畿，山陽兩地區最多，北海道則未有發現。"
+  },
+  "飛鳥時代": {
+   "title": "飛鳥時代",
+   "revid": 94463748,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%A3%9B%E9%B3%A5%E6%99%82%E4%BB%A3&oldid=94463748&variant=zh-tw",
+   "extract": "飛鳥時代基本上是指7世紀的日本，具體而言乃是從592年到710年之間的時期，也有人認為其開始階段可更早至538年，和前一時期的古墳時代後期相重合。"
+  },
+  "奈良時代": {
+   "title": "奈良時代",
+   "revid": 94716220,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A5%88%E8%89%AF%E6%99%82%E4%BB%A3&oldid=94716220&variant=zh-tw",
+   "extract": "奈良時代（710年—794年），是日本歷史的一段時期，始於元明天皇將都城遷至平城京（奈良），終於桓武天皇將都城遷至平安京（京都），年代因首都而得名。由於人們希望藉助佛教來達到鎮護國家的目的，天平文化在這一時期蓬勃發展。"
+  },
+  "平安時代": {
+   "title": "平安時代",
+   "revid": 93880822,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B9%B3%E5%AE%89%E6%97%B6%E4%BB%A3&oldid=93880822&variant=zh-tw",
+   "extract": "平安時代是日本古代的最後一個歷史時代，它從794年桓武天皇將首都從長岡京（784年—794年）移到平安京（現在的京都）開始，結束時間歷史學界多以1185年源賴朝獲得朝廷文治勅許，即獲得各令制國守護與地頭任命權，作為平安時代與鎌倉時代的分野，不過民間過去多以1192年源賴朝受封征夷大將軍，作為鐮倉時代的開始。"
+  },
+  "鎌倉時代": {
+   "title": "鎌倉時代",
+   "revid": 94727548,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%8E%8C%E5%80%89%E6%99%82%E4%BB%A3&oldid=94727548&variant=zh-tw",
+   "extract": "鎌倉時代是日本歷史中以鎌倉為全國政治中心的武家政權時代。從1185年鎌倉幕府替代平家政權任命全國守護、地頭開始至1333年（正慶二年，元弘三年）鎌倉幕府滅亡後結束。"
+  },
+  "室町時代": {
+   "title": "室町時代",
+   "revid": 94768583,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%AE%A4%E7%94%BA%E6%97%B6%E4%BB%A3&oldid=94768583&variant=zh-tw",
+   "extract": "室町時代，是日本歷史中世時代的一個劃分，名稱源自於將幕府設在京都室町通的室町幕府。室町時代前後共經歷16代將軍，歷237年。上承鎌倉時代，下啟安土桃山時代。"
+  },
+  "安土桃山時代": {
+   "title": "安土桃山時代",
+   "revid": 94415671,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%AE%89%E5%9C%9F%E6%A1%83%E5%B1%B1%E6%97%B6%E4%BB%A3&oldid=94415671&variant=zh-tw",
+   "extract": "安土桃山時代，又稱織豐時代，是1568年至1603年之間，織田信長與豐臣秀吉先後作為「天下人」稱霸日本的時代。起於織田信長上洛並扶植最後一位室町幕府將軍足利義昭為其傀儡，終於德川家康建立江戶幕府。"
+  },
+  "江戶時代": {
+   "title": "江戶時代",
+   "revid": 94514035,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B1%9F%E6%88%B7%E6%97%B6%E4%BB%A3&oldid=94514035&variant=zh-tw",
+   "extract": "江戶時代（1603年－1868年），又稱德川時代，是指日本歷史中在江戶幕府（德川幕府）統治下的時期，從慶長八年二月十二（1603年3月24日）德川家康被委任為征夷大將軍在江戶（現在的東京）開設幕府時開始，到慶應四年四月十一（1868年5月3日）江戶開城後結束，為期265年。"
+  },
+  "明治時代": {
+   "title": "明治",
+   "revid": 93557794,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%98%8E%E6%B2%BB&oldid=93557794&variant=zh-tw",
+   "extract": "明治，是日本明治天皇在位期間使用的年號。時間為公曆1868年10月23日（慶應四年九月八日）至1912年7月30日。"
+  },
+  "大正時代": {
+   "title": "大正",
+   "revid": 95140742,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A4%A7%E6%AD%A3&oldid=95140742&variant=zh-tw",
+   "extract": "大正是日本大正天皇在位期間使用的年號，使用時間從1912年7月30日至1926年12月25日止。承續年號為明治，接續年號為昭和。"
+  },
+  "昭和時代": {
+   "title": "昭和",
+   "revid": 95172557,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%98%AD%E5%92%8C&oldid=95172557&variant=zh-tw",
+   "extract": "昭和是日本昭和天皇在位時所使用的年號，使用時間為1926年12月25日至1989年1月7日，是日本各年號中使用時間最長的，共計64年，但由於開始時是年底、終結時是年初，所以實際上為62年又13日。"
+  },
+  "平成時代": {
+   "title": "平成",
+   "revid": 94555932,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B9%B3%E6%88%90&oldid=94555932&variant=zh-tw",
+   "extract": "平成是日本第125代天皇明仁使用的年號。自1989年1月8日明仁繼位開始使用，至2019年4月30日明仁退位結束。"
+  },
+  "令和時代": {
+   "title": "令和",
+   "revid": 94878779,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BB%A4%E5%92%8C&oldid=94878779&variant=zh-tw",
+   "extract": "令和是日本今上天皇德仁的年號，也是日本現行使用的紀年稱號，選自日本古籍《萬葉集》當中的詩句「初春令月，氣淑風和」，為日本第一個所引典故並非出自中華傳統典籍的年號。"
+  },
+  "中國朝代": {
+   "title": "中國朝代",
+   "revid": 94505618,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E5%9B%BD%E6%9C%9D%E4%BB%A3&oldid=94505618&variant=zh-tw",
+   "extract": "中國朝代指中國歷史上某一世系君主統治之政權、及其相對應的歷史時期。「朝代」亦是以政權界定一個歷史時期之名詞，此等王朝之政權更替，構成中國朝代輪替。「朝」指以正統自居之當政政權，而「朝代」指「朝」政權執政之時代。"
+  },
+  "夏朝": {
+   "title": "夏朝",
+   "revid": 94968594,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A4%8F%E6%9C%9D&oldid=94968594&variant=zh-tw",
+   "extract": "夏朝（約前2070年－約前1600年）是中國歷史記載的第一個中原部族世襲制朝代。一般認為夏朝的政治形態是由多個部落聯盟或複雜酋邦形式聯合組成，其主體部族稱為夏人。"
+  },
+  "商朝": {
+   "title": "商朝",
+   "revid": 95278004,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%95%86%E6%9C%9D&oldid=95278004&variant=zh-tw",
+   "extract": "商朝（前17世紀—前11世紀），又稱大邑商、殷，是由商人建立的國家，是古代中國歷史上有當時文字記載遺留至今的最早朝代，標誌著中國歷史自商朝進入信史時期。"
+  },
+  "西周": {
+   "title": "西周",
+   "revid": 94906113,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E5%91%A8&oldid=94906113&variant=zh-tw",
+   "extract": "西周（約前1046年-前771年），指中國歷史上周朝前期定都豐鎬（宗周，今陝西西安）的時期，周成王時期遷都洛邑（成周，今河南洛陽），始於周武王在牧野之戰滅亡殷商，終於平王東遷，共經歷11代12王。"
+  },
+  "春秋時期": {
+   "title": "春秋時期",
+   "revid": 94634319,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%98%A5%E7%A7%8B%E6%97%B6%E6%9C%9F&oldid=94634319&variant=zh-tw",
+   "extract": "春秋時期（公元前770年—公元前476年／前403年），簡稱春秋，是東周的前半段。"
+  },
+  "戰國時期": {
+   "title": "戰國時期",
+   "revid": 91668863,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%88%98%E5%9B%BD%E6%97%B6%E6%9C%9F&oldid=91668863&variant=zh-tw",
+   "extract": "戰國時期（前475年/前403年—前221年），簡稱戰國，是中國歷史上的一段時期。"
+  },
+  "秦朝": {
+   "title": "秦朝",
+   "revid": 94466212,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%A7%A6%E6%9C%9D&oldid=94466212&variant=zh-tw",
+   "extract": "秦朝（前221年—前207年），是中國歷史上首個大一統中央集權的帝國。秦朝皇室為嬴姓，所以史書又稱嬴秦。秦朝源自周朝諸侯國秦國。"
+  },
+  "西漢": {
+   "title": "西漢",
+   "revid": 95226084,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E6%B1%89&oldid=95226084&variant=zh-tw",
+   "extract": "西漢（前206年或前202年2月28日—9年1月10日、23—25年）是現代歷史學家稱漢朝的上一部分，與東漢合稱兩漢。"
+  },
+  "新朝": {
+   "title": "新朝",
+   "revid": 92992870,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E6%9C%9D&oldid=92992870&variant=zh-tw",
+   "extract": "新朝（9年1月10日—23年10月6日），又稱新莽，是中國歷史上兩漢之間的短暫朝代，即王莽篡漢所建，僅一代皇帝，建都常安（即原長安，今西安）。"
+  },
+  "東漢": {
+   "title": "東漢",
+   "revid": 95060836,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%9C%E6%B1%89&oldid=95060836&variant=zh-tw",
+   "extract": "東漢（25年—220年）是漢朝的後半部分，與西漢合稱兩漢。東漢首位皇帝是漢光武帝劉秀，末代皇帝則是漢獻帝劉協。西漢建都長安，東漢建都雒陽，故而得名。另外東漢也被後世稱為後漢和中漢。"
+  },
+  "三國": {
+   "title": "三國",
+   "revid": 94233218,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%89%E5%9B%BD&oldid=94233218&variant=zh-tw",
+   "extract": "三國（狹義220年—280年，廣義184年／190年／208年—280年）是曹魏、蜀漢及孫吳三個國家並立的中國歷史時期，也是魏晉南北朝和六朝的開端時期。一般認為是從建安元年起算。"
+  },
+  "西晉": {
+   "title": "西晉",
+   "revid": 94984472,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%A5%BF%E6%99%8B&oldid=94984472&variant=zh-tw",
+   "extract": "西晉（266年2月4日－316年12月11日），是中國歷史上繼三國時期曹魏之後的王朝，與後來的東晉合稱晉朝。"
+  },
+  "東晉": {
+   "title": "東晉",
+   "revid": 94816722,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%9C%E6%99%8B&oldid=94816722&variant=zh-tw",
+   "extract": "東晉（317年4月6日－420年7月10日），中國朝代，乃西晉司馬氏政權的延續。因北方游牧民族發動戰爭，晉懷帝與晉愍帝先後被俘殺，琅琊王司馬睿在群臣擁戴下在建康（今南京）即位，即晉元帝，史稱東晉。"
+  },
+  "南北朝": {
+   "title": "南北朝",
+   "revid": 94538889,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%97%E5%8C%97%E6%9C%9D&oldid=94538889&variant=zh-tw",
+   "extract": "南北朝（420年—589年）是中國歷史上的一段時期，由420年劉宋代晉起至589年隋滅陳為止，上承兩晉、五胡十六國、下接隋朝。因為南北長時間對立，所以稱「南北朝」。"
+  },
+  "隋朝": {
+   "title": "隋朝",
+   "revid": 92757320,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%9A%8B%E6%9C%9D&oldid=92757320&variant=zh-tw",
+   "extract": "隋朝（581年3月4日－619年5月23日）是中國歷史之中，上承南北朝、下啟唐朝的一個重要的朝代，史學家常把它和唐朝合稱隋唐。581年隋文帝楊堅受禪建立隋朝，至619年王世充廢隋恭帝楊侗為止，國祚僅38年。"
+  },
+  "唐朝": {
+   "title": "唐朝",
+   "revid": 94564338,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%94%90%E6%9C%9D&oldid=94564338&variant=zh-tw",
+   "extract": "唐朝（618年6月18日—690年10月16日、705年3月3日—907年5月12日）是中國歷史上的一個重要朝代，由唐高祖李淵所建立，國祚289年，歷22任皇帝。"
+  },
+  "五代十國": {
+   "title": "五代十國",
+   "revid": 94126623,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BA%94%E4%BB%A3%E5%8D%81%E5%9B%BD&oldid=94126623&variant=zh-tw",
+   "extract": "五代十國（狹義907年—960年，廣義875年—979年）是中國歷史時期，由唐朝滅亡開始，至宋朝統一大部分漢地為止。五代十國實質上是晚唐政治與藩鎮割據的延續。"
+  },
+  "北宋": {
+   "title": "北宋",
+   "revid": 94956375,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8C%97%E5%AE%8B&oldid=94956375&variant=zh-tw",
+   "extract": "北宋（960年2月4日－1127年3月20日），古代皇朝，是宋朝的其中一個時期，開國皇帝是宋太祖趙匡胤，建都汴京（今河南省開封市）。"
+  },
+  "南宋": {
+   "title": "南宋",
+   "revid": 95080628,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%97%E5%AE%8B&oldid=95080628&variant=zh-tw",
+   "extract": "南宋（1127年6月12日－1279年3月19日）是宋朝的其中一個時期，與北宋合稱「兩宋」。"
+  },
+  "元朝": {
+   "title": "元朝",
+   "revid": 94108471,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%85%83%E6%9C%9D&oldid=94108471&variant=zh-tw",
+   "extract": "元朝，國號大元（詳見國號一節），又稱蒙元、皇元，是中國歷史上由蒙古族所建立的朝代。"
+  },
+  "明朝": {
+   "title": "明朝",
+   "revid": 94534127,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%98%8E%E6%9C%9D&oldid=94534127&variant=zh-tw",
+   "extract": "明朝（1368年1月23日—1644年4月25日）是中國歷史上繼元朝之後的帝制政權，也是最後一個由漢族建立的大一統朝代。歷經12世、16位皇帝，國祚276年。"
+  },
+  "清朝": {
+   "title": "清朝",
+   "revid": 95238860,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B8%85%E6%9C%9D&oldid=95238860&variant=zh-tw",
+   "extract": "清朝（1636年5月15日或1644年6月6日—1912年2月12日），國號大清，並使用中國、中華大清國、大清國、大清帝國等名稱為自稱，是中國歷史上由滿族建立的大一統朝代，亦為中國歷史上最後一個帝制皇朝。"
+  },
+  "中華民國大陸時期": {
+   "title": "中華民國大陸時期",
+   "revid": 95190121,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E8%8F%AF%E6%B0%91%E5%9C%8B%E5%A4%A7%E9%99%B8%E6%99%82%E6%9C%9F&oldid=95190121&variant=zh-tw",
+   "extract": "中華民國大陸時期，簡稱大陸時期或（中華）民國時期，是中華民國自建立至1949年底中華民國政府遷台以前的歷史時期。"
+  },
+  "中華人民共和國": {
+   "title": "中華人民共和國",
+   "revid": 95315762,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD&oldid=95315762&variant=zh-tw",
+   "extract": "35°N 103°E / 35°N 103°E / 35; 103"
+  },
+  "印度歷史": {
+   "title": "印度歷史",
+   "revid": 94396378,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%B0%E5%BA%A6%E5%8E%86%E5%8F%B2&oldid=94396378&variant=zh-tw",
+   "extract": "印度地區歷史悠久，是世界上最早出現文明的地區之一。而印度河是其古印度文明的發源地，在古印度文明滅亡後，雅利安人進入印度地區，在文化上並與當地人結合，創造了經典的吠陀文化。"
+  },
+  "印度河流域文明": {
+   "title": "印度河流域文明",
+   "revid": 94933549,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%B0%E5%BA%A6%E6%B2%B3%E6%B5%81%E5%9F%9F%E6%96%87%E6%98%8E&oldid=94933549&variant=zh-tw",
+   "extract": "印度河流域文明，又稱哈拉帕文明，是南亞西北部的一個青銅時代文明，存在於公元前3300年至公元前1300年之間，其成熟時期則在公元前2600年至公元前1900年之間。"
+  },
+  "吠陀時代": {
+   "title": "吠陀文化",
+   "revid": 94470291,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%90%A0%E9%99%80%E6%96%87%E5%8C%96&oldid=94470291&variant=zh-tw",
+   "extract": "吠陀時期，又稱吠陀時代，約存在公元前1500年至公元前500年之間。"
+  },
+  "十六雄國": {
+   "title": "印度列國時代",
+   "revid": 93299006,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%B0%E5%BA%A6%E5%88%97%E5%9B%BD%E6%97%B6%E4%BB%A3&oldid=93299006&variant=zh-tw",
+   "extract": "印度列國時代，又稱「十六雄國」，是印度歷史上的一個時期，前承印度吠陀時代。主要是十六大國並立爭霸，這些大國主要分佈在印度中北部的印度河-恆河平原。"
+  },
+  "孔雀王朝": {
+   "title": "孔雀王朝",
+   "revid": 95226911,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%AD%94%E9%9B%80%E7%8E%8B%E6%9C%9D&oldid=95226911&variant=zh-tw",
+   "extract": "孔雀王朝，又稱孔雀帝國，是印度鐵器時代的一個幅員遼闊的國家，由旃陀羅笈多在前322年建立於印度次大陸的摩揭陀，並以鬆散的方式存在到前185年。"
+  },
+  "笈多王朝": {
+   "title": "笈多王朝",
+   "revid": 94678526,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%AC%88%E5%A4%9A%E7%8E%8B%E6%9C%9D&oldid=94678526&variant=zh-tw",
+   "extract": "笈多王朝，是以南亞摩揭陀為核心的一個王朝，曾統治印度次大陸中的許多地區，是印度歷史上其中一個最興盛的時期，被稱為印度的黃金時代，在歷史上佔有重要地位。"
+  },
+  "德里蘇丹國": {
+   "title": "德里蘇丹國",
+   "revid": 94502851,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%BE%B7%E9%87%8C%E8%98%87%E4%B8%B9%E5%9C%8B&oldid=94502851&variant=zh-tw",
+   "extract": "德里蘇丹國，是1206年至1526年間存在於南亞的一個伊斯蘭教國家，由古爾王朝的德里總督庫特布丁·艾伊拜克建立。"
+  },
+  "蒙兀兒帝國": {
+   "title": "蒙兀兒帝國",
+   "revid": 94497837,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8E%AB%E5%8D%A7%E5%84%BF%E5%B8%9D%E5%9B%BD&oldid=94497837&variant=zh-tw",
+   "extract": "蒙兀兒帝國，是1526年至1857年間位於南亞的一個君主制國家。其皇室來自蒙古-突厥血統、波斯化的帖木兒王朝。帝國全盛時期的領土幾乎囊括整個南亞，人口超過1.5億。"
+  },
+  "英屬印度": {
+   "title": "英屬印度",
+   "revid": 94553093,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8B%B1%E5%B1%9E%E5%8D%B0%E5%BA%A6&oldid=94553093&variant=zh-tw",
+   "extract": "英屬印度，又稱王管印度、直管印度，是指英國官方在1858年至1947年間統治印度次大陸的時期。這個由英國統治的區域在同時代被通稱為印度，其中由英國直接管理的區域被稱為英屬印度，而由本土統治者統治的區域則被稱為土邦。"
+  },
+  "印度": {
+   "title": "印度",
+   "revid": 94616114,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%B0%E5%BA%A6&oldid=94616114&variant=zh-tw",
+   "extract": "印度共和國，通稱印度，是位於南亞次大陸上的國家，面積位列世界第七，是亞洲面積第三大的國家，實際控制領土面積約316萬6千平方公里。印度人口眾多，列世界首位。截至2026年8月，印度擁有接近14.8億人口。"
+  },
+  "伊朗歷史": {
+   "title": "伊朗歷史",
+   "revid": 94259409,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BC%8A%E6%9C%97%E6%AD%B7%E5%8F%B2&oldid=94259409&variant=zh-tw",
+   "extract": "伊朗歷史與大片地域的歷史糾纏在一起，該地域西起底格里斯河，東至印度河及錫爾河，北起高加索、裏海及鹹海，南及波斯灣、阿曼灣與埃及。"
+  },
+  "蘇美": {
+   "title": "蘇美",
+   "revid": 94153215,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8B%8F%E7%BE%8E%E5%B0%94&oldid=94153215&variant=zh-tw",
+   "extract": "蘇美為目前發現於美索不達米亞文明中最早的文明體系，同時也是全世界最早產生的文明之一。蘇美文明主要位於美索不達米亞的南部，透過放射性碳十四的斷代測試，表明蘇美文明的開端可以追溯至西元前4500年。"
+  },
+  "阿卡德帝國": {
+   "title": "阿卡德帝國",
+   "revid": 95033916,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E5%8D%A1%E5%BE%B7%E5%B8%9D%E5%9B%BD&oldid=95033916&variant=zh-tw",
+   "extract": "阿卡德帝國是美索不達米亞（大體為今伊拉克一帶和土耳其東南部地區）地區的第一個帝國，早於該地區後來出現的巴比倫和亞述帝國，因此也被認為是史上最早的帝國。其締造者阿卡德人為閃語族的一支。"
+  },
+  "烏爾第三王朝": {
+   "title": "烏爾第三王朝",
+   "revid": 95037519,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B9%8C%E5%B0%94%E7%AC%AC%E4%B8%89%E7%8E%8B%E6%9C%9D&oldid=95037519&variant=zh-tw",
+   "extract": "烏爾第三王朝，又稱新蘇美爾帝國，是蘇美爾城邦烏爾建立的政權，它在前2112年—前2004年統治整個美索不達米亞。烏爾王朝是由蘇美爾人建立的，此時蘇美爾語是官方流通的貴族語言。"
+  },
+  "古巴比倫王國": {
+   "title": "舊巴比倫帝國",
+   "revid": 94247651,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%88%8A%E5%B7%B4%E6%AF%94%E5%80%AB%E5%B8%9D%E5%9C%8B&oldid=94247651&variant=zh-tw",
+   "extract": "巴比倫的第一個王朝由阿摩利人統治，一般史稱巴比倫第一王朝；其歷史可以追溯到公元前1894年，建立於烏爾第三王朝毀滅百餘年後的伊辛-拉爾薩時期。"
+  },
+  "加喜特王朝": {
+   "title": "加喜特王朝",
+   "revid": 94632024,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8A%A0%E5%96%9C%E7%89%B9%E7%8E%8B%E6%9C%9D&oldid=94632024&variant=zh-tw",
+   "extract": "加喜特王朝，亦稱喀西特王朝、巴比倫第三王朝，是巴比倫自波斯征服之前持續時間最長的王朝。在這個王朝的鼎盛時期，巴比倫在西南亞的政治、科技和商業生活的廣泛接觸中發揮了關鍵作用。"
+  },
+  "新亞述帝國": {
+   "title": "新亞述帝國",
+   "revid": 95002654,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E4%BA%9A%E8%BF%B0%E5%B8%9D%E5%9B%BD&oldid=95002654&variant=zh-tw",
+   "extract": "新亞述帝國是古亞述歷史的第四階段。始於西元前911年阿達德尼拉里二世即位，在西元前9至7世紀間成為截至當時最大的帝國，成功併吞了巴比倫尼亞、埃及、烏拉爾圖和埃蘭，稱霸近東及南高加索、北非和東地中海的部分地區。"
+  },
+  "新巴比倫王國": {
+   "title": "新巴比倫帝國",
+   "revid": 94247482,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E5%B7%B4%E6%AF%94%E5%80%AB%E5%B8%9D%E5%9C%8B&oldid=94247482&variant=zh-tw",
+   "extract": "新巴比倫帝國，因由迦勒底人建立又稱為迦勒底帝國，是最後一個由古美索不達米亞人統治的政體。西元前626年建立並和米底一同消滅了新亞述帝國，在尼布甲尼撒二世統治時國勢達到頂峰，最後在西元前539年亡於波斯。"
+  },
+  "阿契美尼德王朝": {
+   "title": "阿契美尼德王朝",
+   "revid": 93587289,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E5%A5%91%E7%BE%8E%E5%B0%BC%E5%BE%B7%E7%8E%8B%E6%9C%9D&oldid=93587289&variant=zh-tw",
+   "extract": "阿契美尼德王朝或阿契美尼德帝國，又稱波斯帝國或波斯第一帝國，是伊朗歷史上第一個由波斯人建立的王朝，也是第一個橫跨歐、亞、非三大洲的帝國。"
+  },
+  "亞歷山大帝國": {
+   "title": "馬其頓王國",
+   "revid": 94069331,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%A6%AC%E5%85%B6%E9%A0%93%E7%8E%8B%E5%9C%8B&oldid=94069331&variant=zh-tw",
+   "extract": "馬其頓王國，又稱馬其頓帝國，是一個存在於前9世紀至前2世紀的歐洲國家。該國最輝煌的時期為前4世紀，由亞歷山大大帝所統治，因此被尊稱為亞歷山大帝國。"
+  },
+  "塞琉古王朝": {
+   "title": "塞琉古王朝",
+   "revid": 94277767,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A1%9E%E7%90%89%E5%8F%A4%E7%8E%8B%E6%9C%9D&oldid=94277767&variant=zh-tw",
+   "extract": "塞琉古王朝或稱塞流卡斯王朝，是一個由馬其頓奧勒提斯人塞琉古一世建立的王室家族，所統治的國家塞琉古帝國統治近東和亞洲的一部分，於希臘化時代繼承阿契美尼德帝國除埃及外大部分疆土。"
+  },
+  "安息帝國": {
+   "title": "安息帝國",
+   "revid": 92365651,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%AE%89%E6%81%AF%E5%B8%9D%E5%9C%8B&oldid=92365651&variant=zh-tw",
+   "extract": "安息帝國或阿爾沙克帝國，西方稱帕提亞帝國，是一個存在於公元前247年至224年間的一個伊朗王朝。帕尼部落酋長阿爾沙克一世趁著一名波斯總督起兵抵抗塞琉古王朝而征服了伊朗東北部帕提亞地區，並在公元前3世紀中葉建立安息帝國。"
+  },
+  "薩珊王朝": {
+   "title": "薩珊帝國",
+   "revid": 95238173,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%96%A9%E7%8F%8A%E5%B8%9D%E5%9C%8B&oldid=95238173&variant=zh-tw",
+   "extract": "薩珊王朝，國號伊朗國或伊朗，史稱波斯第二帝國，是伊朗歷史上的一個重要王朝，在224年取代了安息帝國，與羅馬帝國共存超過400年。"
+  },
+  "阿拉伯帝國": {
+   "title": "阿拉伯帝國",
+   "revid": 93273147,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E6%8B%89%E4%BC%AF%E5%B8%9D%E5%9B%BD&oldid=93273147&variant=zh-tw",
+   "extract": "阿拉伯帝國（632年－1258年），是阿拉伯半島上的阿拉伯人於中世紀創建的哈里發國。"
+  },
+  "塞爾柱帝國": {
+   "title": "塞爾柱帝國",
+   "revid": 94905013,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A1%9E%E5%B0%94%E6%9F%B1%E5%B8%9D%E5%9B%BD&oldid=94905013&variant=zh-tw",
+   "extract": "大塞爾柱帝國，又稱塞爾柱帝國、塞爾柱土耳其帝國，是存在於中世紀的突厥-波斯、遜尼派伊斯蘭帝國，由烏古斯克尼克部落建立，領土範圍東至興都庫什山脈，西至安納托力亞，北至鹹海，南至阿曼。"
+  },
+  "伊兒汗國": {
+   "title": "伊兒汗國",
+   "revid": 95226649,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BC%8A%E5%85%92%E6%B1%97%E5%9C%8B&oldid=95226649&variant=zh-tw",
+   "extract": "伊兒汗國，蒙古四大汗國之一，成吉思汗之孫、拖雷之子旭烈兀的封地。元憲宗三年到九年（1253年－1259年）間出兵西征，旭烈兀率兵侵入伊朗各地，在攻克巴格達後，建立了伊兒汗國，建都大不里士。"
+  },
+  "帖木兒帝國": {
+   "title": "帖木兒帝國",
+   "revid": 94651894,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%96%E6%9C%A8%E5%84%BF%E5%B8%9D%E5%9B%BD&oldid=94651894&variant=zh-tw",
+   "extract": "帖木兒帝國，自稱圖蘭，王朝稱古爾卡尼，是1370年至1507年間位於中亞的伊斯蘭教國家，由巴魯剌思氏的突厥化蒙古人帖木兒建立。"
+  },
+  "薩法維王朝": {
+   "title": "薩法維帝國",
+   "revid": 94530010,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%96%A9%E9%9D%9E%E5%B8%9D%E5%9C%8B&oldid=94530010&variant=zh-tw",
+   "extract": "薩法維王朝，又稱薩法維帝國、薩法維伊朗、波斯第三帝國，正式國號伊朗守疆王國，明朝稱之為巴喇西，是1501年至1736年間統治伊朗的王朝。"
+  },
+  "阿夫沙爾王朝": {
+   "title": "阿夫沙爾王朝",
+   "revid": 94755700,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E5%A4%AB%E6%B2%99%E5%B0%94%E7%8E%8B%E6%9C%9D&oldid=94755700&variant=zh-tw",
+   "extract": "阿夫沙爾王朝，正式國號伊朗守疆王國，是18世紀統治伊朗的一個烏古斯王朝。"
+  },
+  "卡扎爾王朝": {
+   "title": "卡加王朝",
+   "revid": 94007539,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%A1%E6%89%8E%E5%B0%94%E7%8E%8B%E6%9C%9D&oldid=94007539&variant=zh-tw",
+   "extract": "卡加王朝是伊朗歷史上的一個突厥裔伊朗王朝，他們起源於突厥人的卡加族支。卡加王朝統治時期的伊朗以伊朗崇高國作為國號之一。"
+  },
+  "巴列維王朝": {
+   "title": "巴勒維王朝",
+   "revid": 94496520,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B7%B4%E5%88%97%E7%BB%B4%E7%8E%8B%E6%9C%9D&oldid=94496520&variant=zh-tw",
+   "extract": "巴勒維王朝是1925年至1979年統治伊朗王國（1925年至1935年間又稱波斯王國）的王朝，先後由父子君王李查汗（1925年－1941年）、穆罕默德·李查·巴勒維（1941年－1979年）在位。"
+  },
+  "伊朗": {
+   "title": "伊朗",
+   "revid": 95021670,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BC%8A%E6%9C%97&oldid=95021670&variant=zh-tw",
+   "extract": "伊朗伊斯蘭共和國，通稱伊朗，1935年前被外界稱為波斯，地處西亞伊朗高原之上，氣候炎熱乾燥，其北部緊靠裏海、南瀕波斯灣和阿拉伯海。"
+  },
+  "埃及歷史": {
+   "title": "埃及歷史",
+   "revid": 94408549,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=94408549&variant=zh-tw",
+   "extract": "埃及的歷史悠遠綿長，古埃及是人類文明搖籃之一。埃及歷史以1798年拿破崙入侵為標誌，大體可分為古代中世紀和近現代兩大階段。"
+  },
+  "早王朝時期 (埃及)": {
+   "title": "早王朝時期 (埃及)",
+   "revid": 94729351,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%97%A9%E7%8E%8B%E6%9C%9D%E6%99%82%E6%9C%9F%20(%E5%9F%83%E5%8F%8A)&oldid=94729351&variant=zh-tw",
+   "extract": "早王朝時期，也稱為古風時期或提尼斯時期。大約在公元前3150年，上下埃及的統一標誌著古埃及早王朝時期的開始。早王朝時期包括了第一王朝與第二王朝，時間由前王朝時期直至公元前2686年，又或者直至古王國時期。"
+  },
+  "古王國時期 (埃及)": {
+   "title": "古王國時期",
+   "revid": 94516370,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E7%8E%8B%E5%9C%8B%E6%99%82%E6%9C%9F&oldid=94516370&variant=zh-tw",
+   "extract": "古王國時期（前2686年—前2181年）是古埃及歷史的一個時期，對應於從埃及第三王朝至第六王朝的四個王朝。這一時期也被稱作「金字塔時期」，因為其中的第四王朝以曾修建為數眾多的金字塔建築群而聞名於世。"
+  },
+  "第一中間期 (埃及)": {
+   "title": "古埃及歷史",
+   "revid": 88890232,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
+   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
+   "matchedBy": "search"
+  },
+  "埃及中王國": {
+   "title": "中王國時期",
+   "revid": 94721782,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E7%8E%8B%E5%9C%8B%E6%99%82%E6%9C%9F&oldid=94721782&variant=zh-tw",
+   "extract": "中王國時期是古埃及歷史上的一個時期，包括第十一、第十二、第十三與第十四王朝，通常劃定在前2133－1786年，但嚴格地說，應該從第十一王朝的孟圖霍特普二世時代（約前2060－2010年）開始。"
+  },
+  "第二中間期 (埃及)": {
+   "title": "古埃及歷史",
+   "revid": 88890232,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
+   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
+   "matchedBy": "search"
+  },
+  "埃及新王國": {
+   "title": "新王國時期",
+   "revid": 94757949,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E7%8E%8B%E5%9C%8B%E6%99%82%E6%9C%9F&oldid=94757949&variant=zh-tw",
+   "extract": "新王國時期是古埃及的一個時期，起於公元前16世紀至前11世紀，涵蓋了第十八王朝、第十九王朝、第二十王朝。此時埃及的國都已由孟斐斯移至尼羅河上流的底比斯。此時是古埃及的三大頂峰時代之一，但也是最後一個。"
+  },
+  "第三中間期 (埃及)": {
+   "title": "古埃及歷史",
+   "revid": 88890232,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%8E%86%E5%8F%B2&oldid=88890232&variant=zh-tw",
+   "extract": "古埃及文明大約出現在公元前5千年，在約前3100年埃及成為統一的國家，由法老統治，之後的埃及因此也稱為法老埃及。",
+   "matchedBy": "search"
+  },
+  "古埃及後期": {
+   "title": "古埃及後期",
+   "revid": 94859350,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%9F%83%E5%8F%8A%E5%90%8E%E6%9C%9F&oldid=94859350&variant=zh-tw",
+   "extract": "古埃及後期是古埃及本土統治者在位的最後一個興盛時期。"
+  },
+  "托勒密王朝": {
+   "title": "托勒密王朝",
+   "revid": 94225613,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%89%98%E5%8B%92%E5%AF%86%E7%8E%8B%E6%9C%9D&oldid=94225613&variant=zh-tw",
+   "extract": "托勒密王朝（公元前305-公元前30年），是馬其頓君主亞歷山大大帝死後，由其部將托勒密一世所開創的王朝，主要統治埃及，首都亞歷山卓。"
+  },
+  "羅馬埃及": {
+   "title": "埃及 (羅馬行省)",
+   "revid": 94779905,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%9F%83%E5%8F%8A%20(%E7%BE%85%E9%A6%AC%E8%A1%8C%E7%9C%81)&oldid=94779905&variant=zh-tw",
+   "extract": "公元前30年，屋大維在擊敗其勁敵馬克·安東尼，消滅了托勒密埃及之後，將埃及地區納為羅馬的一個行省。當地埃及人視羅馬皇帝為埃及法老，因此也被稱為埃及第三十四王朝。埃及行省西鄰克里特和昔蘭尼加行省，東接猶太行省。"
+  },
+  "法蒂瑪王朝": {
+   "title": "法提瑪哈里發國",
+   "revid": 94746772,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%B3%95%E8%92%82%E7%8E%9B%E5%93%88%E9%87%8C%E5%8F%91%E5%9B%BD&oldid=94746772&variant=zh-tw",
+   "extract": "法提瑪哈里發國或法提瑪王朝，西方文獻稱其為南薩拉森帝國，中國古代稱綠衣大食，是909年至1171年間位於北非的一個什葉派哈里發國，得名於伊斯蘭教創立者穆罕默德之女法提瑪。"
+  },
+  "阿尤布王朝": {
+   "title": "埃宥比王朝",
+   "revid": 93632417,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E5%B0%A4%E5%B8%83%E7%8E%8B%E6%9C%9D&oldid=93632417&variant=zh-tw",
+   "extract": "埃宥比王朝，又稱埃宥比蘇丹國，是一個庫德族的遜尼派伊斯蘭教王朝，由薩拉丁於1171年建立。該王朝建立了埃及蘇丹國，全盛時期的版圖北至伊拉克北部，南抵葉門。"
+  },
+  "馬木路克王朝": {
+   "title": "馬木路克蘇丹國",
+   "revid": 94786838,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%A6%AC%E6%9C%A8%E7%95%99%E5%85%8B%E8%98%87%E4%B8%B9%E5%9C%8B&oldid=94786838&variant=zh-tw",
+   "extract": "馬木路克蘇丹國，又稱馬木路克埃及或馬木路克王朝，是一個由1250年至1517年間統治埃及、黎凡特、漢志的國家。"
+  },
+  "鄂圖曼帝國": {
+   "title": "鄂圖曼帝國",
+   "revid": 95129622,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A5%A5%E6%96%AF%E6%9B%BC%E5%B8%9D%E5%9B%BD&oldid=95129622&variant=zh-tw",
+   "extract": "鄂圖曼帝國，西方又稱土耳其帝國，是1299年至1923年間存在於近東地區的帝國，得名自開國君主奧斯曼一世。"
+  },
+  "穆罕默德·阿里王朝": {
+   "title": "穆罕默德·阿里王朝",
+   "revid": 94618192,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%A9%86%E7%BD%95%E9%BB%98%E5%BE%B7%C2%B7%E9%98%BF%E9%87%8C%E7%8E%8B%E6%9C%9D&oldid=94618192&variant=zh-tw",
+   "extract": "穆罕默德·阿里王朝是1805年至1953年埃及和蘇丹的統治王朝，以其創立者穆罕默德·阿里為名，穆罕默德·阿里被視為現代埃及的創立者。穆罕默德·阿里王朝又稱為阿拉維王朝，這與摩洛哥的阿拉維王朝並沒有關係。"
+  },
+  "埃及": {
+   "title": "埃及",
+   "revid": 95211798,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%9F%83%E5%8F%8A&oldid=95211798&variant=zh-tw",
+   "extract": "埃及阿拉伯共和國，通稱埃及，是位於北非的國家。地跨亞非兩洲，大部分國土位於北非地區，惟西奈半島位於西南亞。伊斯蘭教為國教。埃及人大部分信仰伊斯蘭教遜尼派，最大的宗教少數派為科普特正教。"
+  },
+  "希臘歷史": {
+   "title": "希臘歷史",
+   "revid": 95088291,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E8%85%8A%E5%8E%86%E5%8F%B2&oldid=95088291&variant=zh-tw",
+   "extract": "希臘歷史傳統上包括對於希臘人民，對於他們統治的地域，以及今天希臘國土內地區的歷史研究。希臘人的定義和居住範圍在歷史上有很大的變動，因此希臘歷史所牽涉的地域具有一定彈性，每一個時期都有自己的地域範圍。"
+  },
+  "米諾斯文明": {
+   "title": "邁諾斯文明",
+   "revid": 94419229,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%B1%B3%E8%AF%BA%E6%96%AF%E6%96%87%E6%98%8E&oldid=94419229&variant=zh-tw",
+   "extract": "米諾斯文明，或譯邁諾斯文明、克里特文明、邁諾安文明、邁諾亞文明等，是克里特島和其他愛琴海群島上的青銅器時代愛琴海文明。"
+  },
+  "邁錫尼文明": {
+   "title": "邁錫尼文明",
+   "revid": 94957461,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%BF%88%E9%94%A1%E5%B0%BC%E6%96%87%E6%98%8E&oldid=94957461&variant=zh-tw",
+   "extract": "邁錫尼希臘（或邁錫尼文明）是古希臘青銅時期的最後階段，時間起終點約為公元前1750年及公元前1050年。 它以富麗堂皇的國家、城市組織、藝術作品和書寫系統代表了希臘本土第一個先進的、獨特的希臘文明。"
+  },
+  "希臘黑暗時代": {
+   "title": "希臘黑暗時代",
+   "revid": 91747387,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E8%85%8A%E9%BB%91%E6%9A%97%E6%97%B6%E4%BB%A3&oldid=91747387&variant=zh-tw",
+   "extract": "希臘黑暗時代，又稱荷馬時代（根據荷馬史詩）、幾何時代（根據當時的幾何藝術），是指希臘歷史中從公元前11世紀邁錫尼文明覆滅到公元前9世紀第一個城邦的建立的歷史時期，也是荷馬史詩的年代。"
+  },
+  "古風時期": {
+   "title": "古風時期",
+   "revid": 94849718,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E9%A2%A8%E6%99%82%E6%9C%9F&oldid=94849718&variant=zh-tw",
+   "extract": "古風時期，又稱古樸時期或遠古時期，是古希臘的一個子歷史時期。這個定義最早出現在18世紀，由於對希臘藝術的研究，學者發現這個時期出現的特有的表面裝飾以及造型藝術的風格和早期的幾何藝術和後期的古典希臘時期藝術風格大為不同。"
+  },
+  "古典時代 (希臘)": {
+   "title": "古希臘",
+   "revid": 93549522,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8F%A4%E5%B8%8C%E8%85%8A&oldid=93549522&variant=zh-tw",
+   "extract": "古希臘泛指愛琴海一帶在羅馬人和基督教進入前的古文明。其大部分時期並非統一勢力，文化繁榮的經典時期為一些城邦百家爭鳴的狀態。"
+  },
+  "希臘化時代": {
+   "title": "希臘化時代",
+   "revid": 94497769,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E8%87%98%E5%8C%96%E6%99%82%E4%BB%A3&oldid=94497769&variant=zh-tw",
+   "extract": "希臘化時代始於亞歷山大大帝之死（公元前323年），終於羅馬共和國在前146年征服希臘本土，或前30年最後的繼業者王國——托勒密王國滅亡為止。"
+  },
+  "拜占庭帝國": {
+   "title": "東羅馬帝國",
+   "revid": 94244583,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%9D%B1%E7%BE%85%E9%A6%AC%E5%B8%9D%E5%9C%8B&oldid=94244583&variant=zh-tw",
+   "extract": "東羅馬帝國，後世又稱拜占庭帝國，正式名稱為羅馬帝國，中國古代隋、唐時期則稱拂菻（ㄌㄧㄣˇ），是羅馬帝國於西元286年實行東西分治後，於原帝國東部（相對於西部的西羅馬帝國）分離出的政權。"
+  },
+  "希臘": {
+   "title": "希臘",
+   "revid": 95310390,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%B8%8C%E8%85%8A&oldid=95310390&variant=zh-tw",
+   "extract": "39°04′27″N 21°49′28″E / 39.074208°N 21.824312°E / 39.074208; 21.824312"
+  },
+  "歐洲歷史": {
+   "title": "歐洲歷史",
+   "revid": 94574373,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%AC%A7%E6%B4%B2%E5%8E%86%E5%8F%B2&oldid=94574373&variant=zh-tw",
+   "extract": "歐洲歷史傳統上被分為四個時期：史前歐洲（前800年之前）、古典時期（前800年至500年）、中世紀（500年至1,500年）、近代時期（1,500年至當今）。"
+  },
+  "羅馬王政時代": {
+   "title": "羅馬王國",
+   "revid": 94094773,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BE%85%E9%A6%AC%E7%8E%8B%E5%9C%8B&oldid=94094773&variant=zh-tw",
+   "extract": "羅馬王國是指前753年到前509年這一時期的古羅馬，此時的羅馬是一個部落，尚未建立共和國。"
+  },
+  "羅馬共和國": {
+   "title": "羅馬共和國",
+   "revid": 94168564,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BD%97%E9%A9%AC%E5%85%B1%E5%92%8C%E5%9B%BD&oldid=94168564&variant=zh-tw",
+   "extract": "羅馬共和國，又稱元老院與羅馬人民，是公元前509年—公元前27年存在的羅馬文明國家，前接羅馬王政時期、後接羅馬帝國。"
+  },
+  "羅馬帝國": {
+   "title": "羅馬帝國",
+   "revid": 95305901,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BE%85%E9%A6%AC%E5%B8%9D%E5%9C%8B&oldid=95305901&variant=zh-tw",
+   "extract": "羅馬帝國是古典時代統治環地中海地區、部分歐洲、西亞和北非地區的帝國，為羅馬共和國的繼承者。前27年，屋大維崛起並建立奧古斯都元首制，共和國轉型為帝國。"
+  },
+  "中世紀": {
+   "title": "中世紀",
+   "revid": 95146568,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E4%B8%96%E7%BA%AA&oldid=95146568&variant=zh-tw",
+   "extract": "在歐洲歷史中，中世紀或中世紀時期大約從公元5世紀末延續到15世紀末（存在對於其始末時間的不同觀點）。中世紀處於西方歷史傳統三分法（古典時代、中世紀和現代）的中間。"
+  },
+  "文藝復興": {
+   "title": "文藝復興",
+   "revid": 94536266,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%87%E8%89%BA%E5%A4%8D%E5%85%B4&oldid=94536266&variant=zh-tw",
+   "extract": "文藝復興是歐洲發生於14至16世紀間的文化運動，發源自亞平寧半島，而後散播至全歐各地。文藝復興上接中古時期、下啟近代歐洲之濫觴，人文主義風行，大眾逐漸相信人文價值較宗教為重要。"
+  },
+  "近代早期歐洲": {
+   "title": "近代早期歐洲",
+   "revid": 75177884,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%BF%91%E4%BB%A3%E6%97%A9%E6%9C%9F%E6%AC%A7%E6%B4%B2&oldid=75177884&variant=zh-tw",
+   "extract": "近代早期歐洲，即後中世紀時期，指的是歐洲歷史上中世紀之後第一次工業革命之前的一段時期，大致時間是從十五世紀末到十八世紀末。"
+  },
+  "工業革命": {
+   "title": "第一次工業革命",
+   "revid": 95221545,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B7%A5%E4%B8%9A%E9%9D%A9%E5%91%BD&oldid=95221545&variant=zh-tw",
+   "extract": "第一次工業革命（英語：The first Industrial Revolution) 約於1760年代興起，持續到1830年代至1840年代。而後產生的第二次工業革命（1870年）和20世紀以來的第三次工業革命。"
+  },
+  "第二次世界大戰": {
+   "title": "第二次世界大戰",
+   "revid": 95216137,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%B8%96%E7%95%8C%E5%A4%A7%E6%88%98&oldid=95216137&variant=zh-tw",
+   "extract": "第二次世界大戰是1939年至1945年發生的全球軍事衝突，交戰雙方分為同盟國和軸心國，涉及彼時大多數國家。這場戰爭是歷史上規模最大的戰爭，導致6,000萬至7,500萬人死亡，其中上千萬人死於屠殺、飢荒、疾病和種族滅絕。"
+  },
+  "歐洲聯盟": {
+   "title": "歐洲聯盟",
+   "revid": 95275236,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%AC%A7%E6%B4%B2%E8%81%94%E7%9B%9F&oldid=95275236&variant=zh-tw",
+   "extract": "歐洲聯盟，簡稱歐盟，是歐洲多國共同建立的政治、經濟及司法的超主權實體，現擁有27個成員國，正式官方語言有24種。規範歐盟的條約經修訂，目前歐盟的運作方式依照《里斯本條約》。"
+  },
+  "中部美洲": {
+   "title": "中部美洲",
+   "revid": 93890284,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E4%B8%AD%E9%83%A8%E7%BE%8E%E6%B4%B2&oldid=93890284&variant=zh-tw",
+   "extract": "中部美洲，又譯美索美洲，是一個歷史上的地區和文化區，地理上位於北美洲。覆蓋區域自中部墨西哥延伸經過貝里斯、瓜地馬拉、薩爾瓦多、宏都拉斯、尼加拉瓜，一直到哥斯大黎加北部。"
+  },
+  "奧爾梅克文明": {
+   "title": "歐美克文明",
+   "revid": 86517986,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A5%A5%E5%B0%94%E6%A2%85%E5%85%8B%E6%96%87%E6%98%8E&oldid=86517986&variant=zh-tw",
+   "extract": "歐美克文明是中部美洲一個高度發展於約西元前1200年至西元前400年的文明，也是中部美洲早期的重要文明之一。"
+  },
+  "瑪雅文明": {
+   "title": "馬雅文明",
+   "revid": 95244272,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%91%AA%E9%9B%85%E6%96%87%E6%98%8E&oldid=95244272&variant=zh-tw",
+   "extract": "馬雅文明是一個集中於美洲中部的古代文明，主要分布在墨西哥的東南部、薩爾瓦多西部、以及整個瓜地馬拉、貝里斯和宏都拉斯，因其原住民為馬雅人而得名。"
+  },
+  "阿茲特克": {
+   "title": "阿茲特克",
+   "revid": 93128837,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E9%98%BF%E8%8C%B2%E7%89%B9%E5%85%8B&oldid=93128837&variant=zh-tw",
+   "extract": "阿茲特克是位於墨西哥中部的一個中部美洲文明，存在於14世紀至16世紀的後古典期（1300年至1521年）。阿茲特克人是墨西哥原住民，主要分布在墨西哥中部和南部地區。"
+  },
+  "新西班牙總督轄區": {
+   "title": "新西班牙總督轄區",
+   "revid": 94754688,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%96%B0%E8%A5%BF%E7%8F%AD%E7%89%99%E7%B8%BD%E7%9D%A3%E8%BD%84%E5%8D%80&oldid=94754688&variant=zh-tw",
+   "extract": "新西班牙總督轄區，原稱新西班牙王國，是西班牙帝國的組成領土，由西班牙哈布斯堡王朝成立。它是西班牙征服美洲期間建立的眾多領地之一，首府設在墨西哥城。"
+  },
+  "墨西哥": {
+   "title": "墨西哥",
+   "revid": 94775126,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A2%A8%E8%A5%BF%E5%93%A5&oldid=94775126&variant=zh-tw",
+   "extract": "墨西哥合眾國，通稱墨西哥，是美洲的一個主權國家，北接美國，西濱太平洋，南鄰貝里斯、瓜地馬拉，東面墨西哥灣。其領土面積達近198萬平方公里，為美洲面積第五大和世界第十四大。"
+  },
+  "秘魯歷史": {
+   "title": "秘魯歷史",
+   "revid": 94723856,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%A7%98%E9%B2%81%E5%8E%86%E5%8F%B2&oldid=94723856&variant=zh-tw",
+   "extract": "秘魯的歷史跨越四個千年，歷經不同階段的文化發展。秘魯是小北史前文明的發源地，該文明是全美洲最古老的文明和六大文明搖籃的其中一個。秘魯也是印加帝國的發源地，它是前哥倫布時期美洲史上版圖最大且最先進的國家。"
+  },
+  "卡拉爾-蘇佩": {
+   "title": "卡拉爾",
+   "revid": 94727729,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%A1%E6%8B%89%E5%B0%94&oldid=94727729&variant=zh-tw",
+   "extract": "卡拉爾位於祕魯首都利馬北方200公里處，曾是小北文明的首都，約有5000年歷史，是美洲最古老的城市。"
+  },
+  "查文文化": {
+   "title": "查文文化",
+   "revid": 94738078,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E6%9F%A5%E6%96%87%E6%96%87%E5%8C%96&oldid=94738078&variant=zh-tw",
+   "extract": "查文文化，前哥倫布時期秘魯高度發展的早期文化。公元前900—公元前200年為興盛期。其藝術影響力遍布今秘魯北部及中部。「查文」源自查文德萬卡爾遺址。"
+  },
+  "莫切文化": {
+   "title": "莫切文化",
+   "revid": 94784038,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E8%8E%AB%E5%88%87%E6%96%87%E5%8C%96&oldid=94784038&variant=zh-tw",
+   "extract": "莫切文化，又譯摩奇文明，是秘魯西北部海岸拉利伯塔德大區切彭省莫切河發現的一個古代印第安文明。這個文明比印加文明還要早，屬於早期中間時期的文化。這個文明發源於秘魯北部的太陽神廟，大約公元100年左右遷徙到特魯希略一帶。"
+  },
+  "瓦里文化": {
+   "title": "瓦里帝國",
+   "revid": 87479217,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%93%A6%E9%87%8C%E5%B8%9D%E5%9B%BD&oldid=87479217&variant=zh-tw",
+   "extract": "瓦里帝國是一個在約600年存在於今秘魯阿亞庫喬盆地的殖民前南美洲政體。該政體持續了約500年，並於約1100年覆滅。由於與蒂亞瓦納科文明存在於同一個時期，因此學界曾有主張其源自蒂亞瓦納科文明。"
+  },
+  "奇穆王國": {
+   "title": "奇穆王國",
+   "revid": 95078052,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%A5%87%E7%A9%86%E7%8E%8B%E5%9C%8B&oldid=95078052&variant=zh-tw",
+   "extract": "奇穆王國是歷史學和考古學中對南美秘魯古代奇穆文化所建立政權的稱呼。奇穆文化是南美前印加文化之一，繁盛於約公元1100年至1470年，都城為昌昌。"
+  },
+  "印加帝國": {
+   "title": "印加帝國",
+   "revid": 93329334,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%B0%E5%8A%A0%E5%B8%9D%E5%9C%8B&oldid=93329334&variant=zh-tw",
+   "extract": "印加帝國，音譯塔萬廷蘇尤，又譯印卡帝國，是15世紀—16世紀位於南美洲的帝國，亦是前哥倫布時期美洲最大的帝國，印加帝國的政治、軍事和文化中心位於今日秘魯的庫斯科。"
+  },
+  "秘魯總督轄區": {
+   "title": "秘魯總督轄區",
+   "revid": 94450449,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%A7%98%E9%AD%AF%E7%B8%BD%E7%9D%A3%E8%BD%84%E5%8D%80&oldid=94450449&variant=zh-tw",
+   "extract": "秘魯總督轄區是西班牙帝國在美洲的四個總督轄區之一。1533年西班牙征服秘魯，於1542年成立秘魯總督轄區，首府利馬，統治西屬南美洲。"
+  },
+  "秘魯": {
+   "title": "秘魯",
+   "revid": 95219468,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%A7%98%E9%B2%81&oldid=95219468&variant=zh-tw",
+   "extract": "秘（ㄅㄧˋ）魯共和國，通稱秘魯，是南美洲西部的一個國家，北鄰厄瓜多和哥倫比亞，東與巴西和玻利維亞接壤，南接智利，西瀕太平洋，是南美洲國家聯盟的成員國（被暫停資格）。"
+  },
+  "美國歷史": {
+   "title": "美國歷史",
+   "revid": 95006068,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BE%8E%E5%9B%BD%E5%8E%86%E5%8F%B2&oldid=95006068&variant=zh-tw",
+   "extract": "美國歷史是美利堅合衆國的歷史。在數萬年前，在這片後來成為美國的土地上，當時已有多種美洲原住民在此定居，其後代包括現今由聯邦政府承認的574個部落。直到15世紀末，歐洲殖民開始後，原住民社會因戰爭與疫病而遭受毀滅性的打擊。"
+  },
+  "美洲原住民": {
+   "title": "美洲原住民",
+   "revid": 93071234,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BE%8E%E6%B4%B2%E5%8E%9F%E4%BD%8F%E6%B0%91&oldid=93071234&variant=zh-tw",
+   "extract": "美洲原住民，亦稱美洲土著民族，泛指歐洲殖民時期前便定居於美洲大陸及其周邊島嶼的各族群及其後裔。這些族群在前哥倫布時期已形成複雜的社會體系，其分佈範圍涵蓋北美洲、中美洲、南美洲及加勒比地區。"
+  },
+  "十三殖民地": {
+   "title": "北美十三州",
+   "revid": 94252414,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E5%8D%81%E4%B8%89%E6%AE%96%E6%B0%91%E5%9C%B0&oldid=94252414&variant=zh-tw",
+   "extract": "十三殖民地，又譯北美十三州、十三州殖民地，是指大英帝國於17世紀初至18世紀初，在北美洲大西洋沿岸陸續建立的十三個英屬殖民地。"
+  },
+  "美國": {
+   "title": "美國",
+   "revid": 94493404,
+   "url": "https://zh.wikipedia.org/w/index.php?title=%E7%BE%8E%E5%9B%BD&oldid=94493404&variant=zh-tw",
+   "extract": "美利堅合眾國，簡稱美國、美利堅或合眾國，是位於北美洲的聯邦制共和國。其由50個州、首都華盛頓哥倫比亞特區和326個印第安人保留地組成；在聯邦外，其主張對5個離岸自治領土及若干外島擁有主權。"
+  }
+ },
+ "missing": []
+}
