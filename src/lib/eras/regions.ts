@@ -790,7 +790,7 @@ export const REGIONS: Region[] = [
       { name: "莫斯科大公國", start: 1480, end: 1547 },
       { name: "俄羅斯沙皇國", start: 1547, end: 1721 },
       { name: "俄羅斯帝國", start: 1721, end: 1917 },
-      { name: "革命與內戰", start: 1917, end: 1922, wiki: ["俄國革命", "俄國內戰"] },
+      { name: "革命與內戰", start: 1917, end: 1922, wiki: ["1917年俄國革命", "俄國革命 (1917年)", "十月革命"] },
       { name: "蘇聯", start: 1922, end: 1991 },
       { name: "俄羅斯聯邦", start: 1991, end: 2027, wiki: "俄羅斯" },
     ],
