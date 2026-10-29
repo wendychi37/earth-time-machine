@@ -5,7 +5,15 @@ import { messages } from "@/messages/zh-Hant";
 
 export const metadata: Metadata = { title: `資料來源與限制｜${messages.app.title}` };
 
-const SOURCES = [
+const SOURCES: { name: string; url: string | null; use: string; license: string; limits: string }[] = [
+  {
+    name: "教學講義〈世界史列國歷史發展分合表〉、〈臺灣史、中國史、世界史對照表〉",
+    url: null,
+    use: "「課綱重點」圖層：時間軸上的 8 段大時代、每個時代的基本架構、臺灣與中國的分期，以及 ★ 重點事件（約 220 件）",
+    license: "Wendy 提供的教學講義；時代名稱與基本架構照錄，重點事件的標題與說明依講義改寫成短句",
+    limits:
+      "重點事件若年表裡已經有同一件事，只在那一條加上標記，不重複新增；講義沒有寫地點的事件，由本站標在發生地作為位置示意。講義原為高中歷史教學整理，分期與取捨反映編者的觀點。",
+  },
   {
     name: "維基百科〈世界史年表〉",
     url: "https://zh.wikipedia.org/zh-tw/%E4%B8%96%E7%95%8C%E5%8F%B2%E5%B9%B4%E8%A1%A8",
@@ -95,9 +103,13 @@ export default function AboutPage() {
         <ul className="mt-3 space-y-4 text-sm">
           {SOURCES.map((s) => (
             <li key={s.name} className="rounded-lg border border-panel-border bg-panel p-4">
-              <a href={s.url} target="_blank" rel="noreferrer" className="font-semibold underline">
-                {s.name}
-              </a>
+              {s.url ? (
+                <a href={s.url} target="_blank" rel="noreferrer" className="font-semibold underline">
+                  {s.name}
+                </a>
+              ) : (
+                <p className="font-semibold">{s.name}</p>
+              )}
               <p className="mt-1">用途：{s.use}</p>
               <p>授權：{s.license}</p>
               <p className="text-muted">限制：{s.limits}</p>

@@ -14,13 +14,15 @@ export interface LayerVisibility {
   cultures: boolean;
   /** 各地朝代名牌、朝代色帶，以及依地區上色的疆域 */
   eras: boolean;
+  /** 課綱重點：時間軸上的大時代色帶、地球上的 ★ 重點事件（其他事件變小變淡） */
+  curriculum: boolean;
 }
 
 /** 底圖：像地球儀的政治地圖，或衛星照片（地形） */
 export type BaseMap = "map" | "satellite";
 
 /** 控制面板的分頁；「年份」只在手機出現（桌面的時間軸固定在地球下方） */
-export type PanelTab = "time" | "sameEra" | "layers" | "details";
+export type PanelTab = "time" | "focus" | "sameEra" | "layers" | "details";
 
 interface AppState {
   /** 目前選取的年份（天文年號） */
@@ -53,6 +55,9 @@ interface AppState {
   /** 「各地朝代」只顯示這些地區（地區代號）；null 表示全部顯示 */
   regionFilter: string[] | null;
   setRegionFilter: (ids: string[] | null) => void;
+  /** 要地球轉過去的地點；每次呼叫 n 加一，同一個地點也會再轉一次 */
+  focusTarget: { lat: number; lon: number; n: number } | null;
+  focusOn: (point: LatLon) => void;
 }
 
 const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MIN_YEAR, Math.round(year)));
@@ -66,7 +71,7 @@ export const useAppStore = create<AppState>((set) => ({
   selectedEventId: null,
   selectedCultureId: null,
   selectedEra: null,
-  layers: { events: true, labels: true, historical: true, cultures: true, eras: true },
+  layers: { events: true, labels: true, historical: true, cultures: true, eras: true, curriculum: true },
   baseMap: "map",
   setYear: (year) => set({ year: clampYear(year) }),
   select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null, selectedEra: null, ...showDetails(selection) }),
@@ -85,4 +90,6 @@ export const useAppStore = create<AppState>((set) => ({
   setCountryFilter: (countryFilter) => set({ countryFilter }),
   regionFilter: null,
   setRegionFilter: (regionFilter) => set({ regionFilter }),
+  focusTarget: null,
+  focusOn: ({ lat, lon }) => set((s) => ({ focusTarget: { lat, lon, n: (s.focusTarget?.n ?? 0) + 1 } })),
 }));

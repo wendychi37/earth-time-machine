@@ -11,6 +11,7 @@ import { EventMarkers } from "@/features/events/EventMarkers";
 import type { BoundaryFeature } from "@/types/boundary";
 import type { HistoricalEvent } from "@/types/event";
 import { Atmosphere } from "./Atmosphere";
+import { CameraFocus } from "./CameraFocus";
 import { CameraLight } from "./CameraLight";
 import { Earth } from "./Earth";
 import { GlobeControls } from "./GlobeControls";
@@ -37,6 +38,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
   const showHistorical = useAppStore((s) => s.layers.historical);
   const showEvents = useAppStore((s) => s.layers.events);
   const showEras = useAppStore((s) => s.layers.eras);
+  const showCurriculum = useAppStore((s) => s.layers.curriculum);
   const baseMap = useAppStore((s) => s.baseMap);
   const tone = baseMap === "map" ? "dark" : "light";
   const mapCountries = useMapCountries(baseMap === "map" || showLabels);
@@ -121,10 +123,11 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
               tone={tone}
             />
           )}
-          {showEvents && <EventMarkers events={events} />}
+          {(showEvents || showCurriculum) && <EventMarkers events={events} showOthers={showEvents} showKeys={showCurriculum} />}
           {showEras && <EraLabels />}
           <SelectionMarker />
           <GlobeControls />
+          <CameraFocus />
         </Canvas>
       )}
       <div

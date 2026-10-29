@@ -65,6 +65,11 @@ export function SameEraPanel() {
               className={`w-full rounded px-1.5 py-1 text-left leading-snug hover:bg-white/10 ${e.id === selectedEventId ? "bg-white/15" : ""}`}
             >
               <span className="block text-[11px] text-muted">{e.period.start.originalText ?? formatYear(e.period.start.earliest)}</span>
+              {e.curriculum && (
+                <span className="mr-1 text-accent" aria-label={messages.curriculum.badge}>
+                  ★
+                </span>
+              )}
               {e.title}
             </button>
           </li>
