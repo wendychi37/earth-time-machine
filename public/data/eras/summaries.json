@@ -2161,6 +2161,12 @@
    "url": "https://zh.wikipedia.org/w/index.php?title=%E4%BF%84%E7%BD%97%E6%96%AF%E5%B8%9D%E5%9B%BD&oldid=94051627&variant=zh-tw",
    "extract": "俄羅斯帝國在中文中常簡稱為帝俄、沙俄、俄國，是存在於18世紀至20世紀的統一君主制國家，也是俄羅斯歷史上最後一個君主制朝代。"
   },
+  "1917年俄國革命": {
+   "title": "1917年俄國革命",
+   "revid": 93272480,
+   "url": "https://zh.wikipedia.org/w/index.php?title=1917%E5%B9%B4%E4%BF%84%E5%9B%BD%E9%9D%A9%E5%91%BD&oldid=93272480&variant=zh-tw",
+   "extract": "1917年俄國革命是指1917年在原俄羅斯帝國境內發生的一系列革命運動。"
+  },
   "蘇聯": {
    "title": "蘇聯",
    "revid": 95223914,
@@ -2313,7 +2319,6 @@
   }
  },
  "missing": [
-  "波旁復辟",
-  "俄國革命"
+  "波旁復辟"
  ]
 }
