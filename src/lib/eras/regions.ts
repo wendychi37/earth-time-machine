@@ -512,7 +512,7 @@ export const REGIONS: Region[] = [
       { name: "現代希臘", start: 1830, end: 2027, wiki: "希臘" },
     ],
   },
-  // 歐洲：葡萄牙先於西班牙、西班牙先於法國（庇里牛斯山一帶）、低地國與北歐都先於「羅馬、西歐」
+  // 歐洲：葡萄牙先於西班牙、西班牙先於法國（庇里牛斯山一帶）、低地國、北歐與英國都先於「羅馬、西歐」
   {
     id: "pt",
     name: "葡萄牙",
@@ -632,6 +632,31 @@ export const REGIONS: Region[] = [
     ],
   },
   {
+    id: "gb",
+    name: "英國",
+    color: "#d1477a",
+    anchor: { lat: 53, lon: -1.6 },
+    boxes: [
+      [-5.8, 49.9, 1.8, 55.8],
+      [-7.7, 55.8, -0.7, 60.9],
+    ],
+    source: "英國歷史",
+    eras: [
+      { name: "不列顛鐵器時代", start: bc(800), end: 43, approx: true, wiki: ["不列顛鐵器時代", "不列顛史前史"] },
+      { name: "羅馬不列顛", start: 43, end: 410, wiki: ["羅馬不列顛", "不列顛尼亞"] },
+      { name: "盎格魯－撒克遜時期", start: 410, end: 1066, wiki: ["盎格魯-撒克遜英格蘭", "盎格魯-撒克遜時期", "盎格魯-撒克遜人"] },
+      { name: "諾曼王朝", start: 1066, end: 1154 },
+      { name: "金雀花王朝", start: 1154, end: 1485 },
+      { name: "都鐸王朝", start: 1485, end: 1603 },
+      { name: "斯圖亞特王朝", start: 1603, end: 1714 },
+      { name: "共和時期", start: 1649, end: 1660, wiki: ["英格蘭聯邦", "英格蘭共和國"] },
+      { name: "漢諾威王朝", start: 1714, end: 1837 },
+      { name: "維多利亞時代", start: 1837, end: 1901 },
+      { name: "兩次世界大戰時期", start: 1901, end: 1945, wiki: "英國歷史" },
+      { name: "戰後英國", start: 1945, end: 2027, wiki: ["英國", "大不列顛及北愛爾蘭聯合王國"] },
+    ],
+  },
+  {
     id: "eu",
     name: "羅馬、西歐",
     color: "#8f86ec",
@@ -722,7 +747,7 @@ export const wikiCandidates = (era: Era): string[] => (Array.isArray(era.wiki) ?
 export const REGION_CONTINENT: Record<string, Continent> = {
   tw: "asia", kr: "asia", jp: "asia", vn: "asia", kh: "asia", th: "asia", mm: "asia", my: "asia", ph: "asia", id: "asia", cn: "asia", in: "asia", wa: "asia",
   eg: "africa", et: "africa", nb: "africa", nf: "africa", wf: "africa", ng: "africa", cg: "africa", sw: "africa", sa: "africa",
-  gr: "europe", pt: "europe", es: "europe", fr: "europe", nl: "europe", sc: "europe", eu: "europe",
+  gr: "europe", pt: "europe", es: "europe", fr: "europe", nl: "europe", sc: "europe", gb: "europe", eu: "europe",
   mx: "americas", an: "americas", na: "americas",
   au: "oceania",
 };
