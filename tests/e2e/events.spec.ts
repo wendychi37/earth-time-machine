@@ -1,43 +1,23 @@
 import { readFileSync } from "node:fs";
-import { expect, test, type Page } from "@playwright/test";
-import { PerspectiveCamera } from "three";
+import { expect, test } from "@playwright/test";
+import { goToYear, openTab, tapGlobe } from "./helpers";
 import { unpackChronology, type CompactChronology } from "../../src/lib/chronology/compact";
 import { capPerCountry, eventsNearYear } from "../../src/lib/events/visible";
 import { CLUSTER_DEGREES, clusterMarkers, markerScale, scaleStep, stepScale } from "../../src/lib/events/cluster";
-import { latLonToVector3 } from "../../src/lib/geo/sphere";
+import { initialDistance } from "../../src/features/globe/initialView";
 import type { HistoricalEvent } from "../../src/types/event";
 
 const load = (f: string) => unpackChronology(JSON.parse(readFileSync(`public/data/chronology/${f}`, "utf8")) as CompactChronology);
 const events: HistoricalEvent[] = [...load("world-chronology.json"), ...load("country-chronologies.json")];
 
-async function goToYear(page: Page, text: string) {
-  await page.getByTestId("year-input").fill(text);
-  await page.getByTestId("year-input").press("Enter");
-}
-
-/** 以與 GlobeCanvas 相同的初始相機設定，算出某經緯度在畫面上的位置 */
-function initialDistance(width: number, height: number) {
-  const fitWidth = 1 / (0.8 * Math.tan((45 / 2) * (Math.PI / 180)) * (width / height));
-  return Math.min(5, Math.max(3.2, fitWidth));
-}
-
-function projectInitialView(lat: number, lon: number, width: number, height: number) {
-  const aspect = width / height;
-  const distance = initialDistance(width, height);
-  const camera = new PerspectiveCamera(45, aspect, 0.01, 100);
-  camera.position.copy(latLonToVector3(22, 112, distance));
-  camera.lookAt(0, 0, 0);
-  camera.updateMatrixWorld();
-  const p = latLonToVector3(lat, lon, 1.006).project(camera);
-  return { x: ((p.x + 1) / 2) * width, y: ((1 - p.y) / 2) * height };
-}
 
 test("點擊地球上的年表大事，開啟事件卡片與出處", async ({ page }, info) => {
   const year = 1600;
   await page.goto("/");
   // 選一個離初始視角中心（東亞）最近、且沒有和其他標記合併的事件
-  const vp = page.viewportSize()!;
-  const threshold = CLUSTER_DEGREES * stepScale(scaleStep(markerScale(initialDistance(vp.width, vp.height))));
+  await expect(page.getByTestId("globe-canvas").locator("canvas")).toBeVisible({ timeout: 30_000 });
+  const vp = (await page.getByTestId("globe-canvas").locator("canvas").boundingBox())!;
+  const threshold = CLUSTER_DEGREES * stepScale(scaleStep(markerScale(initialDistance(vp.width / vp.height))));
   const clusters = clusterMarkers(capPerCountry(eventsNearYear(events, year), year), threshold);
   const distance = (a: { lat: number; lon: number }, b: { lat: number; lon: number }) => Math.hypot(a.lat - b.lat, a.lon - b.lon);
   const single = clusters.filter((c) => c.events.length === 1 && clusters.every((o) => o === c || distance(o, c) > 4));
@@ -49,10 +29,12 @@ test("點擊地球上的年表大事，開啟事件卡片與出處", async ({ pa
   await expect(page.getByTestId("boundary-legend")).toContainText("的快照", { timeout: 30_000 });
   await page.waitForTimeout(2500);
 
-  const viewport = page.viewportSize()!;
-  const { x, y } = projectInitialView(target.lat, target.lon, viewport.width, viewport.height);
-  if (info.project.name === "mobile") await page.touchscreen.tap(x, y);
-  else await page.mouse.click(x, y);
+  // 朝代名牌可能剛好蓋在事件標記上，先關掉；再回到「年份」分頁，讓地球視窗和剛載入時一樣大
+  await openTab(page, "layers");
+  await page.getByLabel("各地朝代（依年份）").uncheck();
+  if (info.project.name === "mobile") await openTab(page, "time");
+  await page.waitForTimeout(1000);
+  await tapGlobe(page, info, target.lat, target.lon);
 
   const card = page.getByTestId("event-card");
   await expect(card).toBeVisible();
@@ -82,6 +64,7 @@ test("關閉事件標記圖層後不顯示清單", async ({ page }) => {
   await goToYear(page, "1453");
   const list = page.getByRole("navigation", { name: "此時期的事件" });
   await expect(list.getByRole("button", { name: /攻陷拜占庭/ })).toHaveCount(1);
+  await openTab(page, "layers");
   await page.getByLabel(/^歷史大事/).uncheck();
   await expect(list.getByRole("button", { name: /攻陷拜占庭/ })).toHaveCount(0);
 });

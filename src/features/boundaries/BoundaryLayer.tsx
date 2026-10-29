@@ -6,6 +6,7 @@ import { colorForName } from "@/lib/boundaries/colors";
 import { regionForPolity, regionShade } from "@/lib/eras/query";
 import { buildFillArrays } from "@/lib/geo/polygonMesh";
 import { geometryToLinePositions } from "@/lib/geo/ringLines";
+import { useAppStore } from "@/store/useAppStore";
 import type { BoundaryFeature } from "@/types/boundary";
 
 interface BoundaryLayerProps {
@@ -24,18 +25,19 @@ const isNamed = (f: BoundaryFeature) => !!f.properties.name;
  * 近似、中等或未標示精度的邊界用虛線，依國際法確定的邊界（精度 3）用實線。
  */
 export function BoundaryLayer({ features, fillOpacity = 0.32, colorByRegion = false }: BoundaryLayerProps) {
+  const regionFilter = useAppStore((s) => s.regionFilter);
   const fill = useMemo(() => {
     const { positions, colors } = buildFillArrays(features, (f) => {
       if (!isNamed(f)) return null;
       const name = f.properties.subjecto ?? f.properties.name!;
       const region = colorByRegion ? regionForPolity(f.properties.name, f.geometry) : null;
-      return region ? regionShade(region, name) : colorForName(name);
+      return region && (!regionFilter || regionFilter.includes(region.id)) ? regionShade(region, name) : colorForName(name);
     });
     const g = new BufferGeometry();
     g.setAttribute("position", new BufferAttribute(positions, 3));
     g.setAttribute("color", new BufferAttribute(colors, 3));
     return g;
-  }, [features, colorByRegion]);
+  }, [features, colorByRegion, regionFilter]);
 
   const [approxLines, preciseLines] = useMemo(() => {
     const named = features.filter(isNamed);

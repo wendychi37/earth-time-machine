@@ -1,19 +1,12 @@
-import { expect, test, type Page } from "@playwright/test";
-
-async function goToYear(page: Page, text: string) {
-  await page.getByTestId("year-input").fill(text);
-  await page.getByTestId("year-input").press("Enter");
-}
+import { expect, test } from "@playwright/test";
+import { goToYear, openTab } from "./helpers";
 
 test("「同一時期的世界」依大洲並列年表大事，點一條開啟卡片", async ({ page }, info) => {
   await page.goto("/");
   await goToYear(page, "1453");
   const panel = page.getByTestId("same-era-panel");
-  // 手機預設收起，以免擋住地球
-  if (info.project.name === "mobile") {
-    await expect(panel).toBeHidden();
-    await page.getByTestId("same-era-open").click();
-  }
+  await openTab(page, "sameEra");
+  // 預設就打開在地球旁（手機在地球下方）的分頁，不疊在地球上
   await expect(panel).toBeVisible();
   await expect(panel).toContainText("同一時期的世界");
   await expect(panel).toContainText("西元 1433 年～西元 1473 年");
@@ -33,25 +26,33 @@ test("「同一時期的世界」依大洲並列年表大事，點一條開啟�
 
   // 年份改變，表格內容跟著換
   await card.getByRole("button", { name: "關閉" }).click();
+  await openTab(page, "sameEra");
   await goToYear(page, "前221");
   await expect(panel).toContainText(/秦/);
 });
 
-test("對照表可以收起再打開", async ({ page }, info) => {
+test("點了事件會切到「介紹」分頁，可以再切回對照表", async ({ page }, info) => {
   await page.goto("/");
+  await goToYear(page, "1453");
   const panel = page.getByTestId("same-era-panel");
-  if (info.project.name === "mobile") await page.getByTestId("same-era-open").click();
-  await panel.getByRole("button", { name: "收起" }).click();
+  await openTab(page, "sameEra");
+  if (info.project.name === "mobile") {
+    await panel.getByRole("tab", { name: /歐洲/ }).click();
+    await panel.getByRole("tabpanel").getByRole("button", { name: /攻陷拜占庭/ }).click();
+  } else {
+    await page.getByTestId("same-era-columns").getByRole("button", { name: /攻陷拜占庭/ }).click();
+  }
+  await expect(page.getByTestId("panel-tab-details")).toHaveAttribute("aria-selected", "true");
   await expect(panel).toBeHidden();
-  await page.getByTestId("same-era-open").click();
-  await expect(page.getByTestId("same-era-panel")).toBeVisible();
+  await openTab(page, "sameEra");
+  await expect(panel).toBeVisible();
 });
 
 test("打勾選國家：只看日本發生的事", async ({ page }, info) => {
   await page.goto("/");
   await goToYear(page, "1600");
-  if (info.project.name === "mobile") await page.getByTestId("same-era-open").click();
   const panel = page.getByTestId("same-era-panel");
+  await openTab(page, "sameEra");
   await panel.getByTestId("country-picker-button").click();
   const picker = page.getByTestId("country-picker");
   await picker.getByRole("button", { name: "全部取消" }).click();
@@ -77,8 +78,8 @@ test("打勾選國家：只看日本發生的事", async ({ page }, info) => {
 test("美國的大事譯自英文維基百科，標示翻譯並附英文原文", async ({ page }, info) => {
   await page.goto("/");
   await goToYear(page, "1969");
-  if (info.project.name === "mobile") await page.getByTestId("same-era-open").click();
   const panel = page.getByTestId("same-era-panel");
+  await openTab(page, "sameEra");
   await panel.getByTestId("country-picker-button").click();
   const picker = page.getByTestId("country-picker");
   await picker.getByRole("button", { name: "全部取消" }).click();

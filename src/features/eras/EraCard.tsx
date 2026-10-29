@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { useAllEvents } from "@/features/events/useEvents";
 import { eraIndexAt, regionAt, resolveEra } from "@/lib/eras/query";
-import { REGIONS, wikiCandidates, type Era } from "@/lib/eras/regions";
+import { filterRegions, wikiCandidates, type Era } from "@/lib/eras/regions";
 import { wikiUrl } from "@/lib/eras/summaries";
 import { PRESENT_YEAR } from "@/lib/time/constants";
 import { formatYear } from "@/lib/time/format";
@@ -23,6 +23,7 @@ export function eraYears(era: Era): string {
 export function EraCard() {
   const ref = useAppStore((s) => s.selectedEra);
   const year = useAppStore((s) => s.year);
+  const regionFilter = useAppStore((s) => s.regionFilter);
   const setYear = useAppStore((s) => s.setYear);
   const selectEra = useAppStore((s) => s.selectEra);
   const selectEvent = useAppStore((s) => s.selectEvent);
@@ -57,15 +58,15 @@ export function EraCard() {
   const found = summaries?.articles[wikiTitle];
   const article = found && !found.matchedBy ? found : undefined;
   const periodArticle = summaries?.articles[region.source];
-  const others = REGIONS.filter((r) => r.id !== region.id)
+  const others = filterRegions(regionFilter)
+    .filter((r) => r.id !== region.id)
     .map((r) => ({ r, index: eraIndexAt(r, atYear) }))
     .filter(({ index }) => index >= 0);
 
   return (
     <article
       aria-label={`${t.cardLabel}：${era.name}`}
-      data-label-avoid
-      className="max-h-[45dvh] w-full overflow-y-auto rounded-lg border border-panel-border bg-panel p-4 text-sm backdrop-blur sm:max-h-[max(12rem,calc(100dvh-37rem))] sm:w-80"
+      className="w-full rounded-lg border border-panel-border bg-white/[0.03] p-4 text-sm"
       data-testid="era-card"
     >
       <header className="mb-2 flex items-start justify-between gap-2">

@@ -165,6 +165,8 @@ type Country = { iso: string; nameZh: string };
 export interface PageCountry {
   country: Country;
   fallback: { lat: number; lon: number; label: string };
+  /** 這段年份（含頭尾）已由中文年表收錄，外文年表不重複收錄 */
+  skipYears?: [number, number];
 }
 
 interface BuildOptions {
@@ -202,6 +204,8 @@ export function buildChronology(
         calendar: parsed.latest < 1582 ? "julian" : "gregorian",
         originalText: parsed.text,
       };
+      const skip = owner?.skipYears;
+      if (skip && parsed.earliest >= skip[0] && parsed.earliest <= skip[1]) return;
       const original = tidy(split.body);
       const foreign = page.lang ? LANG_NAME[page.lang] : null;
       const translated = foreign ? translate(original) : null;

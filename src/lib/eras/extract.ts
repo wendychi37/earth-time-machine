@@ -24,7 +24,8 @@ export function firstParagraph(html: string): string | null {
     .replace(/<span class="mw-empty-elt"[\s\S]*?<\/span>/g, "");
   for (const m of clean.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/g)) {
     const text = decode(m[1].replace(/<[^>]+>/g, "")).replace(/\s+/g, " ").trim();
-    if (text.length >= 8) return text;
+    // 跳過座標（「19°45′N 96°6′E」）與資訊框殘留（「軍人死亡總數：…」）這類沒有句號的段落
+    if (text.length >= 8 && text.includes("。") && !/^[\d.]+°/.test(text)) return text;
   }
   return null;
 }

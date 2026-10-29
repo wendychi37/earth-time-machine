@@ -8,6 +8,10 @@ export interface CountryChronologySource {
   lang?: "en";
   iso: string;
   fallback: { lat: number; lon: number; label: string };
+  /** 這段年份（含頭尾）已由中文年表收錄，不重複收錄 */
+  skipYears?: [number, number];
+  /** 地圖資料沒有的小國（例如新加坡）用的國名 */
+  nameZh?: string;
 }
 
 export const COUNTRY_CHRONOLOGIES: CountryChronologySource[] = [
@@ -31,13 +35,83 @@ export const COUNTRY_CHRONOLOGIES: CountryChronologySource[] = [
 ];
 
 /**
- * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前三國都是英文版最完整）。
+ * 中文維基百科沒有年表的國家：改用資料最齊全的語言版本（以頁面大小比較英文與當地語言，目前都是英文版最完整）。
  * 內容翻成台灣繁體中文（data/chronology/translations/en.json），並標明譯自英文維基百科。
  */
 const US = { iso: "USA", lang: "en", fallback: { lat: 38.9, lon: -77.04, label: "美國（以華盛頓示意）" } } as const;
 export const FOREIGN_CHRONOLOGIES: CountryChronologySource[] = [
   { page: "Timeline of Russian history", iso: "RUS", lang: "en", fallback: { lat: 55.75, lon: 37.62, label: "俄羅斯（以莫斯科示意）" } },
   { page: "Timeline of Indian history", iso: "IND", lang: "en", fallback: { lat: 28.61, lon: 77.21, label: "印度（以新德里示意）" } },
+  { page: "Timeline of Australian history", iso: "AUS", lang: "en", fallback: { lat: -35.28, lon: 149.13, label: "澳洲（以坎培拉示意）" } },
+  // 東南亞（越南 1945–2002 年已有中文〈越南現代史年表〉，不重複收錄）
+  { page: "Timeline of Vietnamese history", iso: "VNM", lang: "en", skipYears: [1945, 2002], fallback: { lat: 21.03, lon: 105.85, label: "越南（以河內示意）" } },
+  { page: "Timeline of Thai history", iso: "THA", lang: "en", fallback: { lat: 13.75, lon: 100.5, label: "泰國（以曼谷示意）" } },
+  { page: "Timeline of Burmese history", iso: "MMR", lang: "en", fallback: { lat: 16.8, lon: 96.15, label: "緬甸（以仰光示意）" } },
+  { page: "Timeline of Indonesian history", iso: "IDN", lang: "en", fallback: { lat: -6.2, lon: 106.85, label: "印尼（以雅加達示意）" } },
+  { page: "Timeline of Philippine history", iso: "PHL", lang: "en", fallback: { lat: 14.6, lon: 120.98, label: "菲律賓（以馬尼拉示意）" } },
+  { page: "Timeline of Singaporean history", iso: "SGP", nameZh: "新加坡", lang: "en", fallback: { lat: 1.29, lon: 103.85, label: "新加坡" } },
+  { page: "Timeline of East Timorese history", iso: "TLS", lang: "en", fallback: { lat: -8.56, lon: 125.58, label: "東帝汶（以帝力示意）" } },
+  // 非洲
+  { page: "Timeline of South African history", iso: "ZAF", lang: "en", fallback: { lat: -33.92, lon: 18.42, label: "南非（以開普敦示意）" } },
+  { page: "Timeline of Botswana", iso: "BWA", lang: "en", fallback: { lat: -24.65, lon: 25.91, label: "波札那（以嘉柏隆里示意）" } },
+  { page: "Timeline of Kenya", iso: "KEN", lang: "en", fallback: { lat: -1.29, lon: 36.82, label: "肯亞（以奈洛比示意）" } },
+  { page: "Timeline of Tanzanian history", iso: "TZA", lang: "en", fallback: { lat: -6.8, lon: 39.28, label: "坦尚尼亞（以三蘭港示意）" } },
+  { page: "Timeline of Rwandan history", iso: "RWA", lang: "en", fallback: { lat: -1.95, lon: 30.06, label: "盧安達（以吉佳利示意）" } },
+  { page: "Timeline of Burundian history", iso: "BDI", lang: "en", fallback: { lat: -3.38, lon: 29.36, label: "蒲隆地（以布松布拉示意）" } },
+  { page: "Timeline of Sudanese history", iso: "SDN", lang: "en", fallback: { lat: 15.5, lon: 32.56, label: "蘇丹（以喀土穆示意）" } },
+  { page: "Timeline of Ghanaian history", iso: "GHA", lang: "en", fallback: { lat: 5.6, lon: -0.19, label: "迦納（以阿克拉示意）" } },
+  // 歐洲（英文維基百科沒有荷蘭、挪威的年表；法國已有中文〈法國歷史年表〉）
+  { page: "Timeline of Spanish history", iso: "ESP", lang: "en", fallback: { lat: 40.42, lon: -3.7, label: "西班牙（以馬德里示意）" } },
+  { page: "Timeline of Portuguese history", iso: "PRT", lang: "en", fallback: { lat: 38.72, lon: -9.14, label: "葡萄牙（以里斯本示意）" } },
+  { page: "Timeline of Belgian history", iso: "BEL", lang: "en", fallback: { lat: 50.85, lon: 4.35, label: "比利時（以布魯塞爾示意）" } },
+  { page: "Timeline of Danish history", iso: "DNK", lang: "en", fallback: { lat: 55.68, lon: 12.57, label: "丹麥（以哥本哈根示意）" } },
+  { page: "Timeline of Swedish history", iso: "SWE", lang: "en", fallback: { lat: 59.33, lon: 18.07, label: "瑞典（以斯德哥爾摩示意）" } },
+  { page: "Timeline of Finnish history", iso: "FIN", lang: "en", fallback: { lat: 60.17, lon: 24.94, label: "芬蘭（以赫爾辛基示意）" } },
+  { page: "Timeline of Icelandic history", iso: "ISL", lang: "en", fallback: { lat: 64.15, lon: -21.94, label: "冰島（以雷克雅維克示意）" } },
+  { page: "Timeline of Italian history", iso: "ITA", lang: "en", skipYears: [-752, 476], fallback: { lat: 41.9, lon: 12.5, label: "義大利（以羅馬示意）" } },
+  { page: "Timeline of Austrian history", iso: "AUT", lang: "en", fallback: { lat: 48.21, lon: 16.37, label: "奧地利（以維也納示意）" } },
+  { page: "Timeline of Polish history", iso: "POL", lang: "en", fallback: { lat: 52.23, lon: 21.01, label: "波蘭（以華沙示意）" } },
+  { page: "Timeline of Irish history", iso: "IRL", lang: "en", fallback: { lat: 53.35, lon: -6.26, label: "愛爾蘭（以都柏林示意）" } },
+  { page: "Timeline of Swiss history", iso: "CHE", lang: "en", fallback: { lat: 46.95, lon: 7.45, label: "瑞士（以伯恩示意）" } },
+  { page: "Timeline of Hungarian history", iso: "HUN", lang: "en", fallback: { lat: 47.5, lon: 19.04, label: "匈牙利（以布達佩斯示意）" } },
+  { page: "Timeline of Romanian history", iso: "ROU", lang: "en", fallback: { lat: 44.43, lon: 26.1, label: "羅馬尼亞（以布加勒斯特示意）" } },
+  { page: "Timeline of Bulgarian history", iso: "BGR", lang: "en", fallback: { lat: 42.7, lon: 23.32, label: "保加利亞（以索菲亞示意）" } },
+  { page: "Timeline of Serbian history", iso: "SRB", lang: "en", fallback: { lat: 44.79, lon: 20.45, label: "塞爾維亞（以貝爾格勒示意）" } },
+  { page: "Timeline of Croatian history", iso: "HRV", lang: "en", fallback: { lat: 45.81, lon: 15.98, label: "克羅埃西亞（以札格瑞布示意）" } },
+  { page: "Timeline of Latvian history", iso: "LVA", lang: "en", fallback: { lat: 56.95, lon: 24.11, label: "拉脫維亞（以里加示意）" } },
+  { page: "Timeline of Estonian history", iso: "EST", lang: "en", fallback: { lat: 59.44, lon: 24.75, label: "愛沙尼亞（以塔林示意）" } },
+  { page: "Timeline of Albanian history", iso: "ALB", lang: "en", fallback: { lat: 41.33, lon: 19.82, label: "阿爾巴尼亞（以地拉那示意）" } },
+  { page: "Timeline of Slovenian history", iso: "SVN", lang: "en", fallback: { lat: 46.06, lon: 14.51, label: "斯洛維尼亞（以盧比安納示意）" } },
+  { page: "Timeline of Maltese history", iso: "MLT", nameZh: "馬爾他", lang: "en", fallback: { lat: 35.9, lon: 14.51, label: "馬爾他（以瓦勒他示意）" } },
+  { page: "Timeline of Cypriot history", iso: "CYP", lang: "en", fallback: { lat: 35.17, lon: 33.36, label: "賽普勒斯（以尼古西亞示意）" } },
+  // 亞洲（日本、台灣、馬來西亞、柬埔寨已有中文年表；韓國 1910 年起已有中文年表）
+  { page: "Timeline of Korean history", iso: "KOR", lang: "en", skipYears: [1910, 2100], fallback: { lat: 37.57, lon: 126.98, label: "朝鮮半島（以首爾示意）" } },
+  { page: "Timeline of Mongolian history", iso: "MNG", lang: "en", fallback: { lat: 47.92, lon: 106.92, label: "蒙古（以烏蘭巴托示意）" } },
+  { page: "Timeline of Nepalese history", iso: "NPL", lang: "en", fallback: { lat: 27.72, lon: 85.32, label: "尼泊爾（以加德滿都示意）" } },
+  { page: "Timeline of Pakistani history", iso: "PAK", lang: "en", fallback: { lat: 33.69, lon: 73.05, label: "巴基斯坦（以伊斯蘭馬巴德示意）" } },
+  { page: "Timeline of Bangladeshi history", iso: "BGD", lang: "en", fallback: { lat: 23.81, lon: 90.41, label: "孟加拉（以達卡示意）" } },
+  { page: "Timeline of Sri Lankan history", iso: "LKA", lang: "en", fallback: { lat: 6.93, lon: 79.86, label: "斯里蘭卡（以可倫坡示意）" } },
+  { page: "Timeline of Iranian history", iso: "IRN", lang: "en", fallback: { lat: 35.69, lon: 51.39, label: "伊朗（以德黑蘭示意）" } },
+  { page: "Timeline of Syrian history", iso: "SYR", lang: "en", fallback: { lat: 33.51, lon: 36.29, label: "敘利亞（以大馬士革示意）" } },
+  { page: "Timeline of Lebanese history", iso: "LBN", lang: "en", fallback: { lat: 33.89, lon: 35.5, label: "黎巴嫩（以貝魯特示意）" } },
+  { page: "Timeline of Israeli history", iso: "ISR", lang: "en", fallback: { lat: 31.77, lon: 35.21, label: "以色列（以耶路撒冷示意）" } },
+  { page: "Timeline of Georgian history", iso: "GEO", lang: "en", fallback: { lat: 41.72, lon: 44.79, label: "喬治亞（以提比里斯示意）" } },
+  { page: "Timeline of Armenian history", iso: "ARM", lang: "en", fallback: { lat: 40.18, lon: 44.51, label: "亞美尼亞（以葉里溫示意）" } },
+  { page: "Timeline of Bhutanese history", iso: "BTN", lang: "en", fallback: { lat: 27.47, lon: 89.64, label: "不丹（以廷布示意）" } },
+  // 美洲與大洋洲
+  { page: "Timeline of Canadian history", iso: "CAN", lang: "en", fallback: { lat: 45.42, lon: -75.7, label: "加拿大（以渥太華示意）" } },
+  { page: "Timeline of Mexican history", iso: "MEX", lang: "en", fallback: { lat: 19.43, lon: -99.13, label: "墨西哥（以墨西哥城示意）" } },
+  { page: "Timeline of Cuban history", iso: "CUB", lang: "en", fallback: { lat: 23.11, lon: -82.37, label: "古巴（以哈瓦那示意）" } },
+  { page: "Timeline of Haitian history", iso: "HTI", lang: "en", fallback: { lat: 18.54, lon: -72.34, label: "海地（以太子港示意）" } },
+  { page: "Timeline of Colombian history", iso: "COL", lang: "en", fallback: { lat: 4.71, lon: -74.07, label: "哥倫比亞（以波哥大示意）" } },
+  { page: "Timeline of Peruvian history", iso: "PER", lang: "en", fallback: { lat: -12.05, lon: -77.04, label: "秘魯（以利馬示意）" } },
+  { page: "Timeline of Chilean history", iso: "CHL", lang: "en", fallback: { lat: -33.45, lon: -70.67, label: "智利（以聖地牙哥示意）" } },
+  { page: "Timeline of Argentine history", iso: "ARG", lang: "en", fallback: { lat: -34.6, lon: -58.38, label: "阿根廷（以布宜諾斯艾利斯示意）" } },
+  { page: "Timeline of Brazilian history", iso: "BRA", lang: "en", fallback: { lat: -15.79, lon: -47.88, label: "巴西（以巴西利亞示意）" } },
+  { page: "Timeline of New Zealand history", iso: "NZL", lang: "en", fallback: { lat: -41.29, lon: 174.78, label: "紐西蘭（以威靈頓示意）" } },
+  { page: "Timeline of Fijian history", iso: "FJI", lang: "en", fallback: { lat: -18.14, lon: 178.44, label: "斐濟（以蘇瓦示意）" } },
+  { page: "Timeline of Tongan history", iso: "TON", nameZh: "東加", lang: "en", fallback: { lat: -21.14, lon: -175.2, label: "東加（以努瓜婁發示意）" } },
+  { page: "Timeline of modern Greek history", iso: "GRC", nameZh: "希臘", lang: "en", fallback: { lat: 37.98, lon: 23.73, label: "希臘（以雅典示意）" } },
   { page: "Timeline of pre–United States history", ...US },
   { page: "Timeline of the history of the United States (1790–1819)", ...US },
   { page: "Timeline of the history of the United States (1820–1859)", ...US },

@@ -96,6 +96,11 @@ export function englishDateToZh(raw: string): string | null {
   for (const alt of alternatives) {
     const parts = alt.split(/\s*(?:–|—|\bto\b|(?<=\d|BCE|BC|CE|AD)\s*-\s*(?=\d|c\.)|\s-\s)\s*/i).filter(Boolean);
     if (parts.length === 0 || parts.length > 2) return null;
+    // 「1601–03」「1688–97」：後半段省略了世紀
+    if (!allBce && parts.length === 2 && /^\d{3,4}$/.test(parts[0]) && /^\d{1,2}$/.test(parts[1])) {
+      const full = parts[0].slice(0, parts[0].length - parts[1].length) + parts[1];
+      if (Number(full) > Number(parts[0])) parts[1] = full;
+    }
     const points = parts.map((p) => point(p, allBce));
     if (points.some((p) => !p)) return null;
     // 「March 4–6, 1793」：前半段缺年份時不猜測
@@ -110,6 +115,7 @@ function finish(zh: string): string | null {
   return parseChronologyDate(zh) ? zh : null;
 }
 
+const DAY_MONTH = new RegExp(`^(?:\\d{1,2}\\s+)?${MONTH}(?:\\s|[.,:]|$)`, "i");
 const SEPARATOR = /\s+[–—-]\s+|\s*[–—]\s*|:\s+/g;
 
 /**
@@ -121,8 +127,11 @@ export function splitEnglishLine(line: string): { dateText: string; body: string
   let best: { dateText: string; body: string } | null = null;
   for (const m of s.matchAll(SEPARATOR)) {
     if (m.index! > 60) break;
-    const zh = englishDateToZh(s.slice(0, m.index));
+    const head = s.slice(0, m.index);
     const body = s.slice(m.index! + m[0].length).trim();
+    // 「4–6 June. …」「23–24 February – …」是日期範圍，不是西元 4 年、23 年
+    if (/^\d{1,2}$/.test(head.trim()) && DAY_MONTH.test(body)) continue;
+    const zh = englishDateToZh(head);
     if (zh && body) best = { dateText: zh, body };
   }
   return best;

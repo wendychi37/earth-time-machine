@@ -13,6 +13,7 @@ const pages = [];
 const allLinks = new Set<string>();
 for (const source of COUNTRY_CHRONOLOGIES) {
   const page = await fetchPage(source.page);
+  if (!page) throw new Error(`頁面不存在：${source.page}`);
   const items = extractChronologyItems(page.html);
   items.forEach((it) => it.links.forEach((l) => allLinks.add(l)));
   pages.push({ title: page.title, displayTitle: page.displayTitle, revid: page.revid, sourcePage: source.page, items });

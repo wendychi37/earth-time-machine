@@ -1,26 +1,20 @@
-import { BoundaryLegendBar } from "@/features/boundaries/BoundaryStatus";
-import { EraBands } from "@/features/eras/EraBands";
 import { Timeline } from "./Timeline";
 import { YearDisplay } from "./YearDisplay";
 import { YearInput } from "./YearInput";
 import { YearStepper } from "./YearStepper";
 
-/** 畫面底部的時間軸面板：目前年份、輸入、微調與拖曳軸。 */
+/** 地球下方的時間軸：目前年份、微調、輸入與拖曳軸。 */
 export function TimelinePanel() {
   return (
-    <section className="rounded-xl border border-panel-border bg-panel px-3 pt-3 backdrop-blur sm:px-5">
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+    <section className="px-4 pt-1 sm:bg-panel sm:px-5 sm:pt-3">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1.5">
         <YearDisplay />
-        <div className="flex flex-wrap items-center gap-2">
-          <YearStepper />
+        <YearStepper />
+        <div className="w-full sm:w-auto">
           <YearInput />
         </div>
       </div>
       <Timeline />
-      <EraBands />
-      <div className="min-h-[4.75rem] sm:min-h-[3.25rem] border-t border-panel-border py-2">
-        <BoundaryLegendBar />
-      </div>
     </section>
   );
 }

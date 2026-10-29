@@ -15,14 +15,14 @@ export function LayerToggles() {
   ] as const;
 
   return (
-    <fieldset className="rounded-lg border border-panel-border bg-panel px-3 py-2 text-sm backdrop-blur">
+    <fieldset className="grid grid-cols-2 gap-x-3 text-sm sm:grid-cols-1">
       <legend className="sr-only">{messages.layers.title}</legend>
-      <p aria-hidden className="mb-0.5 text-xs font-semibold text-muted">
+      <p aria-hidden className="col-span-full mb-1 text-xs font-semibold text-muted">
         {messages.layers.title}
       </p>
       {items.map(({ key, label }) => (
-        <label key={key} className="flex cursor-pointer items-center gap-2 py-0.5">
-          <input type="checkbox" className="size-4 accent-accent" checked={layers[key]} onChange={() => toggleLayer(key)} />
+        <label key={key} className="flex cursor-pointer items-center gap-2 py-1.5 leading-snug">
+          <input type="checkbox" className="size-5 shrink-0 accent-accent" checked={layers[key]} onChange={() => toggleLayer(key)} />
           {label}
         </label>
       ))}

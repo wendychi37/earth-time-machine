@@ -16,6 +16,8 @@ describe("英文年表日期轉換", () => {
     ["c. 27,000–12,000 years ago", "約27000年－12000年前"],
     ["957 or 962", "957年或962年"],
     ["1790s", "1790年－1799年"],
+    ["1601–03", "1601年－1603年"],
+    ["1688–97", "1688年－1697年"],
   ])("%s → %s", (en, zh) => {
     expect(englishDateToZh(en)).toBe(zh);
   });
@@ -33,6 +35,12 @@ describe("英文年表日期轉換", () => {
     });
   });
 
+  it("日的範圍（「4–6 June」）不當成西元年", () => {
+    expect(splitEnglishLine("4–6 June. The Battle of Samdunja occurs.")).toBeNull();
+    expect(splitEnglishLine("23–24 February – First national convention.")).toBeNull();
+    expect(splitEnglishLine("23 May – 2 June surprise visit")).toBeNull();
+  });
+
   it("年表「Date」欄的月日", () => {
     expect(englishMonthDay("May")).toEqual({ month: 5 });
     expect(englishMonthDay("8 September")).toEqual({ month: 9, day: 8 });
@@ -48,6 +56,88 @@ describe("英文年表日期轉換", () => {
       { section: "10th century", text: "941年5月：A Rus' army landed.", links: ["Rus' people"] },
       { section: "10th century", text: "941年9月：The fleet was destroyed.", links: [] },
       { section: "10th century", text: "約前11500年：Start of Clovis Culture.", links: [] },
+    ]);
+  });
+
+  it("表格最後的「Source」欄不當成事件，「Year (BCE)」欄的年份是西元前", () => {
+    const html = `<table class="wikitable"><tr><th>Year (BCE)</th><th>Date</th><th>Event</th><th>Source</th></tr>
+      <tr><th rowspan="2">c.1000</th><td></td><td>Mining began.</td><td>[1]</td></tr>
+      <tr><td></td><td>Jars were made.</td><td></td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["約前1000年：Mining began.", "約前1000年：Jars were made."]);
+  });
+
+  it("表格最後的「Map」欄整列省略時，仍取「Event」欄", () => {
+    const html = `<table class="wikitable"><tr><th>Year</th><th>Date</th><th>Event</th><th>Map</th></tr>
+      <tr><td>408</td><td>Summer</td><td>Gerontius ends the revolt.</td></tr>
+      <tr><td rowspan="2">1009</td><td></td><td>Hisham was overthrown.</td></tr>
+      <tr><td>1 November</td><td>Sulayman freed Hisham.</td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "408年：Gerontius ends the revolt.",
+      "1009年：Hisham was overthrown.",
+      "1009年11月1日：Sulayman freed Hisham.",
+    ]);
+  });
+
+  it("年份與日期兩欄都跨列時，仍取「Event」欄，不取後面的「Source」欄", () => {
+    const html = `<table class="wikitable"><tr><th>Year</th><th>Date</th><th>Event</th><th>Source</th></tr>
+      <tr><td rowspan="3">1898</td><td rowspan="2">April 25</td><td>The US declares war on Spain.</td><td>[1]</td></tr>
+      <tr><td>Congress meets.</td><td>[2]</td></tr>
+      <tr><td>June 12</td><td>Independence declared.</td><td></td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "1898年4月25日：The US declares war on Spain.",
+      "1898年4月25日：Congress meets.",
+      "1898年6月12日：Independence declared.",
+    ]);
+  });
+
+  it("以年份當小標題時，底下沒寫日期的項目用小標題的年份", () => {
+    const html = `<h2>The Dutch Cape Colony</h2><h3>1652</h3><ul><li>Cape Town was founded.</li></ul>
+      <h3>Notes</h3><ul><li>Not an event.</li></ul>
+      <h2>Further reading</h2><h3>1790s</h3><ul><li>Smith, John. Politics in the 1790s. 1963.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["1652年：Cape Town was founded."]);
+  });
+
+  it("日期在第二欄的表格（Event | Date | Result）", () => {
+    const html = `<table class="wikitable"><tr><th>Event</th><th>Date</th><th>Result</th></tr>
+      <tr><td>Stone Age</td><td>12,000 bc</td><td>starting of the Stone Age</td></tr>
+      <tr><td><a href="https://en.wikipedia.org/wiki/Battle_of_Br%C3%A1vellir">Battle of Brávellir</a></td><td>770</td><td>Death of Harald Wartooth</td></tr></table>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "前12000年：Stone Age; starting of the Stone Age",
+      "770年：Battle of Brávellir; Death of Harald Wartooth",
+    ]);
+  });
+
+  it("單獨一行的年份（清單項目、<dt> 或段落）是後面同一層項目的年份", () => {
+    const html = `<h2>17th century</h2><dl><dt>1601 onwards</dt></dl><ul><li>Expansion of iwi.</li><li>1642</li>
+      <li>13 December: Abel Tasman sights the South Island.</li><li>19 December: Tasman departs.</li></ul>
+      <h2>1840s</h2><dl><dt>1840</dt></dl><ul><li>22 January: Settlers arrive.</li></ul>
+      <p><b>1843</b></p><ul><li>Wairau Affray.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "17世紀：Expansion of iwi.",
+      "1642年：13 December: Abel Tasman sights the South Island.",
+      "1642年：19 December: Tasman departs.",
+      "1840年：22 January: Settlers arrive.",
+      "1843年：Wairau Affray.",
+    ]);
+  });
+
+  it("第一個標題之前的導覽清單不沿用單獨一行的年份", () => {
+    const html = `<ul><li>11th century</li><li>Events</li><li>Sites</li></ul><h2>1840s</h2><ul><li>1840</li><li>Settlers arrive.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual(["1840年：Settlers arrive."]);
+  });
+
+  it("寫了完整日期的項目之後，只寫「日 月」的項目沿用它的年份", () => {
+    const html = `<h2>1840s</h2><ul><li>22 January: Settlers arrive.</li><li>27 September 1841: A school is founded.</li>
+      <li>10 October: Settlers reach Nelson.</li><li>December, 1844 – Own year in another format.</li><li>Main body of settlers arrive.</li></ul>
+      <h3>1965</h3><ul><li>3 March 1964: Earlier note.</li><li>1 April: Something happens.</li></ul>`;
+    expect(extractChronologyItems(html, "en").map((i) => i.text)).toEqual([
+      "1840年－1849年：22 January: Settlers arrive.",
+      "1841年9月27日：A school is founded.",
+      "1841年：10 October: Settlers reach Nelson.",
+      "1840年－1849年：December, 1844 – Own year in another format.",
+      "1840年－1849年：Main body of settlers arrive.",
+      "1964年3月3日：Earlier note.",
+      "1965年：1 April: Something happens.",
     ]);
   });
 });

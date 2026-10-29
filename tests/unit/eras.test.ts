@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { extractLead, dropForeignParentheses, leadSentences } from "@/lib/eras/extract";
 import { bandWindow, displaySpan, eraAt, geometryCenter, regionAt, regionForPolity, regionShade } from "@/lib/eras/query";
-import { REGIONS, bc, regionById } from "@/lib/eras/regions";
+import { REGIONS, REGION_CONTINENT, bc, filterRegions, regionById } from "@/lib/eras/regions";
 
 const region = (id: string) => regionById(id)!;
 
@@ -20,9 +20,16 @@ describe("朝代資料", () => {
     expect(new Set(REGIONS.map((r) => r.color)).size).toBe(REGIONS.length);
   });
 
+  it("每個地區都有所屬大洲，篩選時依原本順序留下勾選的地區", () => {
+    for (const r of REGIONS) expect(REGION_CONTINENT[r.id], r.name).toBeDefined();
+    expect(filterRegions(null)).toBe(REGIONS);
+    expect(filterRegions(["es", "tw"]).map((r) => r.id)).toEqual(["tw", "es"]);
+    expect(filterRegions([])).toEqual([]);
+  });
+
   it("名稱不使用中國大陸譯名", () => {
     const names = REGIONS.flatMap((r) => [r.name, ...r.eras.map((e) => e.name)]).join("、");
-    for (const word of ["奥斯曼", "莫卧儿", "萨法维", "塞琉西", "悉尼"]) expect(names).not.toContain(word);
+    for (const word of ["奥斯曼", "莫卧儿", "萨法维", "塞琉西", "悉尼", "埃塞俄比亞", "尼日利亞", "坦桑尼亞", "肯尼亞", "津巴布韋", "加納", "馬里", "老撾", "馬六甲"]) expect(names).not.toContain(word);
   });
 });
 
@@ -76,12 +83,53 @@ describe("地區判斷", () => {
     ["墨西哥城", 19.43, -99.13, "mx"],
     ["庫斯科", -13.53, -71.97, "an"],
     ["華盛頓", 38.9, -77.04, "na"],
+    ["河內", 21.03, 105.85, "vn"],
+    ["胡志明市", 10.8, 106.7, "vn"],
+    ["金邊", 11.56, 104.92, "kh"],
+    ["曼谷", 13.75, 100.5, "th"],
+    ["仰光", 16.8, 96.2, "mm"],
+    ["吉隆坡", 3.14, 101.69, "my"],
+    ["馬尼拉", 14.6, 121, "ph"],
+    ["雅加達", -6.2, 106.8, "id"],
+    ["阿迪斯阿貝巴", 9.03, 38.74, "et"],
+    ["喀土穆", 15.5, 32.56, "nb"],
+    ["阿爾及爾", 36.75, 3.06, "nf"],
+    ["廷巴克圖", 16.77, -3, "wf"],
+    ["拉哥斯", 6.45, 3.39, "ng"],
+    ["金夏沙", -4.3, 15.3, "cg"],
+    ["奈洛比", -1.29, 36.8, "sw"],
+    ["大辛巴威", -20.3, 30.9, "sa"],
+    ["開羅（不被努比亞搶走）", 30.04, 31.24, "eg"],
+    ["里斯本", 38.72, -9.14, "pt"],
+    ["馬德里", 40.42, -3.7, "es"],
+    ["巴塞隆納", 41.39, 2.17, "es"],
+    ["畢爾包", 43.26, -2.93, "es"],
+    ["巴黎", 48.86, 2.35, "fr"],
+    ["佩皮尼昂", 42.69, 2.9, "fr"],
+    ["里爾", 50.63, 3.06, "fr"],
+    ["阿姆斯特丹", 52.37, 4.9, "nl"],
+    ["布魯塞爾", 50.85, 4.35, "nl"],
+    ["哥本哈根", 55.68, 12.57, "sc"],
+    ["奧斯陸", 59.91, 10.75, "sc"],
+    ["斯德哥爾摩", 59.33, 18.07, "sc"],
+    ["赫爾辛基", 60.17, 24.94, "sc"],
+    ["雷克雅維克", 64.15, -21.94, "sc"],
+    ["倫敦", 51.51, -0.13, "gb"],
+    ["愛丁堡", 55.95, -3.19, "gb"],
+    ["加萊（不被英國搶走）", 50.95, 1.86, "fr"],
+    ["都柏林（不屬英國）", 53.35, -6.26, "eu"],
+    ["柏林（仍屬西歐）", 52.52, 13.4, "eu"],
+    ["里加（不屬北歐）", 56.95, 24.1, undefined],
   ])("%s 屬於正確的地區", (_, lat, lon, id) => {
     expect(regionAt(lat, lon)?.id).toBe(id);
   });
 
   it("不屬於任何地區的位置回傳 null", () => {
-    expect(regionAt(-25, 134)).toBeNull(); // 澳洲
+    expect(regionAt(-75, 0)).toBeNull(); // 南極洲
+  });
+
+  it("澳洲屬於澳洲地區", () => {
+    expect(regionAt(-25, 134)?.id).toBe("au");
   });
 
   const square = (lon: number, lat: number) => ({

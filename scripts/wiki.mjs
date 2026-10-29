@@ -20,11 +20,14 @@ export async function api(params, host = "zh.wikipedia.org") {
 /**
  * 取得頁面的 HTML、版本號與標題（中文維基百科轉成繁體 zh-tw）。
  * 用 index.php?action=render（使用解析快取），大頁面不像 action=parse 那樣容易被拒（503）。
+ * 頁面不存在時回傳 null。
  */
 export async function fetchPage(title, lang = "zh") {
   const host = `${lang}.wikipedia.org`;
   const info = await api({ action: "query", titles: title, prop: "revisions|info", rvprop: "ids", inprop: "varianttitles", redirects: "1" }, host);
   const page = info.query.pages[0];
+  // 頁面不存在時回傳 null，由呼叫端決定略過或停止
+  if (page.missing || !page.revisions) return null;
   const url = `https://${host}/w/index.php?` + new URLSearchParams({ title: page.title, action: "render", ...(lang === "zh" ? { variant: "zh-tw" } : {}), oldid: String(page.revisions[0].revid) });
   for (let i = 0; i < 8; i++) {
     const res = await fetch(url, { headers: UA }).catch(() => null);
@@ -40,8 +43,10 @@ export async function fetchPage(title, lang = "zh") {
 }
 
 /** 查詢連結條目的座標、座標類型與 Wikidata 項目 */
-export async function queryLinkInfo(titles, host = "zh.wikipedia.org") {
+export async function queryLinkInfo(allTitles, host = "zh.wikipedia.org") {
   const linkInfo = {};
+  // 含「|」等字元的不是有效條目名稱，放進查詢會被拆成兩個值而超過 50 個的上限
+  const titles = allTitles.filter((t) => !/[|#<>[\]{}]/.test(t));
   for (let i = 0; i < titles.length; i += 50) {
     const batch = titles.slice(i, i + 50);
     const r = await api({ action: "query", titles: batch.join("|"), prop: "coordinates|pageprops", coprop: "type|dim|country", ppprop: "wikibase_item", redirects: "1", colimit: "max" }, host);
