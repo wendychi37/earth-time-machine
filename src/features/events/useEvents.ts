@@ -2,15 +2,16 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { mergeKeyEvents } from "@/lib/curriculum/merge";
+import { dedupeEvents } from "@/lib/events/dedupe";
 import { repository } from "@/lib/data";
 import { capPerCountry, eventsNearYear, filterByCountry } from "@/lib/events/visible";
 import { useAppStore } from "@/store/useAppStore";
 import type { HistoricalEvent } from "@/types/event";
 
-/** 年表併入講義重點事件只做一次（比對兩萬條年表需要一點時間） */
+/** 年表去掉重複的事件、併入講義重點事件，只做一次（比對兩萬條年表需要一點時間） */
 let merged: Promise<HistoricalEvent[]> | null = null;
 function loadEvents() {
-  merged ??= repository.getEvents().then(mergeKeyEvents, (err) => {
+  merged ??= repository.getEvents().then((events) => mergeKeyEvents(dedupeEvents(events)), (err) => {
     merged = null;
     throw err;
   });

@@ -6,6 +6,7 @@ import { Suspense, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
+import { ChapterTags } from "@/features/curriculum/ChapterTags";
 import { EraLabels } from "@/features/eras/EraLabels";
 import { EventMarkers } from "@/features/events/EventMarkers";
 import type { BoundaryFeature } from "@/types/boundary";
@@ -42,7 +43,12 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
   const baseMap = useAppStore((s) => s.baseMap);
   const tone = baseMap === "map" ? "dark" : "light";
   const mapCountries = useMapCountries(baseMap === "map" || showLabels);
-  const labels = useMapLabels(showLabels);
+  const allLabels = useMapLabels(showLabels);
+  // 打開「各地朝代」時，地球上寫的是當時的朝代名稱；現代國名、行政區先收起來（只留海洋名），避免古代出現「印尼」「澳門」
+  const labels = useMemo(
+    () => (allLabels && showEras ? { countries: [], admin1: [], marine: allLabels.marine } : allLabels),
+    [allLabels, showEras],
+  );
   const adminLines = useAdminLines(showLabels);
   const showCultures = useAppStore((s) => s.layers.cultures);
   const year = useAppStore((s) => s.year);
@@ -125,6 +131,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           )}
           {(showEvents || showCurriculum) && <EventMarkers events={events} showOthers={showEvents} showKeys={showCurriculum} />}
           {showEras && <EraLabels />}
+          {showCurriculum && <ChapterTags />}
           <SelectionMarker />
           <GlobeControls />
           <CameraFocus />

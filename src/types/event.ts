@@ -15,7 +15,9 @@ export interface EventSource {
 /** 講義〈臺灣史、中國史、世界史對照表〉標出的重點（「課綱重點」圖層） */
 export interface CurriculumTag {
   keyId: string;
-  track: "tw" | "cn" | "world";
+  track: "tw" | "cn" | "ea" | "world";
+  /** 出自 Wendy 自製的四門課複習年表 */
+  poster?: boolean;
   /** 講義的說法（年表原文標題較長或較難時，名牌與重點清單用這個） */
   title: string;
   /** 講義的年代（天文年號）；年表那一條的日期可能差一兩年 */

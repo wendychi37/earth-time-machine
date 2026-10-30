@@ -58,6 +58,9 @@ interface AppState {
   /** 要地球轉過去的地點；每次呼叫 n 加一，同一個地點也會再轉一次 */
   focusTarget: { lat: number; lon: number; n: number } | null;
   focusOn: (point: LatLon) => void;
+  /** 點過的四門課章節：只有這一章的標籤立在地球上（時間移出這一章就收起） */
+  shownChapter: { track: string; n: number } | null;
+  showChapter: (chapter: { track: string; n: number } | null) => void;
 }
 
 const clampYear = (year: number) => Math.min(PHASE1_MAX_YEAR, Math.max(PHASE1_MIN_YEAR, Math.round(year)));
@@ -92,4 +95,6 @@ export const useAppStore = create<AppState>((set) => ({
   setRegionFilter: (regionFilter) => set({ regionFilter }),
   focusTarget: null,
   focusOn: ({ lat, lon }) => set((s) => ({ focusTarget: { lat, lon, n: (s.focusTarget?.n ?? 0) + 1 } })),
+  shownChapter: null,
+  showChapter: (shownChapter) => set({ shownChapter }),
 }));

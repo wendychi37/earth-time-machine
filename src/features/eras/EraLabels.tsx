@@ -14,8 +14,9 @@ import { useAppStore } from "@/store/useAppStore";
 const MIN_FACING = 0.25;
 
 /**
- * 地球上各地區的朝代名牌：依目前年份顯示該地區當時的朝代或時代名稱，
+ * 地球上各地區的朝代名稱：依目前年份顯示該地區當時的朝代或時代名稱，
  * 拖動時間軸時跟著換；點一下打開朝代介紹卡。
+ * 用地區顏色的字（加白邊）而不是色塊：地球上的色塊只留給 ★ 重點事件，畫面才不會互相干擾。
  */
 export function EraLabels() {
   const year = useAppStore((s) => s.year);
@@ -57,8 +58,8 @@ export function EraLabels() {
                 <button
                   type="button"
                   onClick={() => selectEra({ regionId: region.id, index })}
-                  className={`whitespace-nowrap rounded-full px-3 py-0.5 text-sm font-bold text-white shadow-md [text-shadow:0_1px_2px_rgb(0_0_0/0.45)] ${selected ? "ring-2 ring-white" : "ring-1 ring-white/50"}`}
-                  style={{ background: region.color }}
+                  className={`era-label whitespace-nowrap px-1 text-[15px] font-bold leading-tight ${selected ? "underline decoration-2 underline-offset-4" : ""}`}
+                  style={{ color: region.color }}
                   aria-label={`${region.name}：${era.name}（${messages.eras.cardLabel}）`}
                   data-testid={`era-label-${region.id}`}
                 >

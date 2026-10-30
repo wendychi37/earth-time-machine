@@ -34,69 +34,76 @@ body {
   left: 0;
   top: 0;
   white-space: nowrap;
-  font-weight: 700;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 12px;
   line-height: 1;
-  letter-spacing: 0.04em;
-  color: #2b2f38;
+  letter-spacing: 0.06em;
+  color: #6b7280;
   paint-order: stroke fill;
-  -webkit-text-stroke: 3px rgb(255 255 255 / 0.85);
+  -webkit-text-stroke: 2px rgb(255 255 255 / 0.7);
   will-change: transform;
 }
 .map-label[data-kind="admin1"] {
-  font-weight: 500;
   font-size: 11px;
-  color: #59606e;
+  color: #8a909b;
 }
 .map-label[data-kind="marine"] {
-  font-weight: 500;
   font-size: 12px;
   letter-spacing: 0.3em;
-  color: #2f6a99;
+  color: #6f98bd;
   -webkit-text-stroke: 0;
 }
 .map-label[data-tone="light"] {
-  color: #fff;
-  -webkit-text-stroke: 3px rgb(0 0 0 / 0.6);
+  color: #d5dae2;
+  -webkit-text-stroke: 2px rgb(0 0 0 / 0.5);
 }
 .map-label[data-tone="light"][data-kind="admin1"] {
-  color: #e4e8ef;
+  color: #b8bfca;
 }
 .map-label[data-tone="light"][data-kind="marine"] {
   color: #b9dcff;
   -webkit-text-stroke: 0;
   text-shadow: 0 1px 2px rgb(0 0 0 / 0.7);
 }
-/* 考古文化：左邊的圓點對準位置，文字往右延伸；可點選 */
+/* 考古文化：左邊的圓點對準位置，文字往右延伸；可點選。用褐色字不用色塊，地球上的色塊只留給 ★ 重點事件 */
 .map-label[data-kind="culture"] {
   pointer-events: auto;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-size: 13px;
   font-weight: 700;
-  padding: 3px 8px 3px 3px;
-  border-radius: 999px;
-  color: #fff;
-  background: rgb(160 82 20 / 0.88);
-  -webkit-text-stroke: 0;
-  box-shadow: 0 1px 3px rgb(0 0 0 / 0.35);
+  padding: 2px 4px 2px 3px;
+  border-radius: 6px;
+  color: #8a4512;
+  -webkit-text-stroke: 3px rgb(255 255 255 / 0.85);
 }
 .map-label[data-kind="culture"]::before {
   content: "";
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   flex: none;
   border-radius: 50%;
-  background: #ffd9a8;
+  background: #c26a22;
   border: 2px solid #fff;
+}
+.map-label[data-tone="light"][data-kind="culture"] {
+  color: #ffc58f;
+  -webkit-text-stroke: 3px rgb(0 0 0 / 0.55);
 }
 .map-label[data-kind="culture"][hidden] {
   display: none;
 }
 .map-label[data-kind="culture"]:hover,
 .map-label[data-kind="culture"]:focus-visible {
-  background: rgb(190 100 25);
-  outline: 2px solid #fff;
+  background: rgb(255 255 255 / 0.75);
+  outline: 2px solid #c26a22;
+}
+
+/* 朝代名稱：地區顏色的字加白邊（不用色塊） */
+.era-label {
+  paint-order: stroke fill;
+  -webkit-text-stroke: 3.5px rgb(255 255 255 / 0.9);
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.25));
 }

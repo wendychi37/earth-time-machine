@@ -9,14 +9,15 @@ import { useAppStore } from "@/store/useAppStore";
  * 時間軸上方的大時代色帶（〈世界史列國歷史發展分合表〉的分期）。
  * 目前所在的時代加框；點一下跳到該時代的開頭。太窄放不下的時代名稱只在滑過時顯示。
  */
-export function PeriodBands({ scale }: { scale: TimeScale }) {
+export function PeriodBands({ scale, compact = false }: { scale: TimeScale; compact?: boolean }) {
+  const prefix = compact ? "focus-" : "";
   const year = useAppStore((s) => s.year);
   const setYear = useAppStore((s) => s.setYear);
   const show = useAppStore((s) => s.layers.curriculum);
   if (!show) return null;
   const current = periodAt(year);
   return (
-    <div role="group" aria-label={messages.curriculum.bandsLabel} className="relative mb-1 h-5 sm:h-6" data-testid="period-bands">
+    <div role="group" aria-label={messages.curriculum.bandsLabel} className="relative mb-1 h-5 sm:h-6" data-testid={`${prefix}period-bands`}>
       {PERIODS.map((p) => {
         const left = scale.toPosition(Math.max(scale.min, p.start));
         const right = scale.toPosition(Math.min(scale.max, p.end));
@@ -33,7 +34,7 @@ export function PeriodBands({ scale }: { scale: TimeScale }) {
               active ? "z-10 rounded-sm font-bold ring-2 ring-accent" : "opacity-75 hover:opacity-100"
             }`}
             style={{ left: `${left * 100}%`, width: `${(right - left) * 100}%`, backgroundColor: p.color }}
-            data-testid={`period-band-${p.id}`}
+            data-testid={`${prefix}period-band-${p.id}`}
           >
             <span className="truncate">{p.sub ?? p.name}</span>
           </button>

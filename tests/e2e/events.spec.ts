@@ -29,9 +29,11 @@ test("點擊地球上的年表大事，開啟事件卡片與出處", async ({ pa
   await expect(page.getByTestId("boundary-legend")).toContainText("的快照", { timeout: 30_000 });
   await page.waitForTimeout(2500);
 
-  // 朝代名牌可能剛好蓋在事件標記上，先關掉；再回到「年份」分頁，讓地球視窗和剛載入時一樣大
+  // 朝代名稱可能剛好蓋在事件標記上，先關掉；再回到「年份」分頁，讓地球視窗和剛載入時一樣大
   await openTab(page, "layers");
   await page.getByLabel("各地朝代（依年份）").uncheck();
+  // 這裡要點的是年表大事，★ 課綱重點的名牌也先關掉
+  await page.getByRole("checkbox", { name: /課綱重點/ }).uncheck();
   if (info.project.name === "mobile") await openTab(page, "time");
   await page.waitForTimeout(1000);
   await tapGlobe(page, info, target.lat, target.lon);
