@@ -3,6 +3,7 @@ import { periodRange } from "@/lib/time/formatDate";
 import { DatePrecision, type HistoricalDate } from "@/types/time";
 import type { CurriculumTag, HistoricalEvent } from "@/types/event";
 import { KEY_EVENTS, type KeyEvent } from "./keyEvents";
+import { COURSE_SOURCE } from "./courses";
 import { CURRICULUM_SOURCE, periodAt } from "./periods";
 
 /** 年表事件與講義重點事件的年份最多差幾年仍視為同一件事 */
@@ -23,7 +24,7 @@ function distanceKm(a: { lat: number; lon: number }, b: { lat: number; lon: numb
 }
 
 /** 臺灣史、中國史的重點只找該國年表裡的事件（地點常是首都的區域示意，所以不比距離） */
-const TRACK_ISO: Record<KeyEvent["track"], string | null> = { tw: "TWN", cn: "CHN", world: null };
+const TRACK_ISO: Record<KeyEvent["track"], string | null> = { tw: "TWN", cn: "CHN", ea: null, world: null };
 
 const tagOf = (k: KeyEvent): CurriculumTag => ({
   keyId: k.id,
@@ -34,6 +35,7 @@ const tagOf = (k: KeyEvent): CurriculumTag => ({
   periodId: periodAt(k.start).id,
   ...(k.theme ? { theme: k.theme } : {}),
   ...(k.note ? { note: k.note } : {}),
+  ...(k.poster ? { poster: true } : {}),
 });
 
 /**
@@ -86,7 +88,7 @@ export function keyEventToHistorical(k: KeyEvent): HistoricalEvent {
     country: null,
     wikidataQid: null,
     wikipedia: { zh: null, en: null },
-    sources: [{ title: CURRICULUM_SOURCE.title, url: null, supports: "overall", note: CURRICULUM_SOURCE.note }],
+    sources: [{ ...(k.poster ? COURSE_SOURCE : CURRICULUM_SOURCE), url: null, supports: "overall" }],
     isDemo: false,
     reviewStatus: "reviewed",
     curriculum: tagOf(k),

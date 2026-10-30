@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { KEY_EVENTS, type KeyEvent } from "@/lib/curriculum/keyEvents";
 import { findMatch, mergeKeyEvents } from "@/lib/curriculum/merge";
 import { PERIODS, periodAt } from "@/lib/curriculum/periods";
-import { CHINA_STAGES, TAIWAN_STAGES, stageAt } from "@/lib/curriculum/stages";
+import { COURSES, chaptersAt, courseOf, laneSegments, spanAt } from "@/lib/curriculum/courses";
 import type { HistoricalEvent } from "@/types/event";
 import { DatePrecision } from "@/types/time";
 
@@ -57,15 +57,39 @@ describe("重點事件（對照表）", () => {
   });
 });
 
-describe("臺灣、中國分期", () => {
-  it("首尾相接", () => {
-    for (const stages of [TAIWAN_STAGES, CHINA_STAGES])
-      for (let i = 1; i < stages.length; i++) expect(stages[i].start).toBe(stages[i - 1].end);
+describe("四門課年表", () => {
+  it("四門課都有章節，L 號不重複，起訖合理", () => {
+    expect(COURSES.map((c) => c.id)).toEqual(["tw", "cn", "ea", "world"]);
+    for (const c of COURSES) {
+      const ns = [...c.chapters.map((ch) => ch.n), ...c.overview.map((o) => o.n)];
+      expect(new Set(ns).size).toBe(ns.length);
+      for (const ch of c.chapters) expect(ch.end).toBeGreaterThan(ch.start);
+    }
   });
-  it("依年份找到分期", () => {
-    expect(stageAt(TAIWAN_STAGES, 1624)?.name).toBe("荷西時期");
-    expect(stageAt(TAIWAN_STAGES, 1683)?.name).toBe("鄭氏時期");
-    expect(stageAt(CHINA_STAGES, 1624)?.name).toBe("明");
+  it("依年份找到章節、時代背景與課綱主題", () => {
+    expect(chaptersAt(courseOf("tw"), 1684).map((ch) => ch.n)).toEqual([5]);
+    expect(chaptersAt(courseOf("cn"), 250).map((ch) => ch.n)).toEqual([5, 6]);
+    expect(spanAt(courseOf("tw").backgrounds, 1683)?.label).toBe("鄭氏");
+    expect(spanAt(courseOf("ea").standards, 1700)?.label).toMatch(/^Ia-Ⅳ/);
+    expect(chaptersAt(courseOf("cn"), 930)).toEqual([]);
+  });
+  it("時間軸色條不重疊，且涵蓋每一段有章節的時間", () => {
+    for (const c of COURSES) {
+      const segs = laneSegments(c, -2999, 2026);
+      for (let i = 1; i < segs.length; i++) expect(segs[i].start).toBeGreaterThanOrEqual(segs[i - 1].end);
+      for (const y of [1000, 1700, 1950]) {
+        const seg = segs.find((s) => y >= s.start && y < s.end);
+        expect(seg?.chapter ?? null).toBe(chaptersAt(c, y).at(-1) ?? null);
+      }
+    }
+  });
+  it("年表的時代重點不和講義重點重複（同一條軌、兩年內、同樣標題）", () => {
+    const poster = KEY_EVENTS.filter((k) => k.poster);
+    expect(poster.length).toBeGreaterThan(50);
+    for (const p of poster) {
+      const dup = KEY_EVENTS.find((k) => !k.poster && k.track === p.track && Math.abs(k.start - p.start) <= 2 && k.title.includes(p.title));
+      expect(dup, p.title).toBeUndefined();
+    }
   });
 });
 

@@ -6,6 +6,7 @@ import { Suspense, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
+import { ChapterTags } from "@/features/curriculum/ChapterTags";
 import { EraLabels } from "@/features/eras/EraLabels";
 import { EventMarkers } from "@/features/events/EventMarkers";
 import type { BoundaryFeature } from "@/types/boundary";
@@ -125,6 +126,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           )}
           {(showEvents || showCurriculum) && <EventMarkers events={events} showOthers={showEvents} showKeys={showCurriculum} />}
           {showEras && <EraLabels />}
+          {showCurriculum && <ChapterTags />}
           <SelectionMarker />
           <GlobeControls />
           <CameraFocus />

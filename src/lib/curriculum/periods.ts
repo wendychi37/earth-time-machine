@@ -27,7 +27,7 @@ export interface CurriculumPeriod {
 
 export const CURRICULUM_SOURCE = {
   title: "〈世界史列國歷史發展分合表〉、〈臺灣史、中國史、世界史對照表〉",
-  note: "Wendy 提供的教學講義",
+  note: "Wendy 自製的教學講義",
 };
 
 export const PERIODS: CurriculumPeriod[] = [

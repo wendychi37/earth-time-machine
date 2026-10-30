@@ -1,5 +1,6 @@
 "use client";
 
+import { chaptersAt, courseOf } from "@/lib/curriculum/courses";
 import { PERIODS, periodLabel } from "@/lib/curriculum/periods";
 import { formatLatLon } from "@/lib/geo/format";
 import { formatHistoricalDate, formatPeriod } from "@/lib/time/formatDate";
@@ -17,6 +18,8 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
   const c = messages.curriculum;
   const key = event.curriculum;
   const period = key && PERIODS.find((p) => p.id === key.periodId);
+  const course = key && courseOf(key.track);
+  const chapters = course ? chaptersAt(course, key.start) : [];
   const originals = [event.period.start.originalText, event.period.end?.originalText].filter(Boolean);
   const precisionNote =
     event.locationPrecision === "approximate" ? t.locationApprox : event.locationPrecision === "region" ? t.locationRegion : "";
@@ -53,6 +56,12 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
           ✕
         </button>
       </header>
+
+      {course && chapters.length > 0 && (
+        <p className="mb-2 text-xs text-muted" data-testid="key-chapter">
+          {chapters.map((ch) => `${c.chapterLabel(course.name, ch.n)}【${ch.title}】`).join("、")}
+        </p>
+      )}
 
       {key && (key.theme || key.note || key.title !== event.title) && (
         <div className="mb-3 rounded-md border border-accent/30 bg-accent/10 p-2.5 text-[13px] leading-relaxed" data-testid="key-note">
@@ -158,7 +167,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
       {event.relatedArticles && (
         <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{event.translation ? t.translatedNote : t.chronologyNote}</p>
       )}
-      {key && !event.relatedArticles && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{c.addedNote}</p>}
+      {key && !event.relatedArticles && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{key.poster ? c.addedNotePoster : c.addedNote}</p>}
       {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-200/80">{t.demoNote}</p>}
     </article>
   );

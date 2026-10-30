@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 import { useAllEvents, useEventsNearYear } from "@/features/events/useEvents";
 import { PERIODS, periodAt, periodLabel, type CurriculumPeriod } from "@/lib/curriculum/periods";
-import { CHINA_STAGES, TAIWAN_STAGES, stageAt } from "@/lib/curriculum/stages";
-import { TRACK_COLORS, TRACKS } from "@/lib/curriculum/tracks";
+import { COURSES, chaptersAt, inEastAsia, spanAt, type Chapter, type Course } from "@/lib/curriculum/courses";
+import { TRACK_COLORS } from "@/lib/curriculum/tracks";
 import { eventWindowYears } from "@/lib/events/visible";
 import { formatYearShort } from "@/lib/time/format";
 import { periodRange } from "@/lib/time/formatDate";
@@ -92,15 +92,24 @@ export function FocusPanel() {
     }
   };
 
-  const trio = TRACKS.map((track) => {
-    const stage = track === "tw" ? stageAt(TAIWAN_STAGES, year) : track === "cn" ? stageAt(CHINA_STAGES, year) : null;
-    const event = nearest(
-      keyEvents.filter((e) => e.curriculum!.track === track),
-      year,
-      window,
+  const goChapter = (ch: Chapter) => {
+    setYear(Math.max(PHASE1_MIN_YEAR, ch.start));
+    focusOn(ch);
+  };
+  /** 每門課的重點事件；東亞史也收世界史欄裡發生在東亞的事 */
+  const courseEvents = (course: Course) =>
+    keyEvents.filter(
+      (e) =>
+        e.curriculum!.track === course.id ||
+        (course.id === "ea" && e.curriculum!.track === "world" && e.location && inEastAsia(e.location.lat, e.location.lon)),
     );
-    return { track, stage: stage?.name ?? null, event };
-  });
+  const courses = COURSES.map((course) => ({
+    course,
+    chapters: chaptersAt(course, year),
+    background: spanAt(course.backgrounds, year),
+    standard: spanAt(course.standards, year),
+    event: nearest(courseEvents(course), year, window),
+  }));
 
   return (
     <section aria-label={t.tabTitle} className="space-y-4 text-sm" data-testid="focus-panel">
@@ -158,30 +167,57 @@ export function FocusPanel() {
       </div>
 
       <div>
-        <h3 className="mb-2 font-semibold">{t.trioTitle}</h3>
-        <dl className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-2.5 gap-y-2" data-testid="focus-trio">
-          {trio.map(({ track, stage, event }) => (
-            <div key={track} className="contents">
-              <dt
-                className="h-fit rounded-md py-0.5 text-center text-xs font-bold text-white"
-                style={{ backgroundColor: TRACK_COLORS[track] }}
-              >
-                {t.tracks[track]}
-              </dt>
-              <dd className="leading-snug">
-                {stage && <span className="font-semibold">{stage}</span>}
-                {stage && event && <span className="text-muted">・</span>}
-                {event ? (
-                  <button type="button" onClick={() => openEvent(event)} className="text-left underline decoration-white/30 underline-offset-2 hover:decoration-white">
-                    {formatYearShort(startOf(event))} {titleOf(event)}
+        <h3 className="mb-2 font-semibold">{t.coursesTitle(formatYearShort(year))}</h3>
+        <ul className="space-y-2" data-testid="focus-courses">
+          {courses.map(({ course, chapters, background, standard, event }) => (
+            <li
+              key={course.id}
+              className="rounded-lg border-l-4 bg-white/[0.04] px-2.5 py-2 leading-snug"
+              style={{ borderLeftColor: TRACK_COLORS[course.id] }}
+              data-testid={`focus-course-${course.id}`}
+            >
+              <p className="text-xs font-bold" style={{ color: TRACK_COLORS[course.id] }}>
+                <span className="rounded px-1 py-px text-white" style={{ backgroundColor: TRACK_COLORS[course.id] }}>
+                  {course.name}
+                </span>
+                {background && <span className="ml-1.5 font-normal text-muted">{t.background}：{background.label}</span>}
+              </p>
+              {chapters.length > 0 ? (
+                chapters.map((ch) => (
+                  <button
+                    key={ch.n}
+                    type="button"
+                    onClick={() => goChapter(ch)}
+                    aria-label={t.jumpChapter(course.name, ch.n, ch.title)}
+                    className="mt-1 block text-left font-semibold underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                    data-testid="focus-chapter"
+                  >
+                    L{ch.n}【{ch.title}】
                   </button>
-                ) : (
-                  !stage && <span className="text-muted">{t.worldFallback}</span>
-                )}
-              </dd>
-            </div>
+                ))
+              ) : (
+                <p className="mt-1 text-muted">{t.noChapter}</p>
+              )}
+              {standard && (
+                <p className="mt-0.5 text-xs text-muted">
+                  {t.standard}：{standard.label}
+                </p>
+              )}
+              {event && (
+                <button
+                  type="button"
+                  onClick={() => openEvent(event)}
+                  className="mt-1 block text-left text-[13px] underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                >
+                  <span className="text-accent" aria-hidden>
+                    ★{" "}
+                  </span>
+                  {formatYearShort(startOf(event))} {titleOf(event)}
+                </button>
+              )}
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
 
       <div>
@@ -222,6 +258,38 @@ export function FocusPanel() {
         {t.others(others)}
         <span aria-hidden>›</span>
       </button>
+
+      <details className="rounded-lg border border-panel-border px-3 py-2" data-testid="all-chapters">
+        <summary className="cursor-pointer font-semibold">{t.allChapters}</summary>
+        <div className="mt-2 space-y-3">
+          {COURSES.map((course) => (
+            <div key={course.id}>
+              <h4 className="mb-1 text-xs font-bold" style={{ color: TRACK_COLORS[course.id] }}>
+                {course.name}
+              </h4>
+              <ol className="space-y-0.5">
+                {[...course.overview.map((o) => ({ ...o, chapter: null as Chapter | null })), ...course.chapters.map((ch) => ({ n: ch.n, title: ch.title, chapter: ch }))]
+                  .sort((a, b) => a.n - b.n)
+                  .map(({ n, title, chapter }) => (
+                    <li key={n} className="flex gap-2 text-[13px] leading-snug">
+                      <span className="w-7 shrink-0 tabular-nums text-muted">L{n}</span>
+                      {chapter ? (
+                        <button type="button" onClick={() => goChapter(chapter)} className="text-left hover:underline">
+                          {title}
+                          <span className="ml-1 text-xs text-muted">{formatYearShort(Math.max(PHASE1_MIN_YEAR, chapter.start))}～</span>
+                        </button>
+                      ) : (
+                        <span className="text-muted">
+                          {title}（{t.overview}）
+                        </span>
+                      )}
+                    </li>
+                  ))}
+              </ol>
+            </div>
+          ))}
+        </div>
+      </details>
 
       <p className="text-[11px] leading-relaxed text-muted">{t.source}</p>
     </section>

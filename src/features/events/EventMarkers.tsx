@@ -105,7 +105,7 @@ function KeyMarker({ event, selected }: { event: MarkerCluster["events"][number]
  * 只顯示朝向相機那一面的文字，轉到地球背面就藏起來。
  * 文字是另外掛上去的，可能比第一次重畫還晚出現：掛上時先藏起來，再要求重畫一次來判斷正反面。
  */
-function useFacingCamera(position: [number, number, number]) {
+export function useFacingCamera(position: [number, number, number]) {
   const ref = useRef<HTMLDivElement | null>(null);
   const invalidate = useThree((s) => s.invalidate);
   useFrame(({ camera }) => {
