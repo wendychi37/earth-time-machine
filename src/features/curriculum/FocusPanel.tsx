@@ -13,6 +13,9 @@ import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import type { HistoricalEvent } from "@/types/event";
 
+/** 大時代的基本架構先列幾條，其餘按「更多」才展開 */
+const THEMES_SHOWN = 3;
+
 /** 重點事件用講義的年代與說法（年表那一條的日期、標題可能不同） */
 const rangeOf = (e: HistoricalEvent): [number, number] =>
   e.curriculum ? [e.curriculum.start, e.curriculum.end ?? e.curriculum.start] : periodRange(e.period);
@@ -63,14 +66,14 @@ export function FocusPanel() {
   const openEvent = useOpenEvent();
   const all = useAllEvents();
   const near = useEventsNearYear();
-  const [theme, setTheme] = useState<{ periodId: string; title: string } | null>(null);
+  const [theme, setTheme] = useState<{
+    periodId: string;
+    title: string;
+  } | null>(null);
 
   const period = periodAt(year);
   const index = PERIODS.indexOf(period);
-  const keyEvents = useMemo(
-    () => (all ?? []).filter((e) => e.curriculum).sort((a, b) => startOf(a) - startOf(b)),
-    [all],
-  );
+  const keyEvents = useMemo(() => (all ?? []).filter((e) => e.curriculum).sort((a, b) => startOf(a) - startOf(b)), [all]);
   const inPeriod = keyEvents.filter((e) => e.curriculum!.periodId === period.id);
   const activeTheme = theme?.periodId === period.id ? theme.title : null;
   const listed = activeTheme ? inPeriod.filter((e) => e.curriculum!.theme === activeTheme) : inPeriod;
@@ -92,9 +95,14 @@ export function FocusPanel() {
     }
   };
 
-  const goChapter = (ch: Chapter) => {
+  const showChapter = useAppStore((s) => s.showChapter);
+  const [openCourse, setOpenCourse] = useState<string | null>(null);
+  const [allThemes, setAllThemes] = useState(false);
+  /** 跳到某一章：時間軸到開頭、地球轉過去，並把這一章的標籤立在地球上 */
+  const goChapter = (course: Course, ch: Chapter) => {
     setYear(Math.max(PHASE1_MIN_YEAR, ch.start));
     focusOn(ch);
+    showChapter({ track: course.id, n: ch.n });
   };
   /** 每門課的重點事件；東亞史也收世界史欄裡發生在東亞的事 */
   const courseEvents = (course: Course) =>
@@ -113,7 +121,10 @@ export function FocusPanel() {
 
   return (
     <section aria-label={t.tabTitle} className="space-y-4 text-sm" data-testid="focus-panel">
-      <div className="rounded-xl border border-panel-border bg-white/[0.04] p-3" style={{ borderTopColor: period.color, borderTopWidth: 4 }}>
+      <div
+        className="rounded-xl border border-panel-border bg-white/[0.04] p-3"
+        style={{ borderTopColor: period.color, borderTopWidth: 4 }}
+      >
         <div className="flex items-center justify-between gap-2">
           <button
             type="button"
@@ -146,7 +157,7 @@ export function FocusPanel() {
           <span className="font-normal">（{t.themesHint}）</span>
         </h3>
         <ul className="mt-1.5 flex flex-wrap gap-1.5" data-testid="focus-themes">
-          {period.themes.map((th) => {
+          {(allThemes || period.themes.length <= THEMES_SHOWN ? period.themes : period.themes.slice(0, THEMES_SHOWN)).map((th) => {
             const active = th.title === activeTheme;
             return (
               <li key={th.title}>
@@ -163,60 +174,92 @@ export function FocusPanel() {
               </li>
             );
           })}
+          {period.themes.length > THEMES_SHOWN && (
+            <li>
+              <button
+                type="button"
+                onClick={() => setAllThemes((v) => !v)}
+                aria-expanded={allThemes}
+                className="rounded-full px-2.5 py-1 text-[13px] text-muted hover:text-foreground"
+                data-testid="themes-more"
+              >
+                {allThemes ? t.fewerThemes : t.moreThemes(period.themes.length - THEMES_SHOWN)}
+              </button>
+            </li>
+          )}
         </ul>
       </div>
 
       <div>
         <h3 className="mb-2 font-semibold">{t.coursesTitle(formatYearShort(year))}</h3>
-        <ul className="space-y-2" data-testid="focus-courses">
-          {courses.map(({ course, chapters, background, standard, event }) => (
-            <li
-              key={course.id}
-              className="rounded-lg border-l-4 bg-white/[0.04] px-2.5 py-2 leading-snug"
-              style={{ borderLeftColor: TRACK_COLORS[course.id] }}
-              data-testid={`focus-course-${course.id}`}
-            >
-              <p className="text-xs font-bold" style={{ color: TRACK_COLORS[course.id] }}>
-                <span className="rounded px-1 py-px text-white" style={{ backgroundColor: TRACK_COLORS[course.id] }}>
-                  {course.name}
-                </span>
-                {background && <span className="ml-1.5 font-normal text-muted">{t.background}：{background.label}</span>}
-              </p>
-              {chapters.length > 0 ? (
-                chapters.map((ch) => (
-                  <button
-                    key={ch.n}
-                    type="button"
-                    onClick={() => goChapter(ch)}
-                    aria-label={t.jumpChapter(course.name, ch.n, ch.title)}
-                    className="mt-1 block text-left font-semibold underline decoration-white/30 underline-offset-2 hover:decoration-white"
-                    data-testid="focus-chapter"
-                  >
-                    L{ch.n}【{ch.title}】
-                  </button>
-                ))
-              ) : (
-                <p className="mt-1 text-muted">{t.noChapter}</p>
-              )}
-              {standard && (
-                <p className="mt-0.5 text-xs text-muted">
-                  {t.standard}：{standard.label}
-                </p>
-              )}
-              {event && (
+        <ul className="space-y-1" data-testid="focus-courses">
+          {courses.map(({ course, chapters, background, standard, event }) => {
+            const open = openCourse === course.id;
+            const main = chapters.at(-1);
+            return (
+              <li key={course.id} className="rounded-lg bg-white/[0.04] leading-snug" data-testid={`focus-course-${course.id}`}>
                 <button
                   type="button"
-                  onClick={() => openEvent(event)}
-                  className="mt-1 block text-left text-[13px] underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                  onClick={() => setOpenCourse(open ? null : course.id)}
+                  aria-expanded={open}
+                  className="flex w-full items-center gap-2 px-2.5 py-2 text-left hover:bg-white/5"
+                  data-testid="focus-course-toggle"
                 >
-                  <span className="text-accent" aria-hidden>
-                    ★{" "}
+                  <span
+                    className="shrink-0 rounded px-1.5 py-px text-xs font-bold text-white"
+                    style={{ backgroundColor: TRACK_COLORS[course.id] }}
+                  >
+                    {course.name}
                   </span>
-                  {formatYearShort(startOf(event))} {titleOf(event)}
+                  <span className="min-w-0 flex-1 truncate font-semibold">
+                    {main ? `L${main.n} ${main.title}` : <span className="font-normal text-muted">{t.noChapter}</span>}
+                  </span>
+                  {chapters.length > 1 && <span className="shrink-0 text-xs text-muted">{t.moreChapters(chapters.length - 1)}</span>}
+                  <span className={`shrink-0 text-muted transition-transform ${open ? "rotate-90" : ""}`} aria-hidden>
+                    ›
+                  </span>
                 </button>
-              )}
-            </li>
-          ))}
+                {open && (
+                  <div className="space-y-1 border-t border-white/10 px-2.5 pb-2.5 pt-2" data-testid="focus-course-detail">
+                    {chapters.map((ch) => (
+                      <button
+                        key={ch.n}
+                        type="button"
+                        onClick={() => goChapter(course, ch)}
+                        aria-label={t.jumpChapter(course.name, ch.n, ch.title)}
+                        className="block text-left font-semibold underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                        data-testid="focus-chapter"
+                      >
+                        L{ch.n}【{ch.title}】
+                      </button>
+                    ))}
+                    {background && (
+                      <p className="text-xs text-muted">
+                        {t.background}：{background.label}
+                      </p>
+                    )}
+                    {standard && (
+                      <p className="text-xs text-muted">
+                        {t.standard}：{standard.label}
+                      </p>
+                    )}
+                    {event && (
+                      <button
+                        type="button"
+                        onClick={() => openEvent(event)}
+                        className="block text-left text-[13px] underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                      >
+                        <span className="text-accent" aria-hidden>
+                          ★{" "}
+                        </span>
+                        {formatYearShort(startOf(event))} {titleOf(event)}
+                      </button>
+                    )}
+                  </div>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -268,13 +311,23 @@ export function FocusPanel() {
                 {course.name}
               </h4>
               <ol className="space-y-0.5">
-                {[...course.overview.map((o) => ({ ...o, chapter: null as Chapter | null })), ...course.chapters.map((ch) => ({ n: ch.n, title: ch.title, chapter: ch }))]
+                {[
+                  ...course.overview.map((o) => ({
+                    ...o,
+                    chapter: null as Chapter | null,
+                  })),
+                  ...course.chapters.map((ch) => ({
+                    n: ch.n,
+                    title: ch.title,
+                    chapter: ch,
+                  })),
+                ]
                   .sort((a, b) => a.n - b.n)
                   .map(({ n, title, chapter }) => (
                     <li key={n} className="flex gap-2 text-[13px] leading-snug">
                       <span className="w-7 shrink-0 tabular-nums text-muted">L{n}</span>
                       {chapter ? (
-                        <button type="button" onClick={() => goChapter(chapter)} className="text-left hover:underline">
+                        <button type="button" onClick={() => goChapter(course, chapter)} className="text-left hover:underline">
                           {title}
                           <span className="ml-1 text-xs text-muted">{formatYearShort(Math.max(PHASE1_MIN_YEAR, chapter.start))}～</span>
                         </button>

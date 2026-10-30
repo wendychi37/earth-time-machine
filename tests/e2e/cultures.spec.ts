@@ -5,6 +5,9 @@ test("拉到史前年代，地球上出現考古文化，點了顯示年代與�
   await page.goto("/");
   await expect(page.getByTestId("globe-canvas").locator("canvas")).toBeVisible({ timeout: 30_000 });
 
+  // 手機畫面小，★ 課綱重點的名牌會蓋住臺灣的考古文化，先關掉
+  await openTab(page, "layers");
+  await page.getByRole("checkbox", { name: /課綱重點/ }).uncheck();
   await goToYear(page, "西元前1000");
   await expect(page.getByTestId("current-year")).toHaveText(/西元前 1000 年/);
 

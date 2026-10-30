@@ -15,12 +15,17 @@ const HEIGHT: Record<Course["id"], number> = { tw: 0.05, cn: 0.09, ea: 0.13, wor
 const UP = new Vector3(0, 1, 0);
 
 /**
- * 地球上的四門課章節標籤：這一年每門課正在上的章節，立在那一章的代表地點上方，跟著地球轉。
- * 點一下打開「重點」分頁，看這一章的時代背景與重點事件。
+ * 地球上的四門課章節標籤：平常不顯示，在「重點」分頁或時間軸點了某一章，那一章的標籤才立在代表地點上方，
+ * 跟著地球轉；時間移出這一章就收起。點標籤打開「重點」分頁。
  */
 export function ChapterTags() {
   const year = useAppStore((s) => s.year);
-  const tags = COURSES.flatMap((course) => chaptersAt(course, year).map((chapter) => ({ course, chapter })));
+  const shown = useAppStore((s) => s.shownChapter);
+  const tags = COURSES.flatMap((course) =>
+    chaptersAt(course, year)
+      .filter((chapter) => shown?.track === course.id && shown.n === chapter.n)
+      .map((chapter) => ({ course, chapter })),
+  );
   return (
     <group name={messages.curriculum.tagsLabel}>
       {tags.map(({ course, chapter }, i) => (

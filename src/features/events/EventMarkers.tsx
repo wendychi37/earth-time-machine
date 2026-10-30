@@ -50,6 +50,8 @@ function Hit({ onClick, name, radius }: { onClick: () => void; name: string; rad
 
 /** 打開「課綱重點」時，其他事件變小、變淡，讓 ★ 重點事件跳出來 */
 const DIM_SCALE = 0.65;
+/** ★ 名牌比圓點寬得多，相距小於這個角度（比例為 1 時）就收成一顆 */
+const KEY_CLUSTER_DEGREES = 7;
 const DIM_OPACITY = 0.45;
 
 function Marker({ event, selected, dim }: { event: MarkerCluster["events"][number]; selected: boolean; dim: boolean }) {
@@ -73,18 +75,35 @@ function Marker({ event, selected, dim }: { event: MarkerCluster["events"][numbe
   );
 }
 
-/** 講義標出的重點事件：金色星號加上事件名稱，不和其他事件合併成數字圈 */
-function KeyMarker({ event, selected }: { event: MarkerCluster["events"][number]; selected: boolean }) {
+/**
+ * 講義標出的重點事件：金色星號加上事件名稱，不和其他事件合併成數字圈。
+ * 同一個地方的幾件重點收成一顆 ★（名牌寫最接近目前年份的那一件，旁邊標件數），點了列出清單。
+ */
+function KeyMarker({
+  cluster,
+  selectedId,
+  open,
+  onToggle,
+}: {
+  cluster: MarkerCluster;
+  selectedId: string | null;
+  open: boolean;
+  onToggle: () => void;
+}) {
   const selectEvent = useAppStore((s) => s.selectEvent);
-  const position = latLonToVector3(event.location.lat, event.location.lon, SURFACE).toArray() as [number, number, number];
+  const position = latLonToVector3(cluster.lat, cluster.lon, SURFACE).toArray() as [number, number, number];
   const labelRef = useFacingCamera(position);
+  const selected = cluster.events.find((e) => e.id === selectedId);
+  const shown = selected ?? cluster.events[0];
+  const more = cluster.events.length - 1;
   return (
     <group position={position}>
       <Html center zIndexRange={[20, 10]}>
-        <div ref={labelRef}>
+        <div ref={labelRef} className="relative">
           <button
             type="button"
-            onClick={() => selectEvent(event.id)}
+            onClick={() => (more ? onToggle() : selectEvent(shown.id))}
+            aria-expanded={more ? open : undefined}
             className={`flex max-w-48 -translate-y-px items-center gap-1 whitespace-nowrap rounded-full py-0.5 pl-0.5 pr-2 text-xs font-bold leading-tight shadow-lg ${
               selected ? "bg-white text-slate-950 ring-2 ring-accent" : "bg-[#fff6dc] text-[#3a2a06] hover:bg-white"
             }`}
@@ -93,8 +112,45 @@ function KeyMarker({ event, selected }: { event: MarkerCluster["events"][number]
             <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] text-slate-950" aria-hidden>
               ★
             </span>
-            <span className="truncate">{event.curriculum?.title ?? event.title}</span>
+            <span className="truncate">{shown.curriculum?.title ?? shown.title}</span>
+            {more > 0 && (
+              <span className="shrink-0 rounded-full bg-accent px-1.5 text-[11px] text-slate-950" aria-label={messages.events.clusterTitle(cluster.events.length)}>
+                {cluster.events.length}
+              </span>
+            )}
           </button>
+          {open && more > 0 && (
+            <div
+              className="absolute left-0 top-7 w-60 rounded-lg border border-white/15 bg-slate-900/95 p-2 text-sm text-slate-100 shadow-xl"
+              data-testid="key-cluster-list"
+            >
+              <div className="mb-1 flex items-center justify-between px-1 text-xs text-slate-400">
+                <span>{messages.events.clusterTitle(cluster.events.length)}</span>
+                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-white">
+                  ×
+                </button>
+              </div>
+              <ul className="max-h-56 overflow-y-auto">
+                {cluster.events.map((e) => (
+                  <li key={e.id}>
+                    <button
+                      type="button"
+                      className="flex w-full gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
+                      onClick={() => {
+                        selectEvent(e.id);
+                        onToggle();
+                      }}
+                    >
+                      <span className="text-accent" aria-hidden>
+                        ★
+                      </span>
+                      {e.curriculum?.title ?? e.title}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </Html>
     </group>
@@ -198,9 +254,19 @@ export function EventMarkers({ events, showOthers, showKeys }: { events: Histori
     const next = scaleStep(markerScale(camera.position.length()));
     if (next !== step) setStep(next);
   });
+  const year = useAppStore((s) => s.year);
   const keys = useMemo(
     () => (showKeys ? events.filter((e): e is MarkerCluster["events"][number] => !!e.curriculum && !!e.location) : []),
     [events, showKeys],
+  );
+  // 最接近目前年份的重點排前面，收成一顆 ★ 時名牌就寫這一件
+  const keyClusters = useMemo(
+    () =>
+      clusterMarkers(
+        [...keys].sort((a, b) => Math.abs(a.curriculum!.start - year) - Math.abs(b.curriculum!.start - year)),
+        KEY_CLUSTER_DEGREES * stepScale(step),
+      ),
+    [keys, year, step],
   );
   const others = useMemo(() => (showOthers ? events.filter((e) => !(showKeys && e.curriculum)) : []), [events, showOthers, showKeys]);
   const clusters = useMemo(() => clusterMarkers(others, CLUSTER_DEGREES * stepScale(step)), [others, step]);
@@ -220,8 +286,14 @@ export function EventMarkers({ events, showOthers, showKeys }: { events: Histori
           />
         ),
       )}
-      {keys.map((e) => (
-        <KeyMarker key={e.id} event={e} selected={e.id === selectedEventId} />
+      {keyClusters.map((c) => (
+        <KeyMarker
+          key={c.key}
+          cluster={c}
+          selectedId={selectedEventId}
+          open={openKey === `key-${c.key}`}
+          onToggle={() => setOpenKey((k) => (k === `key-${c.key}` ? null : `key-${c.key}`))}
+        />
       ))}
     </group>
   );

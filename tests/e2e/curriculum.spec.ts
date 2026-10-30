@@ -10,12 +10,18 @@ test("「重點」分頁：大時代、基本架構、四門課章節與重點�
   await openTab(page, "focus");
   const panel = page.getByTestId("focus-panel");
   await expect(page.getByTestId("focus-period")).toHaveText("近代早期世界");
+  // 基本架構先列三個，其餘收在「更多」裡
+  await page.getByTestId("themes-more").click();
   await expect(page.getByTestId("focus-themes")).toContainText("宗教改革");
-  await expect(page.getByTestId("focus-course-tw")).toContainText("L3【大航海與荷治時期】");
-  await expect(page.getByTestId("focus-course-tw")).toContainText("荷西");
-  await expect(page.getByTestId("focus-course-cn")).toContainText("L10【明與海洋選擇】");
-  await expect(page.getByTestId("focus-course-ea")).toContainText("L8【全球貿易與海上帝國】");
-  await expect(page.getByTestId("focus-course-world")).toContainText("三十年戰爭");
+  // 一門課一行，點開才看到時代背景與重點事件
+  await expect(page.getByTestId("focus-course-tw")).toContainText("L3 大航海與荷治時期");
+  await expect(page.getByTestId("focus-course-cn")).toContainText("L10 明與海洋選擇");
+  await expect(page.getByTestId("focus-course-ea")).toContainText("L8 全球貿易與海上帝國");
+  await expect(page.getByTestId("focus-course-detail")).toHaveCount(0);
+  await page.getByTestId("focus-course-tw").getByTestId("focus-course-toggle").click();
+  await expect(page.getByTestId("focus-course-tw").getByTestId("focus-course-detail")).toContainText("荷西");
+  await page.getByTestId("focus-course-world").getByTestId("focus-course-toggle").click();
+  await expect(page.getByTestId("focus-course-world").getByTestId("focus-course-detail")).toContainText("三十年戰爭");
 
   // 點基本架構：只列出相關的重點事件，年份跳過去
   await page.getByTestId("focus-themes").getByRole("button", { name: "宗教改革" }).click();
@@ -34,16 +40,20 @@ test("「重點」分頁：大時代、基本架構、四門課章節與重點�
   await expect(page.getByTestId("focus-period")).toContainText("19 世紀");
 });
 
-test("四門課章節：時間軸章節列、地球上的章節標籤，點章節跳到那一章", async ({ page }, info) => {
+test("四門課章節：時間軸章節列平常收起，點了章節才在地球上立起標籤", async ({ page }, info) => {
   await page.goto("/");
   await goToYear(page, "1684");
+  await expect(page.getByTestId("course-lane-tw")).toHaveCount(0);
+  await page.getByTestId("course-lanes-toggle").click();
   await expect(page.getByTestId("course-lane-tw").locator("[aria-current=true]")).toHaveAttribute("aria-label", /臺灣史 L5/);
-  await expect(page.getByTestId("chapter-tag").filter({ hasText: "臺灣史 L5" })).toHaveCount(1);
-  await expect(page.getByTestId("chapter-tag").filter({ hasText: "世界史 L8" })).toHaveCount(1);
+  await expect(page.getByTestId("chapter-tag")).toHaveCount(0);
 
   await openTab(page, "focus");
+  await page.getByTestId("focus-course-tw").getByTestId("focus-course-toggle").click();
   await page.getByTestId("focus-course-tw").getByTestId("focus-chapter").click();
   await expect(page.getByTestId("current-year")).toContainText("1684");
+  await expect(page.getByTestId("chapter-tag")).toHaveCount(1);
+  await expect(page.getByTestId("chapter-tag")).toContainText("臺灣史 L5");
   await page.screenshot({ path: `test-results/courses-${info.project.name}.png` });
 
   // 時代重點：年表新增的事件註明出自四門課複習年表
@@ -61,6 +71,5 @@ test("關掉「課綱重點」圖層：時間軸色帶與時代名稱不顯示",
   await openTab(page, "time");
   await expect(page.getByTestId("period-bands")).toHaveCount(0);
   await expect(page.getByTestId("course-lanes")).toHaveCount(0);
-  await expect(page.getByTestId("chapter-tag")).toHaveCount(0);
   await expect(page.getByTestId("current-period")).toHaveCount(0);
 });
