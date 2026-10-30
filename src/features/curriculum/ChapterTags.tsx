@@ -54,9 +54,9 @@ function ChapterTag({ course, chapter, lift }: { course: Course; chapter: Chapte
         <meshBasicMaterial color={color} />
       </mesh>
       <group position={topArr}>
-        <Html center zIndexRange={[25, 21]}>
+        <Html center zIndexRange={[25, 21]} style={{ pointerEvents: "none" }}>
           {/* 標籤再往上抬一截（下方一條細線指回地面），正對著看時也不會蓋住地點上的 ★ 重點事件 */}
-          <div ref={labelRef} className="flex -translate-y-1/2 flex-col items-center">
+          <div ref={labelRef} className="pointer-events-none flex -translate-y-1/2 flex-col items-center">
             <button
               type="button"
               onClick={() => {
@@ -65,7 +65,7 @@ function ChapterTag({ course, chapter, lift }: { course: Course; chapter: Chapte
                 focusOn(chapter);
               }}
               title={`${t.chapterLabel(course.name, chapter.n)}【${chapter.title}】`}
-              className="flex max-w-44 items-center gap-1 whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11px] font-bold leading-tight text-white shadow-lg ring-1 ring-white/40 hover:ring-white"
+              className="pointer-events-auto flex max-w-44 items-center gap-1 whitespace-nowrap rounded-md px-1.5 py-0.5 text-[11px] font-bold leading-tight text-white shadow-lg ring-1 ring-white/40 hover:ring-white"
               style={{ backgroundColor: color }}
               data-testid="chapter-tag"
             >
