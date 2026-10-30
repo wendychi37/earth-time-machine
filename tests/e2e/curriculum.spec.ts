@@ -34,6 +34,15 @@ test("「重點」分頁：大時代、基本架構、四門課章節與重點�
   await expect(page.getByTestId("key-badge")).toContainText("課綱重點");
   await page.screenshot({ path: `test-results/curriculum-${info.project.name}.png` });
 
+  // 重點分頁裡也有可以拉的時間軸：點在最右邊，跳到現代
+  await openTab(page, "focus");
+  const track = page.getByTestId("focus-timeline-track");
+  await track.scrollIntoViewIfNeeded();
+  const box = (await track.boundingBox())!;
+  await page.mouse.click(box.x + box.width - 2, box.y + box.height / 2);
+  await expect(page.getByTestId("focus-timeline-thumb")).toHaveAttribute("aria-valuenow", /^20\d\d$/);
+  await goToYear(page, "1624");
+
   // 下一個時代
   await openTab(page, "focus");
   await panel.getByRole("button", { name: "下一個時代" }).click();

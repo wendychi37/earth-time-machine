@@ -14,6 +14,8 @@ interface TimelineProps {
   scale?: TimeScale;
   ticks?: AstronomicalYear[];
   mobileTicks?: AstronomicalYear[];
+  /** 放在「重點」分頁裡的精簡版：只有大時代色帶，不含四門課章節列 */
+  compact?: boolean;
 }
 
 /** 鍵盤操作的步進：方向鍵 1 年、Shift + 方向鍵 10 年、PageUp/PageDown 100 年 */
@@ -39,7 +41,8 @@ function keyStep(e: KeyboardEvent): number | "min" | "max" | null {
 }
 
 /** 可拖曳的歷史時間軸。刻度由 TimeScale 決定，日後可直接換成宇宙尺度。 */
-export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTicks = PHASE1_MOBILE_TICKS }: TimelineProps) {
+export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTicks = PHASE1_MOBILE_TICKS, compact = false }: TimelineProps) {
+  const id = (name: string) => (compact ? `focus-${name}` : name);
   const year = useAppStore((s) => s.year);
   const setYear = useAppStore((s) => s.setYear);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -69,15 +72,15 @@ export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTic
   };
 
   return (
-    <div className="px-2 pb-6 pt-1 sm:pt-3">
-      <PeriodBands scale={scale} />
-      <CourseLanes scale={scale} />
+    <div className={compact ? "px-1 pb-6 pt-1" : "px-2 pb-6 pt-1 sm:pt-3"}>
+      <PeriodBands scale={scale} compact={compact} />
+      {!compact && <CourseLanes scale={scale} />}
       <div
         ref={trackRef}
         className="relative h-8 cursor-pointer touch-none select-none"
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
-        data-testid="timeline-track"
+        data-testid={id("timeline-track")}
       >
         <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-white/15" />
         <div
@@ -95,7 +98,7 @@ export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTic
           onKeyDown={onKeyDown}
           className="absolute top-1/2 size-6 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-accent shadow-lg focus:outline-none focus-visible:ring-4 focus-visible:ring-accent/50"
           style={{ left: `${position * 100}%` }}
-          data-testid="timeline-thumb"
+          data-testid={id("timeline-thumb")}
         />
         <TimelineTicks scale={scale} ticks={ticks} mobileTicks={mobileTicks} />
       </div>

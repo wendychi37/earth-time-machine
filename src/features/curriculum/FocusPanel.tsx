@@ -9,6 +9,7 @@ import { eventWindowYears } from "@/lib/events/visible";
 import { formatYearShort } from "@/lib/time/format";
 import { periodRange } from "@/lib/time/formatDate";
 import { PHASE1_MAX_YEAR, PHASE1_MIN_YEAR } from "@/lib/time/constants";
+import { Timeline } from "@/features/timeline/Timeline";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import type { HistoricalEvent } from "@/types/event";
@@ -151,6 +152,10 @@ export function FocusPanel() {
           >
             ›
           </button>
+        </div>
+        {/* 可以拉的時間軸：手機上不用切回「年份」分頁，直接在這裡拉 */}
+        <div className="mt-2">
+          <Timeline compact />
         </div>
         <h3 className="mt-3 text-xs font-semibold text-muted">
           {t.themesTitle}
