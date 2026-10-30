@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { messages } from "@/messages/zh-Hant";
 
-/** 加入主畫面時用的名稱與圖示（地球加金色時光環） */
+/** 加入主畫面時用的名稱與圖示（泛黃紙上的古董地球儀） */
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: messages.app.title,
