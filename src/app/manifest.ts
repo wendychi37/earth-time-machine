@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { messages } from "@/messages/zh-Hant";
 
-/** 加入主畫面時用的名稱與圖示（時光機飛進發光的古書） */
+/** 加入主畫面時用的名稱與圖示（未來飛行器飛進破舊神秘的古書） */
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: messages.app.title,
