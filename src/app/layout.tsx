@@ -5,6 +5,8 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: `${messages.app.title}｜${messages.app.subtitle}`,
   description: messages.app.description,
+  // 加入主畫面時圖示下面只寫「地球時光機」
+  appleWebApp: { title: messages.app.title },
 };
 
 export const viewport: Viewport = {
