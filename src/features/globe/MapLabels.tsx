@@ -3,7 +3,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, type RefObject } from "react";
 import { Matrix4, Vector3 } from "three";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { cameraDistance, isFlatProjection, latLonToVector3 } from "@/lib/geo/sphere";
 import {
   CULTURE_ANCHOR_PX,
   isCandidateAtZoom,
@@ -122,10 +122,11 @@ export function MapLabels({ data, cultures, onSelectCulture, container, tone }: 
       }
     });
 
-    const zoom = zoomForDistance(camera.position.length());
+    const zoom = zoomForDistance(cameraDistance(camera.position));
     const visible = candidates.filter((c) => isCandidateAtZoom(c.kind, c.minZoom, zoom));
     const placed = placeLabels(visible, {
       camera: camera.position,
+      flat: isFlatProjection(),
       width: size.width,
       height: size.height,
       blocked,

@@ -10,7 +10,7 @@ export function BoundaryLegend({ state }: { state: BoundaryState }) {
   const t = messages.boundaries;
   const { availability, displayed, index, loading, error } = state;
 
-  if (error) return <p className="text-xs text-red-300">{t.loadError}</p>;
+  if (error) return <p className="text-xs text-red-700">{t.loadError}</p>;
   if (!availability || availability.status !== "snapshot") return null;
 
   return (

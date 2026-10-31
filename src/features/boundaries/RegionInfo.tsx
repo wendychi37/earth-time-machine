@@ -17,7 +17,7 @@ export function RegionInfo({ point, state }: { point: LatLon; state: BoundarySta
 
   let body: React.ReactNode;
   if (state.availability?.status === "no-data") {
-    body = <p className="text-amber-200">{t.noDataTitle}</p>;
+    body = <p className="text-amber-900">{t.noDataTitle}</p>;
   } else if (!state.displayed) {
     body = <p className="text-muted">{t.loading}</p>;
   } else if (!region) {

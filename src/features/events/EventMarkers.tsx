@@ -4,9 +4,9 @@ import { Html } from "@react-three/drei";
 import { useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { useCallback, useMemo, useRef, useState } from "react";
 import type { Group } from "three";
-import { continentColor } from "@/lib/chronology/continents";
+import { CATEGORIES, categoryColor, categoryOf } from "@/lib/events/categories";
 import { CLUSTER_DEGREES, clusterMarkers, markerScale, scaleStep, stepScale, type MarkerCluster } from "@/lib/events/cluster";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { cameraDistance, facingCamera, latLonToVector3 } from "@/lib/geo/sphere";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import type { HistoricalEvent } from "@/types/event";
@@ -18,7 +18,7 @@ const SURFACE = 1.006;
 function useScreenScale(extra: number) {
   const ref = useRef<Group>(null);
   useFrame(({ camera }) => {
-    ref.current?.scale.setScalar(markerScale(camera.position.length()) * extra);
+    ref.current?.scale.setScalar(markerScale(cameraDistance(camera.position)) * extra);
   });
   return ref;
 }
@@ -58,7 +58,7 @@ function Marker({ event, selected, dim }: { event: MarkerCluster["events"][numbe
   const selectEvent = useAppStore((s) => s.selectEvent);
   const ref = useScreenScale(selected ? 1.5 : dim ? DIM_SCALE : 1);
   const position = latLonToVector3(event.location.lat, event.location.lon, SURFACE).toArray();
-  const color = continentColor(event.continent);
+  const color = categoryColor(event);
   const faded = dim && !selected;
   return (
     <group ref={ref} position={position}>
@@ -109,24 +109,24 @@ function KeyMarker({
             }`}
             data-testid="key-marker"
           >
-            <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] text-slate-950" aria-hidden>
+            <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-bright text-[13px] text-paper" aria-hidden>
               ★
             </span>
             <span className="truncate">{shown.curriculum?.title ?? shown.title}</span>
             {more > 0 && (
-              <span className="shrink-0 rounded-full bg-accent px-1.5 text-[11px] text-slate-950" aria-label={messages.events.clusterTitle(cluster.events.length)}>
+              <span className="shrink-0 rounded-full bg-accent-bright px-1.5 text-[11px] text-paper" aria-label={messages.events.clusterTitle(cluster.events.length)}>
                 {cluster.events.length}
               </span>
             )}
           </button>
           {open && more > 0 && (
             <div
-              className="absolute left-0 top-7 w-60 rounded-lg border border-white/15 bg-slate-900/95 p-2 text-sm text-slate-100 shadow-xl"
+              className="absolute left-0 top-7 w-60 rounded-lg border border-ink/15 bg-paper p-2 text-sm text-ink shadow-xl"
               data-testid="key-cluster-list"
             >
-              <div className="mb-1 flex items-center justify-between px-1 text-xs text-slate-400">
+              <div className="mb-1 flex items-center justify-between px-1 text-xs text-muted">
                 <span>{messages.events.clusterTitle(cluster.events.length)}</span>
-                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-white">
+                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-ink">
                   ×
                 </button>
               </div>
@@ -135,7 +135,7 @@ function KeyMarker({
                   <li key={e.id}>
                     <button
                       type="button"
-                      className="flex w-full gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
+                      className="flex w-full gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-ink/10"
                       onClick={() => {
                         selectEvent(e.id);
                         onToggle();
@@ -166,8 +166,8 @@ export function useFacingCamera(position: [number, number, number]) {
   const invalidate = useThree((s) => s.invalidate);
   useFrame(({ camera }) => {
     if (!ref.current) return;
-    const c = camera.position;
-    const facing = (position[0] * c.x + position[1] * c.y + position[2] * c.z) / c.length() > 0.2;
+    const [x, y, z] = position;
+    const facing = facingCamera({ x, y, z }, camera.position) > 0.2;
     ref.current.style.visibility = facing ? "visible" : "hidden";
   });
   return useCallback(
@@ -181,13 +181,21 @@ export function useFacingCamera(position: [number, number, number]) {
   );
 }
 
+/** 數字圈用裡面最多的那一類的顏色 */
+function dominantColor(events: HistoricalEvent[]) {
+  const counts = new Map<string, number>();
+  for (const e of events) counts.set(categoryOf(e), (counts.get(categoryOf(e)) ?? 0) + 1);
+  const top = [...counts].sort((a, b) => b[1] - a[1])[0][0];
+  return CATEGORIES.find((c) => c.id === top)!.color;
+}
+
 function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; open: boolean; onToggle: () => void; dim: boolean }) {
   const selectedEventId = useAppStore((s) => s.selectedEventId);
   const selectEvent = useAppStore((s) => s.selectEvent);
   const ref = useScreenScale(dim ? 0.8 : 1);
   const position = latLonToVector3(cluster.lat, cluster.lon, SURFACE).toArray() as [number, number, number];
   const labelRef = useFacingCamera(position);
-  const color = continentColor(cluster.events[0].continent);
+  const color = dominantColor(cluster.events);
   const selected = cluster.events.some((e) => e.id === selectedEventId);
   return (
     <group position={position}>
@@ -209,12 +217,12 @@ function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; ope
           </span>
           {open && (
             <div
-              className="pointer-events-auto absolute left-4 top-3 w-60 rounded-lg border border-white/15 bg-slate-900/95 p-2 text-sm text-slate-100 shadow-xl"
+              className="pointer-events-auto absolute left-4 top-3 w-60 rounded-lg border border-ink/15 bg-paper p-2 text-sm text-ink shadow-xl"
               data-testid="cluster-list"
             >
-              <div className="mb-1 flex items-center justify-between px-1 text-xs text-slate-400">
+              <div className="mb-1 flex items-center justify-between px-1 text-xs text-muted">
                 <span>{messages.events.clusterTitle(cluster.events.length)}</span>
-                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-white">
+                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-ink">
                   ×
                 </button>
               </div>
@@ -223,12 +231,13 @@ function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; ope
                   <li key={e.id}>
                     <button
                       type="button"
-                      className="w-full rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
+                      className="flex w-full items-baseline gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-ink/10"
                       onClick={() => {
                         selectEvent(e.id);
                         onToggle();
                       }}
                     >
+                      <span className="size-2 shrink-0 translate-y-[-1px] rounded-full" style={{ backgroundColor: categoryColor(e) }} aria-hidden />
                       {e.title}
                     </button>
                   </li>
@@ -251,7 +260,7 @@ export function EventMarkers({ events, showOthers, showKeys }: { events: Histori
   const [step, setStep] = useState(0);
   const [openKey, setOpenKey] = useState<string | null>(null);
   useFrame(({ camera }) => {
-    const next = scaleStep(markerScale(camera.position.length()));
+    const next = scaleStep(markerScale(cameraDistance(camera.position)));
     if (next !== step) setStep(next);
   });
   const year = useAppStore((s) => s.year);

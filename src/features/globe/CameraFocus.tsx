@@ -3,7 +3,7 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import { Vector3 } from "three";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { isFlatProjection, latLonToFlat, latLonToVector3 } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 
 /** 轉過去要幾秒 */
@@ -18,11 +18,23 @@ const ease = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
 export function CameraFocus() {
   const target = useAppStore((s) => s.focusTarget);
   const camera = useThree((s) => s.camera);
+  const controls = useThree((s) => s.controls) as unknown as { target: Vector3; update: () => void } | null;
+  const flatAnim = useRef<{ from: Vector3; to: Vector3; t: number } | null>(null);
   const invalidate = useThree((s) => s.invalidate);
   const anim = useRef<{ from: Vector3; to: Vector3; t: number } | null>(null);
 
   useEffect(() => {
     if (!target) return;
+    if (isFlatProjection()) {
+      // 平面地圖：平移過去，高度不變
+      flatAnim.current = {
+        from: camera.position.clone().setZ(0),
+        to: latLonToFlat(target.lat, target.lon, 1),
+        t: 0,
+      };
+      invalidate();
+      return;
+    }
     anim.current = {
       from: camera.position.clone().normalize(),
       to: latLonToVector3(target.lat, target.lon, 1).normalize(),
@@ -34,6 +46,17 @@ export function CameraFocus() {
   }, [target?.n]);
 
   useFrame((_, delta) => {
+    const f = flatAnim.current;
+    if (f) {
+      f.t = Math.min(1, f.t + delta / DURATION);
+      const p = f.from.clone().lerp(f.to, ease(f.t));
+      camera.position.set(p.x, p.y, camera.position.z);
+      controls?.target.set(p.x, p.y, 0);
+      controls?.update();
+      if (f.t >= 1) flatAnim.current = null;
+      else invalidate();
+      return;
+    }
     const a = anim.current;
     if (!a) return;
     a.t = Math.min(1, a.t + delta / DURATION);

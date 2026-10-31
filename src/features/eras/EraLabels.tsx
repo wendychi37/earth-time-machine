@@ -3,10 +3,9 @@
 import { Html } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useMemo, useRef } from "react";
-import { Vector3 } from "three";
 import { eraIndexAt } from "@/lib/eras/query";
 import { REGIONS } from "@/lib/eras/regions";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { facingCamera, latLonToVector3 } from "@/lib/geo/sphere";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 
@@ -24,15 +23,13 @@ export function EraLabels() {
   const selectEra = useAppStore((s) => s.selectEra);
   const regionFilter = useAppStore((s) => s.regionFilter);
   const refs = useRef<(HTMLDivElement | null)[]>([]);
-  const normals = useMemo(() => REGIONS.map((r) => latLonToVector3(r.anchor.lat, r.anchor.lon, 1).normalize()), []);
-  const toCamera = useMemo(() => new Vector3(), []);
+  const anchors = useMemo(() => REGIONS.map((r) => latLonToVector3(r.anchor.lat, r.anchor.lon, 1)), []);
 
   useFrame(({ camera }) => {
-    toCamera.copy(camera.position).normalize();
-    normals.forEach((n, i) => {
+    anchors.forEach((n, i) => {
       const el = refs.current[i];
       if (!el) return;
-      const visible = n.dot(toCamera) > MIN_FACING;
+      const visible = facingCamera(n, camera.position) > MIN_FACING;
       el.style.opacity = visible ? "1" : "0";
       el.style.pointerEvents = visible ? "auto" : "none";
     });
@@ -58,7 +55,7 @@ export function EraLabels() {
                 <button
                   type="button"
                   onClick={() => selectEra({ regionId: region.id, index })}
-                  className={`era-label whitespace-nowrap px-1 text-[15px] font-bold leading-tight ${selected ? "underline decoration-2 underline-offset-4" : ""}`}
+                  className={`era-label whitespace-nowrap px-1 text-[12px] font-medium leading-tight tracking-wide sm:text-[13px] ${selected ? "underline decoration-2 underline-offset-4" : ""}`}
                   style={{ color: region.color }}
                   aria-label={`${region.name}：${era.name}（${messages.eras.cardLabel}）`}
                   data-testid={`era-label-${region.id}`}

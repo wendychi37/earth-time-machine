@@ -56,7 +56,7 @@ export function CourseLanes({ scale }: { scale: TimeScale }) {
                         focusOn(chapter);
                         showChapter({ track: course.id, n: chapter.n });
                       }}
-                      className={`absolute top-0 flex h-full items-center overflow-hidden whitespace-nowrap border-x border-[#0b0f1a] px-0.5 text-[10px] font-medium leading-none text-white ${
+                      className={`absolute top-0 flex h-full items-center overflow-hidden whitespace-nowrap border-x border-paper px-0.5 text-[10px] font-medium leading-none text-white ${
                         active ? "z-10 rounded-sm font-bold opacity-100 ring-2 ring-accent" : "opacity-60 hover:opacity-100"
                       }`}
                       style={{

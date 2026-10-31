@@ -28,7 +28,7 @@ export function SelectionPanel() {
   return (
     <section
       aria-label={t.title}
-      className="w-full rounded-lg border border-panel-border bg-white/[0.03] p-4 text-sm"
+      className="w-full rounded-lg border border-panel-border bg-paper-2/60 p-4 text-sm"
     >
       <div className="mb-2 flex items-center justify-between">
         <h2 className="font-semibold">{t.title}</h2>

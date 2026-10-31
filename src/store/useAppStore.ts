@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import type { EraRef } from "@/lib/eras/query";
+import type { ShownCategory } from "@/lib/events/categories";
 import type { LatLon } from "@/lib/geo/sphere";
+import { OLDEST_MA } from "@/lib/plates/periods";
 import { DEFAULT_YEAR, PHASE1_MAX_YEAR, PHASE1_MIN_YEAR } from "@/lib/time/constants";
 import type { AstronomicalYear } from "@/types/time";
 
@@ -16,6 +18,8 @@ export interface LayerVisibility {
   eras: boolean;
   /** 課綱重點：時間軸上的大時代色帶、地球上的 ★ 重點事件（其他事件變小變淡） */
   curriculum: boolean;
+  /** 板塊移動：地球換成寒武紀到現在的古大陸，時間軸換成地質年代（人類歷史的圖層先收起來） */
+  plates: boolean;
 }
 
 /** 底圖：像地球儀的政治地圖，或衛星照片（地形） */
@@ -36,6 +40,9 @@ interface AppState {
   selectedEra: EraRef | null;
   layers: LayerVisibility;
   baseMap: BaseMap;
+  /** 板塊移動的時間（百萬年前） */
+  ma: number;
+  setMa: (ma: number) => void;
   setYear: (year: AstronomicalYear) => void;
   select: (point: LatLon | null) => void;
   selectEvent: (id: string | null) => void;
@@ -52,6 +59,9 @@ interface AppState {
   /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
   countryFilter: string[] | null;
   setCountryFilter: (isos: string[] | null) => void;
+  /** 只顯示這些分類的事件；null 表示全部顯示 */
+  categoryFilter: ShownCategory[] | null;
+  setCategoryFilter: (ids: ShownCategory[] | null) => void;
   /** 「各地朝代」只顯示這些地區（地區代號）；null 表示全部顯示 */
   regionFilter: string[] | null;
   setRegionFilter: (ids: string[] | null) => void;
@@ -74,8 +84,10 @@ export const useAppStore = create<AppState>((set) => ({
   selectedEventId: null,
   selectedCultureId: null,
   selectedEra: null,
-  layers: { events: true, labels: true, historical: true, cultures: true, eras: true, curriculum: true },
-  baseMap: "map",
+  layers: { events: true, labels: true, historical: true, cultures: true, eras: true, curriculum: true, plates: false },
+  ma: 250,
+  setMa: (ma) => set({ ma: Math.min(OLDEST_MA, Math.max(0, Math.round(ma))) }),
+  baseMap: "satellite",
   setYear: (year) => set({ year: clampYear(year) }),
   select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null, selectedEra: null, ...showDetails(selection) }),
   selectEvent: (selectedEventId) =>
@@ -91,6 +103,8 @@ export const useAppStore = create<AppState>((set) => ({
   setPanelOpen: (panelOpen) => set({ panelOpen }),
   countryFilter: null,
   setCountryFilter: (countryFilter) => set({ countryFilter }),
+  categoryFilter: null,
+  setCategoryFilter: (categoryFilter) => set({ categoryFilter }),
   regionFilter: null,
   setRegionFilter: (regionFilter) => set({ regionFilter }),
   focusTarget: null,

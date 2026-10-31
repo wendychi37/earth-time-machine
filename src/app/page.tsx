@@ -4,6 +4,7 @@ import { GlobeOverlay } from "@/components/GlobeOverlay";
 import { PanelTabs } from "@/components/PanelTabs";
 import { EventList } from "@/features/events/EventList";
 import { GlobeView } from "@/features/globe/GlobeView";
+import { TimelineSwitch } from "@/features/plates/TimelineSwitch";
 import { TimelinePanel } from "@/features/timeline/TimelinePanel";
 import { messages } from "@/messages/zh-Hant";
 
@@ -22,7 +23,9 @@ export default function Home() {
       </section>
       <BottomSheet>
         <TimelineSlot>
-          <TimelinePanel />
+          <TimelineSwitch>
+            <TimelinePanel />
+          </TimelineSwitch>
         </TimelineSlot>
         <ControlPanel />
       </BottomSheet>

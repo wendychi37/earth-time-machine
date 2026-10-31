@@ -20,7 +20,7 @@ export function EventList() {
       <ul className="rounded-lg border border-panel-border bg-panel p-2 text-sm">
         {events.map((e) => (
           <li key={e.id}>
-            <button type="button" className="w-full rounded px-2 py-1 text-left hover:bg-white/10" onClick={() => selectEvent(e.id)}>
+            <button type="button" className="w-full rounded px-2 py-1 text-left hover:bg-ink/10" onClick={() => selectEvent(e.id)}>
               {e.title}（{formatPeriod(e.period)}）
             </button>
           </li>

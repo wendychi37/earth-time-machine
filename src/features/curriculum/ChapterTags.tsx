@@ -6,7 +6,7 @@ import { Quaternion, Vector3 } from "three";
 import { useFacingCamera } from "@/features/events/EventMarkers";
 import { COURSES, chaptersAt, type Chapter, type Course } from "@/lib/curriculum/courses";
 import { TRACK_COLORS } from "@/lib/curriculum/tracks";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { latLonToVector3, surfaceNormal } from "@/lib/geo/sphere";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 
@@ -41,8 +41,8 @@ function ChapterTag({ course, chapter, lift }: { course: Course; chapter: Chapte
   const color = TRACK_COLORS[course.id];
   const { base, top, quaternion } = useMemo(() => {
     const base = latLonToVector3(chapter.lat, chapter.lon, 1);
-    const top = base.clone().multiplyScalar(1 + height);
-    return { base, top, quaternion: new Quaternion().setFromUnitVectors(UP, base.clone().normalize()) };
+    const top = latLonToVector3(chapter.lat, chapter.lon, 1 + height);
+    return { base, top, quaternion: new Quaternion().setFromUnitVectors(UP, surfaceNormal(chapter.lat, chapter.lon).normalize()) };
   }, [chapter.lat, chapter.lon, height]);
   const mid = base.clone().lerp(top, 0.5);
   const topArr = top.toArray() as [number, number, number];

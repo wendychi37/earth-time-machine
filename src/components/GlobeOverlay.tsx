@@ -1,43 +1,62 @@
 "use client";
 
 import Link from "next/link";
+import { periodAt, periodLabel } from "@/lib/curriculum/periods";
+import { formatMa, geoPeriodAt } from "@/lib/plates/periods";
 import { formatYear } from "@/lib/time/format";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
+import { CategoryChips } from "@/features/categories/CategoryChips";
+import { GlobeActions } from "@/features/globe/GlobeActions";
 
-/** 地球上方的一行小標題（網站名稱、目前年份）與左下角的底圖小按鈕；只佔邊角，不擋住地球。 */
+/**
+ * 地球上方的羊皮紙標題列（網站名稱、目前年份與時代），下面一排事件分類膠囊，
+ * 右下角一排圓形按鈕（播放、地圖／地形、板塊移動、轉回臺灣）。
+ */
 export function GlobeOverlay() {
   const year = useAppStore((s) => s.year);
-  const baseMap = useAppStore((s) => s.baseMap);
-  const setBaseMap = useAppStore((s) => s.setBaseMap);
-  const t = messages.baseMap;
-  const current = baseMap === "map" ? t.map : t.satellite;
-  const next = baseMap === "map" ? t.satellite : t.map;
+  const curriculum = useAppStore((s) => s.layers.curriculum);
+  const plates = useAppStore((s) => s.layers.plates);
+  const ma = useAppStore((s) => s.ma);
+  const period = periodAt(year);
+  const geo = geoPeriodAt(ma);
 
   return (
     <>
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-10 flex items-start justify-between gap-3 bg-gradient-to-b from-black/70 to-transparent px-4 pb-8 pt-3 sm:px-6">
-        <div className="pointer-events-auto" data-label-avoid>
-          <h1 className="text-lg font-semibold tracking-wide sm:text-xl">{messages.app.title}</h1>
-          <Link href="/about" className="text-xs text-muted underline hover:text-foreground">
-            {messages.nav.about}
-          </Link>
-        </div>
-        <p className="text-right text-xl font-semibold tabular-nums sm:hidden" aria-hidden data-label-avoid>
-          {formatYear(year)}
-        </p>
-      </header>
-      <button
-        type="button"
-        onClick={() => setBaseMap(baseMap === "map" ? "satellite" : "map")}
-        aria-label={t.switchTo(next)}
-        className="absolute bottom-6 left-3 z-10 rounded-full border border-panel-border bg-panel px-3 py-1.5 text-xs backdrop-blur sm:bottom-4 sm:left-4"
-        data-label-avoid
-        data-testid="basemap-pill"
-      >
-        <span className="text-muted">{t.label}：</span>
-        <span className="font-semibold text-accent">{current}</span>
-      </button>
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-col">
+        <header
+          className="pointer-events-auto flex items-center gap-2.5 border-b border-panel-border bg-paper/95 px-4 py-2 text-ink shadow-[0_4px_16px_rgb(0_0_0/0.25)] backdrop-blur sm:w-fit sm:rounded-br-2xl sm:border-r sm:px-5"
+          data-label-avoid
+        >
+          <svg viewBox="0 0 30 30" className="size-7 shrink-0" aria-hidden>
+            <circle cx="15" cy="15" r="11" fill="none" stroke="var(--accent-bright)" strokeWidth="2" />
+            <path d="M4 15h22M15 4c4 4 4 18 0 22M15 4c-4 4-4 18 0 22" fill="none" stroke="var(--accent-bright)" strokeWidth="1.5" />
+            <path d="M21 6l4-3" stroke="var(--oxblood)" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+          <div className="min-w-0">
+            <h1 className="whitespace-nowrap font-serif text-base font-bold leading-tight tracking-wide sm:text-xl">{messages.app.title}</h1>
+            <Link href="/about" className="text-[11px] text-muted underline hover:text-ink">
+              {messages.nav.about}
+            </Link>
+          </div>
+          <div className="ml-auto flex min-w-0 items-center gap-1.5 whitespace-nowrap pl-1 sm:hidden" aria-hidden>
+            <span className="font-mono text-[15px] font-semibold tabular-nums">{plates ? formatMa(ma) : formatYear(year)}</span>
+            {plates ? (
+              <span className="rounded px-1.5 py-0.5 text-xs font-bold text-slate-950" style={{ backgroundColor: geo.color }}>
+                {geo.name}
+              </span>
+            ) : (
+              curriculum && (
+                <span className="truncate rounded px-1.5 py-0.5 text-[11px] font-bold text-white" style={{ backgroundColor: period.color }}>
+                  {periodLabel(period)}
+                </span>
+              )
+            )}
+          </div>
+        </header>
+        {!plates && <CategoryChips />}
+      </div>
+      <GlobeActions />
     </>
   );
 }

@@ -2,10 +2,12 @@
 
 import { chaptersAt, courseOf } from "@/lib/curriculum/courses";
 import { PERIODS, periodLabel } from "@/lib/curriculum/periods";
+import { categoryColor, categoryOf } from "@/lib/events/categories";
 import { formatLatLon } from "@/lib/geo/format";
 import { formatHistoricalDate, formatPeriod } from "@/lib/time/formatDate";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
+import { SameEraWorld } from "./SameEraWorld";
 import type { HistoricalEvent } from "@/types/event";
 
 const wikiUrl = (lang: "zh" | "en", title: string) =>
@@ -27,11 +29,18 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
   return (
     <article
       aria-label={event.title}
-      className="w-full rounded-lg border border-panel-border bg-white/[0.03] p-4 text-sm"
+      className="w-full rounded-2xl border border-panel-border bg-paper-2/60 p-4 text-sm shadow-sm"
       data-testid="event-card"
     >
       <header className="mb-2 flex items-start justify-between gap-2">
         <div>
+          <span
+            className="mb-1 mr-1 inline-flex items-center gap-1 rounded bg-ink/10 px-1.5 py-0.5 text-[11px] font-medium text-foreground"
+            data-testid="category-badge"
+          >
+            <span className="size-2 rounded-full" style={{ backgroundColor: categoryColor(event) }} aria-hidden />
+            {messages.categories.names[categoryOf(event)]}
+          </span>
           {key && (
             <span className="mb-1 mr-1 inline-block rounded bg-accent/25 px-1.5 py-0.5 text-[11px] font-bold text-accent" data-testid="key-badge">
               {c.badge}
@@ -39,16 +48,16 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
             </span>
           )}
           {event.translation && (
-            <span className="mb-1 inline-block rounded bg-sky-400/20 px-1.5 py-0.5 text-[11px] font-medium text-sky-200" data-testid="translated-badge">
+            <span className="mb-1 inline-block rounded bg-sky-400/20 px-1.5 py-0.5 text-[11px] font-medium text-sky-900" data-testid="translated-badge">
               {t.translatedBadge}
             </span>
           )}
           {event.isDemo && (
-            <span className="mb-1 inline-block rounded bg-amber-400/20 px-1.5 py-0.5 text-[11px] font-medium text-amber-200">
+            <span className="mb-1 inline-block rounded bg-amber-400/20 px-1.5 py-0.5 text-[11px] font-medium text-amber-900">
               {t.demoBadge}
             </span>
           )}
-          <h2 className="text-base font-semibold" data-testid="event-title">
+          <h2 className="mt-1 font-serif text-xl font-bold leading-snug" data-testid="event-title">
             {event.title}
           </h2>
         </div>
@@ -84,7 +93,7 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
       <dl className="space-y-2">
         <div>
           <dt className="text-xs text-muted">{t.date}</dt>
-          <dd data-testid="event-date">{event.period.end ? formatPeriod(event.period) : formatHistoricalDate(event.period.start)}</dd>
+          <dd className="font-mono font-semibold tracking-wide text-accent" data-testid="event-date">{event.period.end ? formatPeriod(event.period) : formatHistoricalDate(event.period.start)}</dd>
           {originals.length > 0 && (
             <dd className="text-xs text-muted">
               {t.originalDate}：{originals.join("～")}
@@ -168,7 +177,8 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
         <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{event.translation ? t.translatedNote : t.chronologyNote}</p>
       )}
       {key && !event.relatedArticles && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-muted">{key.poster ? c.addedNotePoster : c.addedNote}</p>}
-      {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-200/80">{t.demoNote}</p>}
+      {event.isDemo && <p className="mt-3 border-t border-panel-border pt-2 text-xs text-amber-900/80">{t.demoNote}</p>}
+      <SameEraWorld event={event} />
     </article>
   );
 }

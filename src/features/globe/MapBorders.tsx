@@ -1,5 +1,7 @@
 "use client";
 
+import { cameraDistance } from "@/lib/geo/sphere";
+
 import { useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef } from "react";
 import { BufferAttribute, BufferGeometry, type LineBasicMaterial } from "three";
@@ -42,7 +44,7 @@ export function MapBorders({ countries, adminLines, tone }: MapBordersProps) {
   useFrame(({ camera }) => {
     const m = adminMaterial.current;
     if (!m) return;
-    const d = camera.position.length();
+    const d = cameraDistance(camera.position);
     const t = Math.min(1, Math.max(0, (ADMIN_FADE_START - d) / (ADMIN_FADE_START - ADMIN_FADE_END)));
     m.opacity = t * adminMaxOpacity;
     m.visible = t > 0;

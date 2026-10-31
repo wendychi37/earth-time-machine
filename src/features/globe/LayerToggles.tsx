@@ -13,6 +13,7 @@ export function LayerToggles() {
     { key: "eras", label: messages.layers.eras },
     { key: "cultures", label: messages.layers.cultures },
     { key: "events", label: messages.layers.events },
+    { key: "plates", label: messages.layers.plates },
   ] as const;
 
   return (

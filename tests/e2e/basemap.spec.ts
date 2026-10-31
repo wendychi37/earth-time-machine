@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { openTab } from "./helpers";
 
-test("地圖模式顯示繁體中文國名，可切換到地形（衛星）模式", async ({ page }, info) => {
+test("立體地球顯示繁體中文國名，可切換到平面地圖", async ({ page }, info) => {
   await page.goto("/");
   await expect(page.getByTestId("globe-canvas").locator("canvas")).toBeVisible({ timeout: 30_000 });
 
@@ -11,16 +11,16 @@ test("地圖模式顯示繁體中文國名，可切換到地形（衛星）模�
   await expect(labels.filter({ hasText: /^印尼$/ })).toBeVisible();
 
   await openTab(page, "layers");
-  const mapButton = page.getByRole("radio", { name: /地圖/ });
-  const satelliteButton = page.getByRole("radio", { name: /地形/ });
-  await expect(mapButton).toHaveAttribute("aria-checked", "true");
-  await page.screenshot({ path: `test-results/basemap-${info.project.name}-map.png` });
+  const mapButton = page.getByRole("radio", { name: /平面地圖/ });
+  const globeButton = page.getByRole("radio", { name: /立體地球/ });
+  await expect(globeButton).toHaveAttribute("aria-checked", "true");
+  await page.screenshot({ path: `test-results/basemap-${info.project.name}-globe.png` });
 
-  await satelliteButton.click();
-  await expect(satelliteButton).toHaveAttribute("aria-checked", "true");
-  // 地形模式仍保留國名
-  await expect(labels.filter({ hasText: /^泰國$/ })).toBeVisible();
-  await page.screenshot({ path: `test-results/basemap-${info.project.name}-satellite.png` });
+  await mapButton.click();
+  await expect(mapButton).toHaveAttribute("aria-checked", "true");
+  // 平面地圖一開始對準東亞，一樣有國名
+  await expect(labels.filter({ hasText: /^泰國$/ })).toBeVisible({ timeout: 30_000 });
+  await page.screenshot({ path: `test-results/basemap-${info.project.name}-flat.png` });
 
   // 關掉「國名與行政區」後標籤消失
   await openTab(page, "layers");

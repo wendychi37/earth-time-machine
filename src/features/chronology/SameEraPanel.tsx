@@ -62,7 +62,7 @@ export function SameEraPanel() {
               type="button"
               onClick={() => selectEvent(e.id === selectedEventId ? null : e.id)}
               aria-pressed={e.id === selectedEventId}
-              className={`w-full rounded px-1.5 py-1 text-left leading-snug hover:bg-white/10 ${e.id === selectedEventId ? "bg-white/15" : ""}`}
+              className={`w-full rounded px-1.5 py-1 text-left leading-snug hover:bg-ink/10 ${e.id === selectedEventId ? "bg-ink/15" : ""}`}
             >
               <span className="block text-[11px] text-muted">{e.period.start.originalText ?? formatYear(e.period.start.earliest)}</span>
               {e.curriculum && (
@@ -112,7 +112,7 @@ export function SameEraPanel() {
       {/* 桌面：各洲依序排列，同一時期一眼看完 */}
       <div className="hidden space-y-2 sm:block" data-testid="same-era-columns">
         {columns.map((c) => (
-          <div key={c.id} className="rounded-lg border-l-4 bg-white/[0.03] py-1 pl-2" style={{ borderColor: c.color }}>
+          <div key={c.id} className="rounded-lg border-l-4 bg-paper-2/60 py-1 pl-2" style={{ borderColor: c.color }}>
             <h3 className="flex items-center gap-1.5 px-1.5 text-xs font-semibold">
               {c.label}
               <span className="font-normal text-muted">{t.count(c.events.length)}</span>

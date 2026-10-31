@@ -89,7 +89,7 @@ export function EraBands() {
         ) : (
           <button
             type="button"
-            className="rounded-md border border-panel-border px-2 py-0.5 text-xs text-accent hover:bg-white/5"
+            className="rounded-md border border-panel-border px-2 py-0.5 text-xs text-accent hover:bg-ink/5"
             onClick={() => setOpen(true)}
             data-testid="era-bands-open"
           >
@@ -100,7 +100,7 @@ export function EraBands() {
           type="button"
           onClick={() => setPicking((v) => !v)}
           aria-expanded={picking}
-          className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs hover:bg-white/10 ${regionFilter ? "border-accent text-accent" : "border-panel-border"}`}
+          className={`shrink-0 rounded-full border px-2.5 py-0.5 text-xs hover:bg-ink/10 ${regionFilter ? "border-accent text-accent" : "border-panel-border"}`}
           data-testid="region-picker-button"
         >
           {t.filterButton(regionFilter ? regionFilter.length : null)}

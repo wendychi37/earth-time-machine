@@ -4,7 +4,7 @@ import { useTexture } from "@react-three/drei";
 import { useThree, type ThreeEvent } from "@react-three/fiber";
 import { useEffect, useMemo } from "react";
 import { CanvasTexture, SRGBColorSpace } from "three";
-import { vector3ToLatLon } from "@/lib/geo/sphere";
+import { FLAT_HEIGHT, FLAT_WIDTH, isFlatProjection, vector3ToLatLon } from "@/lib/geo/sphere";
 import { drawPoliticalMap } from "@/lib/map/politicalTexture";
 import { useAppStore } from "@/store/useAppStore";
 import type { MapCountry } from "@/types/geo";
@@ -62,7 +62,7 @@ export function Earth({ quality, countries }: EarthProps) {
   const isMap = baseMap === "map" && political;
   return (
     <mesh onClick={handleClick} name="earth" userData={{ baseMap: isMap ? "map" : "satellite" }}>
-      <sphereGeometry args={[1, 128, 64]} />
+      {isFlatProjection() ? <planeGeometry args={[FLAT_WIDTH, FLAT_HEIGHT]} /> : <sphereGeometry args={[1, 128, 64]} />}
       <meshStandardMaterial
         key={isMap ? "map" : "satellite"}
         map={isMap ? political : color}
