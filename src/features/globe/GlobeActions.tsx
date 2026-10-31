@@ -35,6 +35,27 @@ function RoundButton({ label, onClick, active, children, testId }: { label: stri
   );
 }
 
+/** 立體地球：圓球加經緯線 */
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="size-5" aria-hidden fill="none" stroke="currentColor" strokeWidth="1.6">
+      <circle cx="10" cy="10" r="7.5" />
+      <ellipse cx="10" cy="10" rx="3.2" ry="7.5" />
+      <path d="M2.8 7.5h14.4M2.8 12.5h14.4" />
+    </svg>
+  );
+}
+
+/** 平面地圖：摺成三折的地圖 */
+function FlatMapIcon() {
+  return (
+    <svg viewBox="0 0 20 20" className="size-5" aria-hidden>
+      <path d="M2 4.5l5-2 6 2 5-2v13l-5 2-6-2-5 2z" fill="currentColor" opacity="0.9" />
+      <path d="M7 2.5v13M13 4.5v13" stroke="var(--color-paper, #f3e8d2)" strokeWidth="1.2" opacity="0.7" />
+    </svg>
+  );
+}
+
 /**
  * 地球右下角的圓形按鈕：播放年份、地圖／地形、板塊移動、轉回臺灣。
  * 常用的動作放在手指拿得到的地方，不用打開面板。
@@ -79,7 +100,6 @@ export function GlobeActions() {
     setPlaying(true);
   };
 
-  const nextBase = baseMap === "map" ? b.satellite : b.map;
   return (
     <div
       role="group"
@@ -102,7 +122,7 @@ export function GlobeActions() {
       )}
       {!plates && (
         <div className="flex flex-row rounded-full bg-paper p-1 shadow-[0_2px_10px_rgb(0_0_0/0.35)] sm:flex-col">
-          {(["map", "satellite"] as const).map((v) => (
+          {(["satellite", "map"] as const).map((v) => (
             <button
               key={v}
               type="button"
@@ -110,10 +130,10 @@ export function GlobeActions() {
               aria-label={b.switchTo(v === "map" ? b.map : b.satellite)}
               onClick={() => setBaseMap(v)}
               data-testid={v === baseMap ? "basemap-pill" : undefined}
-              title={b.switchTo(nextBase)}
-              className={`size-9 rounded-full text-xs font-bold sm:size-10 ${baseMap === v ? "bg-accent text-paper" : "text-muted hover:text-ink"}`}
+              title={v === "map" ? b.map : b.satellite}
+              className={`flex size-9 items-center justify-center rounded-full sm:size-10 ${baseMap === v ? "bg-accent text-paper" : "text-accent hover:bg-paper-2"}`}
             >
-              {v === "map" ? b.map : b.satellite}
+              {v === "map" ? <FlatMapIcon /> : <GlobeIcon />}
             </button>
           ))}
         </div>

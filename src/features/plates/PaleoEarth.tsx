@@ -3,6 +3,7 @@
 import { useThree } from "@react-three/fiber";
 import { useEffect, useMemo } from "react";
 import { CanvasTexture, SRGBColorSpace } from "three";
+import { FLAT_HEIGHT, FLAT_WIDTH, isFlatProjection } from "@/lib/geo/sphere";
 import { nearestTime } from "@/lib/plates/periods";
 import type { PaleoCoastlines } from "@/lib/plates/types";
 import { useAppStore } from "@/store/useAppStore";
@@ -104,8 +105,13 @@ export function PaleoEarth() {
   const texture = usePaleoTexture(data, time);
   return (
     // 古大陸上點擊不選地點（底下現代地球的點擊不要穿透上來）
-    <mesh name="paleo-earth" userData={{ time }} onClick={(e) => e.stopPropagation()}>
-      <sphereGeometry args={[1.002, 128, 64]} />
+    <mesh
+      name="paleo-earth"
+      userData={{ time }}
+      onClick={(e) => e.stopPropagation()}
+      position={isFlatProjection() ? [0, 0, 0.002] : undefined}
+    >
+      {isFlatProjection() ? <planeGeometry args={[FLAT_WIDTH, FLAT_HEIGHT]} /> : <sphereGeometry args={[1.002, 128, 64]} />}
       <meshStandardMaterial map={texture} roughness={0.95} metalness={0} />
     </mesh>
   );

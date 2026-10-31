@@ -87,7 +87,7 @@ export const useAppStore = create<AppState>((set) => ({
   layers: { events: true, labels: true, historical: true, cultures: true, eras: true, curriculum: true, plates: false },
   ma: 250,
   setMa: (ma) => set({ ma: Math.min(OLDEST_MA, Math.max(0, Math.round(ma))) }),
-  baseMap: "map",
+  baseMap: "satellite",
   setYear: (year) => set({ year: clampYear(year) }),
   select: (selection) => set({ selection, selectedEventId: null, selectedCultureId: null, selectedEra: null, ...showDetails(selection) }),
   selectEvent: (selectedEventId) =>

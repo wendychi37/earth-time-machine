@@ -6,7 +6,7 @@ import { useCallback, useMemo, useRef, useState } from "react";
 import type { Group } from "three";
 import { CATEGORIES, categoryColor, categoryOf } from "@/lib/events/categories";
 import { CLUSTER_DEGREES, clusterMarkers, markerScale, scaleStep, stepScale, type MarkerCluster } from "@/lib/events/cluster";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { cameraDistance, facingCamera, latLonToVector3 } from "@/lib/geo/sphere";
 import { messages } from "@/messages/zh-Hant";
 import { useAppStore } from "@/store/useAppStore";
 import type { HistoricalEvent } from "@/types/event";
@@ -18,7 +18,7 @@ const SURFACE = 1.006;
 function useScreenScale(extra: number) {
   const ref = useRef<Group>(null);
   useFrame(({ camera }) => {
-    ref.current?.scale.setScalar(markerScale(camera.position.length()) * extra);
+    ref.current?.scale.setScalar(markerScale(cameraDistance(camera.position)) * extra);
   });
   return ref;
 }
@@ -166,8 +166,8 @@ export function useFacingCamera(position: [number, number, number]) {
   const invalidate = useThree((s) => s.invalidate);
   useFrame(({ camera }) => {
     if (!ref.current) return;
-    const c = camera.position;
-    const facing = (position[0] * c.x + position[1] * c.y + position[2] * c.z) / c.length() > 0.2;
+    const [x, y, z] = position;
+    const facing = facingCamera({ x, y, z }, camera.position) > 0.2;
     ref.current.style.visibility = facing ? "visible" : "hidden";
   });
   return useCallback(
@@ -260,7 +260,7 @@ export function EventMarkers({ events, showOthers, showKeys }: { events: Histori
   const [step, setStep] = useState(0);
   const [openKey, setOpenKey] = useState<string | null>(null);
   useFrame(({ camera }) => {
-    const next = scaleStep(markerScale(camera.position.length()));
+    const next = scaleStep(markerScale(cameraDistance(camera.position)));
     if (next !== step) setStep(next);
   });
   const year = useAppStore((s) => s.year);

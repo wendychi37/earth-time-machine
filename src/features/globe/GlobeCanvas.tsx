@@ -3,7 +3,7 @@
 import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Suspense, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { latLonToVector3 } from "@/lib/geo/sphere";
+import { FLAT_HEIGHT, FLAT_WIDTH, latLonToSphere, setFlatProjection } from "@/lib/geo/sphere";
 import { useAppStore } from "@/store/useAppStore";
 import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
 import { ChapterTags } from "@/features/curriculum/ChapterTags";
@@ -45,6 +45,9 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
   const showEras = useAppStore((s) => human(s.layers.eras));
   const showCurriculum = useAppStore((s) => human(s.layers.curriculum));
   const baseMap = useAppStore((s) => s.baseMap);
+  // 「地圖」是攤平的世界地圖，「地形」是立體地球。必須在下面的圖層算座標前設定好
+  const flat = baseMap === "map";
+  setFlatProjection(flat);
   const tone = baseMap === "map" ? "dark" : "light";
   const mapCountries = useMapCountries(baseMap === "map" || showLabels);
   const allLabels = useMapLabels(showLabels);
@@ -77,18 +80,32 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
 
   // 地球有自己的視窗，依視窗（不是整個螢幕）的長寬比決定初始距離
   const frame = useRef<HTMLDivElement>(null);
-  const [cameraPosition, setCameraPosition] = useState<[number, number, number] | null>(null);
+  const [aspect, setAspect] = useState<number | null>(null);
   useLayoutEffect(() => {
     const el = frame.current;
     if (!el) return;
-    const aspect = el.clientWidth / Math.max(1, el.clientHeight);
-    setCameraPosition(latLonToVector3(INITIAL_VIEW.lat, INITIAL_VIEW.lon, initialDistance(aspect)).toArray());
+    setAspect(el.clientWidth / Math.max(1, el.clientHeight));
   }, []);
+  const cameraPosition = useMemo<[number, number, number] | null>(() => {
+    if (aspect == null) return null;
+    if (flat) {
+      // 平面地圖：地圖塞滿畫面（寬的螢幕看得到全世界；直的手機螢幕上下塞滿，左右可以拖），
+      // 先對準東亞，但不露出地圖外面
+      const tan = Math.tan((FOV / 2) * (Math.PI / 180));
+      const z = Math.min(FLAT_WIDTH / 2 / (tan * aspect), FLAT_HEIGHT / 2 / tan) * 1.02;
+      const halfWidth = Math.min(FLAT_WIDTH / 2, z * tan * aspect);
+      const x = Math.max(-FLAT_WIDTH / 2 + halfWidth, Math.min(FLAT_WIDTH / 2 - halfWidth, (INITIAL_VIEW.lon * Math.PI) / 180));
+      return [x, 0, z];
+    }
+    return latLonToSphere(INITIAL_VIEW.lat, INITIAL_VIEW.lon, initialDistance(aspect)).toArray();
+  }, [aspect, flat]);
 
   return (
     <div ref={frame} className="relative h-full w-full">
       {cameraPosition && (
         <Canvas
+          // 立體地球與平面地圖的座標完全不同，切換時整個畫面重新建立
+          key={flat ? "flat" : "globe"}
           camera={{ position: cameraPosition, fov: FOV, near: 0.01, far: 100 }}
           dpr={[1, 2]}
           // 只在畫面有變化（拖曳、縮放、資料更新）時才重畫，省電也讓手機更順
@@ -104,15 +121,15 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
             onCreated?.();
           }}
         >
-          <color attach="background" args={["#05070d"]} />
+          <color attach="background" args={[flat ? "#142338" : "#05070d"]} />
           <ambientLight intensity={0.55} />
           <CameraLight />
           <KeepGlobeSize />
-          <Stars radius={50} depth={30} count={3000} factor={2.5} fade />
+          {!flat && <Stars radius={50} depth={30} count={3000} factor={2.5} fade />}
           {/* 大氣層與地球一起出現，避免貼圖載入前只看到光暈 */}
           <Suspense fallback={null}>
             <Earth quality={quality} countries={mapCountries} />
-            <Atmosphere />
+            {!flat && <Atmosphere />}
           </Suspense>
           {showHistorical && boundaries && (
             <BoundaryLayer

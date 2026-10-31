@@ -17,11 +17,11 @@ export const messages = {
   },
   baseMap: {
     label: "底圖",
-    map: "地圖",
-    mapHint: "像地球儀",
-    satellite: "地形",
+    map: "平面地圖",
+    mapHint: "攤平看全世界",
+    satellite: "立體地球",
     satelliteHint: "衛星照片",
-    switchTo: (name: string) => `切換到${name}模式`,
+    switchTo: (name: string) => `切換到${name}`,
     modernNote: "國名與行政區為現代",
   },
   actions: {

@@ -79,6 +79,8 @@ export interface PlaceOptions {
   maxLabels?: number;
   /** 被介面面板蓋住的區域，標籤不放在這裡 */
   blocked?: Rect[];
+  /** 平面地圖：沒有背面，不必檢查地平線 */
+  flat?: boolean;
 }
 
 /**
@@ -86,19 +88,19 @@ export interface PlaceOptions {
  * 不超出畫面、且不和已放的標籤重疊。
  */
 export function placeLabels(candidates: LabelCandidate[], opts: PlaceOptions): PlacedLabel[] {
-  const { camera, width, height, project, maxLabels = 160, blocked = [] } = opts;
+  const { camera, width, height, project, maxLabels = 160, blocked = [], flat = false } = opts;
   const dist = Math.hypot(camera.x, camera.y, camera.z);
   const cx = camera.x / dist;
   const cy = camera.y / dist;
   const cz = camera.z / dist;
   // 單位球上的點 p 在 p·ĉ > 1/d 時才看得到（地平線）
-  const horizon = 1 / dist;
+  const horizon = flat ? -1 : 1 / dist;
   const placed: PlacedLabel[] = [];
   const rects: Rect[] = [...blocked];
 
   for (const c of candidates) {
     if (placed.length >= maxLabels) break;
-    const facing = c.x * cx + c.y * cy + c.z * cz;
+    const facing = flat ? 1 : c.x * cx + c.y * cy + c.z * cz;
     if (facing < horizon + 0.04) continue;
     const p = project(c);
     if (!p) continue;
@@ -109,7 +111,7 @@ export function placeLabels(candidates: LabelCandidate[], opts: PlaceOptions): P
     if (rect.x0 < 0 || rect.y0 < 0 || rect.x1 > width || rect.y1 > height) continue;
     if (rects.some((r) => overlaps(r, rect))) continue;
     rects.push(rect);
-    placed.push({ candidate: c, sx: p.sx, sy: p.sy, opacity: Math.min(1, (facing - horizon - 0.04) / 0.12) });
+    placed.push({ candidate: c, sx: p.sx, sy: p.sy, opacity: flat ? 1 : Math.min(1, (facing - horizon - 0.04) / 0.12) });
   }
   return placed;
 }
