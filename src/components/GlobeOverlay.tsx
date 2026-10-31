@@ -23,7 +23,7 @@ export function GlobeOverlay() {
 
   return (
     <>
-      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-col">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex flex-col land:hidden!">
         <header
           className="pointer-events-auto flex items-center gap-2.5 border-b border-panel-border bg-paper/95 px-4 py-2 text-ink shadow-[0_4px_16px_rgb(0_0_0/0.25)] backdrop-blur sm:w-fit sm:rounded-br-2xl sm:border-r sm:px-5"
           data-label-avoid
@@ -55,6 +55,25 @@ export function GlobeOverlay() {
           </div>
         </header>
         {!plates && <CategoryChips />}
+      </div>
+      {/* 手機橫放：只留一個小小的年份牌 */}
+      <div
+        className="pointer-events-none absolute left-3 top-3 z-10 hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-paper/90 px-3 py-1 text-ink shadow-[0_2px_10px_rgb(0_0_0/0.35)] land:flex"
+        data-label-avoid
+        data-testid="landscape-year"
+      >
+        <span className="font-mono text-sm font-semibold tabular-nums">{plates ? formatMa(ma) : formatYear(year)}</span>
+        {plates ? (
+          <span className="rounded px-1.5 py-0.5 text-[11px] font-bold text-slate-950" style={{ backgroundColor: geo.color }}>
+            {geo.name}
+          </span>
+        ) : (
+          curriculum && (
+            <span className="rounded px-1.5 py-0.5 text-[11px] font-bold text-white" style={{ backgroundColor: period.color }}>
+              {periodLabel(period)}
+            </span>
+          )
+        )}
       </div>
       <GlobeActions />
     </>

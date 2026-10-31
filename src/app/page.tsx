@@ -15,8 +15,8 @@ import { messages } from "@/messages/zh-Hant";
  */
 export default function Home() {
   return (
-    <main className="flex h-dvh w-full flex-col sm:grid sm:grid-cols-[minmax(0,1fr)_22rem] sm:grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-cols-[minmax(0,1fr)_26rem]">
-      <section aria-label={messages.panel.globe} className="relative min-h-0 flex-1 sm:col-start-1 sm:row-span-2 sm:row-start-1">
+    <main className="flex h-dvh w-full flex-col sm:grid sm:grid-cols-[minmax(0,1fr)_22rem] sm:grid-rows-[auto_minmax(0,1fr)_auto] lg:grid-cols-[minmax(0,1fr)_26rem] land:block!">
+      <section aria-label={messages.panel.globe} className="relative min-h-0 flex-1 sm:col-start-1 sm:row-span-2 sm:row-start-1 land:h-dvh!">
         <GlobeView />
         <GlobeOverlay />
         <EventList />

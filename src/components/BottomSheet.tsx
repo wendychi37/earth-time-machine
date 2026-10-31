@@ -15,7 +15,7 @@ export function BottomSheet({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`${open ? "flex" : "hidden"} relative z-10 -mt-4 max-h-[58dvh] shrink-0 flex-col rounded-t-2xl border-t border-panel-border bg-paper shadow-[0_-8px_24px_rgb(0_0_0/0.4)] sm:contents`}
+      className={`${open ? "flex" : "hidden"} relative z-10 -mt-4 max-h-[58dvh] shrink-0 flex-col rounded-t-2xl border-t border-panel-border bg-paper shadow-[0_-8px_24px_rgb(0_0_0/0.4)] sm:contents land:hidden!`}
       data-testid="bottom-sheet"
     >
       <button
@@ -43,7 +43,7 @@ export function TimelineSlot({ children }: { children: ReactNode }) {
   return (
     <div
       id="panel-time"
-      className={`${tab === "time" ? "" : "max-sm:hidden"} shrink-0 sm:col-start-1 sm:row-start-3 sm:border-t sm:border-panel-border`}
+      className={`${tab === "time" ? "" : "max-sm:hidden"} shrink-0 sm:col-start-1 sm:row-start-3 sm:border-t sm:border-panel-border land:hidden!`}
     >
       {children}
     </div>

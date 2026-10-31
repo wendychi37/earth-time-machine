@@ -1,6 +1,9 @@
 /* 只掃描 src 找 class：data/ 與 public/data 的大型 JSON 會讓 Vercel 上的 Tailwind 掃描逾時 */
 @import "tailwindcss" source("../");
 
+/* 手機橫放：地球／地圖佔滿整個螢幕，其他面板先收起來 */
+@custom-variant land (@media (orientation: landscape) and (max-height: 520px));
+
 /*
  * 配色（參考 ChronoGlobe 的感覺，自己調的色票）：
  * 面板與卡片是羊皮紙色、文字是墨褐色、重點是黃銅金，地球所在的區域是深海藍。
