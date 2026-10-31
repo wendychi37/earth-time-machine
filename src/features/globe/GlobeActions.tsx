@@ -121,7 +121,11 @@ export function GlobeActions() {
       <RoundButton label={plates ? t.platesOn : t.plates} onClick={() => toggleLayer("plates")} active={plates} testId="globe-plates">
         <span className="text-[11px] font-bold leading-tight">
           {plates ? (
-            "回到歷史"
+            <>
+              回到
+              <br />
+              歷史
+            </>
           ) : (
             <>
               板塊

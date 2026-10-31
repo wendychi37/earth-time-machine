@@ -129,6 +129,5 @@ main h3 {
 /* 朝代名稱：地區顏色的字加白邊（不用色塊） */
 .era-label {
   paint-order: stroke fill;
-  -webkit-text-stroke: 3.5px rgb(255 255 255 / 0.9);
-  filter: drop-shadow(0 1px 1px rgb(0 0 0 / 0.25));
+  -webkit-text-stroke: 2.5px rgb(255 255 255 / 0.85);
 }

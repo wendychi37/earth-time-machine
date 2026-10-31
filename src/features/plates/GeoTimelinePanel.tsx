@@ -20,7 +20,6 @@ export function GeoTimelinePanel() {
   const t = messages.plates;
   const ma = useAppStore((s) => s.ma);
   const setMa = useAppStore((s) => s.setMa);
-  const toggleLayer = useAppStore((s) => s.toggleLayer);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
   const [playing, setPlaying] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -73,7 +72,8 @@ export function GeoTimelinePanel() {
   return (
     <section className="px-4 pt-1 sm:bg-panel sm:px-5 sm:pt-3" data-testid="geo-timeline">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-        <div className="min-w-0">
+        {/* 手機上方標題列已經有年代，這裡不重複 */}
+        <div className="min-w-0 max-sm:hidden">
           <p className="text-xs font-semibold text-muted">{t.title}</p>
           <p className="flex items-baseline gap-2">
             <span className="font-mono text-2xl font-semibold tabular-nums" data-testid="geo-year">
@@ -93,17 +93,6 @@ export function GeoTimelinePanel() {
           >
             <span aria-hidden>{playing ? "❚❚" : "▶"}</span>
             {playing ? t.pause : t.play}
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              stop();
-              toggleLayer("plates");
-            }}
-            className="h-9 rounded-full border border-ink/20 px-3 text-sm text-foreground hover:bg-ink/10"
-            data-testid="geo-back"
-          >
-            {t.back}
           </button>
         </div>
       </div>
@@ -174,9 +163,10 @@ export function GeoTimelinePanel() {
           {state.status === "loading" ? t.loading : t.missing}
         </p>
       )}
-      <p className="pb-3 text-[11px] leading-relaxed text-muted">
-        {t.hint} {t.credit}
-      </p>
+      <details className="pb-3 text-[11px] leading-relaxed text-muted">
+        <summary className="cursor-pointer">{t.creditLabel}</summary>
+        <p className="mt-1">{t.credit}</p>
+      </details>
     </section>
   );
 }

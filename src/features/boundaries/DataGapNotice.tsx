@@ -8,19 +8,16 @@ import type { BoundaryState } from "./useBoundariesAtYear";
 /** 選取年份沒有可靠疆域資料時顯示。 */
 export function DataGapNotice({ state }: { state: BoundaryState }) {
   const year = useAppStore((s) => s.year);
+  const plates = useAppStore((s) => s.layers.plates);
   const t = messages.boundaries;
-  if (state.availability?.status !== "no-data") return null;
+  if (plates || state.availability?.status !== "no-data") return null;
   const { nearest } = state.availability;
 
   return (
-    <div
-      role="status"
-      className="rounded-lg border border-amber-700/40 bg-amber-100/95 px-4 py-2 text-sm backdrop-blur"
-      data-testid="data-gap"
-    >
-      <p className="font-semibold text-amber-900">{t.noDataTitle}</p>
-      <p>{t.noData(formatYear(year))}</p>
-      {nearest && <p className="text-xs text-muted">{t.nearest(formatYear(nearest.year))}</p>}
-    </div>
+    // 一行小字就好，不佔面板
+    <p role="status" className="text-xs leading-snug text-muted" data-testid="data-gap">
+      {t.noData(formatYear(year))}
+      {nearest && `（${t.nearest(formatYear(nearest.year))}）`}
+    </p>
   );
 }

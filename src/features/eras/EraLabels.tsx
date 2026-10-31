@@ -58,7 +58,7 @@ export function EraLabels() {
                 <button
                   type="button"
                   onClick={() => selectEra({ regionId: region.id, index })}
-                  className={`era-label whitespace-nowrap px-1 text-[15px] font-bold leading-tight ${selected ? "underline decoration-2 underline-offset-4" : ""}`}
+                  className={`era-label whitespace-nowrap px-1 text-[12px] font-medium leading-tight tracking-wide sm:text-[13px] ${selected ? "underline decoration-2 underline-offset-4" : ""}`}
                   style={{ color: region.color }}
                   aria-label={`${region.name}：${era.name}（${messages.eras.cardLabel}）`}
                   data-testid={`era-label-${region.id}`}
