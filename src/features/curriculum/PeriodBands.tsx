@@ -30,7 +30,7 @@ export function PeriodBands({ scale, compact = false }: { scale: TimeScale; comp
             aria-label={messages.curriculum.jumpTo(periodLabel(p))}
             aria-current={active ? "true" : undefined}
             onClick={() => setYear(Math.max(scale.min, p.start))}
-            className={`absolute top-0 flex h-full items-center justify-center overflow-hidden whitespace-nowrap border-x border-[#0b0f1a] px-0.5 text-[10px] font-medium text-white sm:text-[11px] ${
+            className={`absolute top-0 flex h-full items-center justify-center overflow-hidden whitespace-nowrap border-x border-paper px-0.5 text-[10px] font-medium text-white sm:text-[11px] ${
               active ? "z-10 rounded-sm font-bold ring-2 ring-accent" : "opacity-75 hover:opacity-100"
             }`}
             style={{ left: `${left * 100}%`, width: `${(right - left) * 100}%`, backgroundColor: p.color }}

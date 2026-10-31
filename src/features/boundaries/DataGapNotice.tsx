@@ -15,10 +15,10 @@ export function DataGapNotice({ state }: { state: BoundaryState }) {
   return (
     <div
       role="status"
-      className="rounded-lg border border-amber-300/40 bg-amber-950/70 px-4 py-2 text-sm backdrop-blur"
+      className="rounded-lg border border-amber-700/40 bg-amber-100/95 px-4 py-2 text-sm backdrop-blur"
       data-testid="data-gap"
     >
-      <p className="font-semibold text-amber-200">{t.noDataTitle}</p>
+      <p className="font-semibold text-amber-900">{t.noDataTitle}</p>
       <p>{t.noData(formatYear(year))}</p>
       {nearest && <p className="text-xs text-muted">{t.nearest(formatYear(nearest.year))}</p>}
     </div>

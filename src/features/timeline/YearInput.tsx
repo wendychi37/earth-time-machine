@@ -39,18 +39,18 @@ export function YearInput() {
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           inputMode="text"
-          className="min-w-0 flex-1 rounded-md border border-panel-border bg-black/30 px-2 py-1.5 text-sm placeholder:text-muted focus:border-accent focus:outline-none sm:w-48 sm:flex-none"
+          className="min-w-0 flex-1 rounded-md border border-panel-border bg-white/70 px-2 py-1.5 text-sm placeholder:text-muted focus:border-accent focus:outline-none sm:w-48 sm:flex-none"
           data-testid="year-input"
         />
         <button
           type="submit"
-          className="rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-black hover:brightness-110"
+          className="rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-paper hover:brightness-110"
         >
           {t.go}
         </button>
       </div>
       {error && (
-        <p id={errorId} role="alert" className="text-xs text-red-300" data-testid="year-error">
+        <p id={errorId} role="alert" className="text-xs text-red-700" data-testid="year-error">
           {error}
         </p>
       )}

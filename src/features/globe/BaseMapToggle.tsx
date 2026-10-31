@@ -38,10 +38,10 @@ export function BaseMapToggle() {
             aria-label={messages.baseMap.switchTo(o.label)}
             onClick={() => setBaseMap(o.value)}
             className={`flex w-14 flex-col sm:w-16 items-center gap-1 rounded-lg p-1 text-xs transition ${
-              active ? "bg-white/15 text-foreground ring-2 ring-accent" : "text-muted hover:bg-white/10 hover:text-foreground"
+              active ? "bg-ink/15 text-foreground ring-2 ring-accent" : "text-muted hover:bg-ink/10 hover:text-foreground"
             }`}
           >
-            <span aria-hidden className="block size-8 rounded-md sm:size-10 border border-white/20" style={{ background: o.preview }} />
+            <span aria-hidden className="block size-8 rounded-md sm:size-10 border border-ink/20" style={{ background: o.preview }} />
             <span className="font-semibold leading-none">{o.label}</span>
             <span className="hidden text-[10px] leading-none opacity-80 sm:block">{o.hint}</span>
           </button>

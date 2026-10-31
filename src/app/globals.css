@@ -1,13 +1,22 @@
 /* 只掃描 src 找 class：data/ 與 public/data 的大型 JSON 會讓 Vercel 上的 Tailwind 掃描逾時 */
 @import "tailwindcss" source("../");
 
+/*
+ * 配色（參考 ChronoGlobe 的感覺，自己調的色票）：
+ * 面板與卡片是羊皮紙色、文字是墨褐色、重點是黃銅金，地球所在的區域是深海藍。
+ */
 :root {
-  --background: #05070d;
-  --foreground: #e8ecf4;
-  --panel: rgb(14 18 30 / 0.82);
-  --panel-border: rgb(255 255 255 / 0.1);
-  --accent: #f2b84b;
-  --muted: #8b95a8;
+  --background: #142338;
+  --foreground: #33261a;
+  --panel: #f3e8d2;
+  --panel-2: #eadbbd;
+  --panel-border: #d9c59c;
+  --accent: #8a5f17;
+  --accent-bright: #b8862e;
+  --muted: #65523d;
+  --oxblood: #8e3326;
+  --navy: #142338;
+  --on-navy: #f3e8d2;
 }
 
 @theme inline {
@@ -17,8 +26,18 @@
   --color-panel-border: var(--panel-border);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
+  --color-ink: var(--foreground);
+  --color-paper: var(--panel);
+  --color-paper-2: var(--panel-2);
+  --color-accent-bright: var(--accent-bright);
+  --color-oxblood: var(--oxblood);
+  --color-navy: var(--navy);
+  --color-on-navy: var(--on-navy);
   --font-sans: "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", system-ui,
     sans-serif;
+  /* 標題用明體（書卷感），年份用打字機字體 */
+  --font-serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 }
 
 html,
@@ -26,6 +45,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* 面板裡的標題用明體 */
+main h2,
+main h3 {
+  font-family: var(--font-serif);
 }
 
 /* 地球上的國名、行政區名、海洋名（由 MapLabels 產生） */

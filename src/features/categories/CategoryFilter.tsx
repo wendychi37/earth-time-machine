@@ -43,7 +43,7 @@ export function CategoryFilter() {
               onClick={() => toggle(id)}
               data-testid={`category-${id}`}
               className={`flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-[13px] leading-tight transition ${
-                on ? "border-white/20 bg-white/10 text-foreground" : "border-white/10 text-muted line-through decoration-white/30"
+                on ? "border-ink/20 bg-ink/10 text-foreground" : "border-ink/10 text-muted line-through decoration-ink/30"
               }`}
             >
               <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: on ? color : "transparent", boxShadow: `inset 0 0 0 1.5px ${color}` }} aria-hidden />

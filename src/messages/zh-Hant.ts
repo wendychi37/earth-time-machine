@@ -24,6 +24,14 @@ export const messages = {
     switchTo: (name: string) => `切換到${name}模式`,
     modernNote: "國名與行政區為現代",
   },
+  actions: {
+    label: "地球按鈕",
+    play: "自動往後播放年份",
+    pause: "暫停播放",
+    plates: "板塊移動",
+    platesOn: "回到人類歷史",
+    home: "把地球轉回臺灣",
+  },
   coords: {
     north: "北緯",
     south: "南緯",
@@ -105,6 +113,14 @@ export const messages = {
       note: "依事件在今天的哪個國家分類；古代事件會歸到今天所在的國家。",
       filtering: (names: string) => `只顯示：${names}`,
     },
+  },
+  eventNav: {
+    prev: "上一件",
+    next: "下一件",
+    position: (i: number, n: number) => `這個年代的第 ${i} / ${n} 件`,
+    sameEraTitle: "同一時期的世界",
+    sameEraRange: (n: number) => `±${n} 年`,
+    sameEraEmpty: "這段時間其他地方沒有記載的大事。",
   },
   categories: {
     title: "事件分類",
@@ -225,7 +241,7 @@ export const messages = {
   },
   panel: {
     label: "控制面板",
-    tabs: { time: "年份", focus: "重點", sameEra: "同一時期", layers: "圖層", details: "介紹" },
+    tabs: { time: "年份", focus: "課綱重點", sameEra: "同一時期", layers: "圖層", details: "介紹" },
     collapse: "收起面板",
     expand: "打開面板",
     layersTitle: "圖層與底圖",

@@ -11,7 +11,7 @@ export function YearDisplay() {
   const period = periodAt(year);
   return (
     <div className="flex items-center gap-2">
-      <p className="text-lg font-semibold tabular-nums sm:text-2xl" aria-live="polite" data-testid="current-year">
+      <p className="font-mono text-lg font-semibold tabular-nums sm:text-2xl" aria-live="polite" data-testid="current-year">
         <span className="sr-only">{messages.timeline.current}：</span>
         {formatYear(year)}
       </p>

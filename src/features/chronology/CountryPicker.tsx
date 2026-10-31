@@ -57,7 +57,7 @@ export function CountryPicker() {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className={`rounded-full border px-2.5 py-1 text-xs hover:bg-white/10 ${filter ? "border-accent text-accent" : "border-panel-border"}`}
+        className={`rounded-full border px-2.5 py-1 text-xs hover:bg-ink/10 ${filter ? "border-accent text-accent" : "border-panel-border"}`}
         data-testid="country-picker-button"
       >
         {t.button(filter ? filter.length : null)}
@@ -91,7 +91,7 @@ export function CountryPicker() {
           <ul className="min-h-0 flex-1 overflow-y-auto">
             {shown.map((o) => (
               <li key={o.iso}>
-                <label className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 hover:bg-white/10">
+                <label className="flex cursor-pointer items-center gap-2 rounded px-1 py-0.5 hover:bg-ink/10">
                   <input type="checkbox" className="size-4 accent-accent" checked={selected.has(o.iso)} onChange={() => toggle(o.iso)} />
                   <span
                     className="inline-block size-2 rounded-full"
@@ -105,7 +105,7 @@ export function CountryPicker() {
             ))}
           </ul>
           <p className="mt-1 text-[11px] text-muted">{t.note}</p>
-          <button type="button" onClick={() => setOpen(false)} className="mt-1 self-end rounded bg-accent px-3 py-1 text-xs font-medium text-black">
+          <button type="button" onClick={() => setOpen(false)} className="mt-1 self-end rounded bg-accent px-3 py-1 text-xs font-medium text-paper">
             {t.done}
           </button>
         </div>,

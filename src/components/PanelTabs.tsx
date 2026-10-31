@@ -33,7 +33,7 @@ export function PanelTabs() {
     <nav
       role="tablist"
       aria-label={t.label}
-      className="flex shrink-0 border-t border-panel-border bg-[#0b0f1a] pb-[env(safe-area-inset-bottom)] sm:col-start-2 sm:row-start-1 sm:border-l sm:border-t-0 sm:border-b sm:bg-panel sm:pb-0"
+      className="flex shrink-0 border-t border-panel-border bg-paper pb-[env(safe-area-inset-bottom)] sm:col-start-2 sm:row-start-1 sm:border-l sm:border-t-0 sm:border-b sm:bg-panel sm:pb-0"
     >
       {TABS.map(({ id, icon }) => {
         // 桌面沒有「年份」分頁，此時顯示「重點」
@@ -49,8 +49,8 @@ export function PanelTabs() {
             onClick={() => pressTab(id)}
             data-testid={`panel-tab-${id}`}
             className={`relative flex flex-1 flex-col items-center gap-0.5 pb-1.5 pt-2 text-xs font-medium sm:flex-row sm:justify-center sm:gap-1.5 sm:py-3 sm:text-sm ${id === "time" ? "sm:hidden" : ""} ${
-              mobileActive ? "text-accent" : "text-muted max-sm:hover:text-foreground"
-            } ${active ? "sm:text-accent sm:after:absolute sm:after:inset-x-3 sm:after:bottom-0 sm:after:h-0.5 sm:after:rounded-full sm:after:bg-accent" : "sm:text-muted sm:hover:text-foreground"}`}
+              mobileActive ? "font-bold text-oxblood" : "text-muted max-sm:hover:text-foreground"
+            } ${active ? "sm:font-bold sm:text-oxblood sm:after:absolute sm:after:inset-x-3 sm:after:bottom-0 sm:after:h-0.5 sm:after:rounded-full sm:after:bg-oxblood" : "sm:text-muted sm:hover:text-foreground"}`}
           >
             <span className="sm:hidden">{icon}</span>
             {t.tabs[id]}

@@ -13,6 +13,8 @@ describe("事件分類", () => {
     ["聖索菲亞大教堂落成", "culture"],
     ["法蘭西第五共和國成立", "politics"],
     ["寧夏平羅發生 8 級地震", "other"],
+    ["達伽馬航抵印度", "science"],
+    ["哥倫布到達美洲", "science"],
   ])("%s → %s", (title, category) => {
     expect(classifyText(title)).toBe(category);
   });

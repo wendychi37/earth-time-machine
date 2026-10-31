@@ -15,7 +15,7 @@ export function BottomSheet({ children }: { children: ReactNode }) {
 
   return (
     <div
-      className={`${open ? "flex" : "hidden"} relative z-10 -mt-4 max-h-[58dvh] shrink-0 flex-col rounded-t-2xl border-t border-panel-border bg-[#101524] shadow-[0_-8px_24px_rgb(0_0_0/0.4)] sm:contents`}
+      className={`${open ? "flex" : "hidden"} relative z-10 -mt-4 max-h-[58dvh] shrink-0 flex-col rounded-t-2xl border-t border-panel-border bg-paper shadow-[0_-8px_24px_rgb(0_0_0/0.4)] sm:contents`}
       data-testid="bottom-sheet"
     >
       <button
@@ -30,7 +30,7 @@ export function BottomSheet({ children }: { children: ReactNode }) {
         }}
         data-testid="sheet-handle"
       >
-        <span className="h-1.5 w-10 rounded-full bg-white/25" aria-hidden />
+        <span className="h-1.5 w-10 rounded-full bg-ink/25" aria-hidden />
       </button>
       {children}
     </div>

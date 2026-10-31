@@ -109,24 +109,24 @@ function KeyMarker({
             }`}
             data-testid="key-marker"
           >
-            <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent text-[13px] text-slate-950" aria-hidden>
+            <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-accent-bright text-[13px] text-paper" aria-hidden>
               ★
             </span>
             <span className="truncate">{shown.curriculum?.title ?? shown.title}</span>
             {more > 0 && (
-              <span className="shrink-0 rounded-full bg-accent px-1.5 text-[11px] text-slate-950" aria-label={messages.events.clusterTitle(cluster.events.length)}>
+              <span className="shrink-0 rounded-full bg-accent-bright px-1.5 text-[11px] text-paper" aria-label={messages.events.clusterTitle(cluster.events.length)}>
                 {cluster.events.length}
               </span>
             )}
           </button>
           {open && more > 0 && (
             <div
-              className="absolute left-0 top-7 w-60 rounded-lg border border-white/15 bg-slate-900/95 p-2 text-sm text-slate-100 shadow-xl"
+              className="absolute left-0 top-7 w-60 rounded-lg border border-ink/15 bg-paper p-2 text-sm text-ink shadow-xl"
               data-testid="key-cluster-list"
             >
-              <div className="mb-1 flex items-center justify-between px-1 text-xs text-slate-400">
+              <div className="mb-1 flex items-center justify-between px-1 text-xs text-muted">
                 <span>{messages.events.clusterTitle(cluster.events.length)}</span>
-                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-white">
+                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-ink">
                   ×
                 </button>
               </div>
@@ -135,7 +135,7 @@ function KeyMarker({
                   <li key={e.id}>
                     <button
                       type="button"
-                      className="flex w-full gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
+                      className="flex w-full gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-ink/10"
                       onClick={() => {
                         selectEvent(e.id);
                         onToggle();
@@ -217,12 +217,12 @@ function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; ope
           </span>
           {open && (
             <div
-              className="pointer-events-auto absolute left-4 top-3 w-60 rounded-lg border border-white/15 bg-slate-900/95 p-2 text-sm text-slate-100 shadow-xl"
+              className="pointer-events-auto absolute left-4 top-3 w-60 rounded-lg border border-ink/15 bg-paper p-2 text-sm text-ink shadow-xl"
               data-testid="cluster-list"
             >
-              <div className="mb-1 flex items-center justify-between px-1 text-xs text-slate-400">
+              <div className="mb-1 flex items-center justify-between px-1 text-xs text-muted">
                 <span>{messages.events.clusterTitle(cluster.events.length)}</span>
-                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-white">
+                <button type="button" onClick={onToggle} aria-label={messages.events.close} className="px-1 text-base leading-none hover:text-ink">
                   ×
                 </button>
               </div>
@@ -231,7 +231,7 @@ function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; ope
                   <li key={e.id}>
                     <button
                       type="button"
-                      className="flex w-full items-baseline gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
+                      className="flex w-full items-baseline gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-ink/10"
                       onClick={() => {
                         selectEvent(e.id);
                         onToggle();

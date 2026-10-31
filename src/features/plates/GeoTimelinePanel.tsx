@@ -76,7 +76,7 @@ export function GeoTimelinePanel() {
         <div className="min-w-0">
           <p className="text-xs font-semibold text-muted">{t.title}</p>
           <p className="flex items-baseline gap-2">
-            <span className="text-2xl font-bold tabular-nums" data-testid="geo-year">
+            <span className="font-mono text-2xl font-semibold tabular-nums" data-testid="geo-year">
               {formatMa(ma)}
             </span>
             <span className="rounded px-1.5 py-0.5 text-sm font-bold text-slate-950" style={{ backgroundColor: period.color }}>
@@ -88,7 +88,7 @@ export function GeoTimelinePanel() {
           <button
             type="button"
             onClick={play}
-            className="flex h-9 items-center gap-1.5 rounded-full bg-accent px-3.5 text-sm font-bold text-slate-950"
+            className="flex h-9 items-center gap-1.5 rounded-full bg-accent px-3.5 text-sm font-bold text-paper"
             data-testid="geo-play"
           >
             <span aria-hidden>{playing ? "❚❚" : "▶"}</span>
@@ -100,7 +100,7 @@ export function GeoTimelinePanel() {
               stop();
               toggleLayer("plates");
             }}
-            className="h-9 rounded-full border border-white/20 px-3 text-sm text-foreground hover:bg-white/10"
+            className="h-9 rounded-full border border-ink/20 px-3 text-sm text-foreground hover:bg-ink/10"
             data-testid="geo-back"
           >
             {t.back}
@@ -126,8 +126,8 @@ export function GeoTimelinePanel() {
                   stop();
                   setMa(Math.floor(Math.min(OLDEST_MA, p.start) / MA_STEP) * MA_STEP);
                 }}
-                className={`absolute top-0 flex h-full items-center justify-center overflow-hidden whitespace-nowrap border-x border-[#0b0f1a] text-[10px] font-bold text-slate-950 sm:text-[11px] ${
-                  active ? "z-10 rounded-sm ring-2 ring-white" : "opacity-80 hover:opacity-100"
+                className={`absolute top-0 flex h-full items-center justify-center overflow-hidden whitespace-nowrap border-x border-paper text-[10px] font-bold text-slate-950 sm:text-[11px] ${
+                  active ? "z-10 rounded-sm ring-2 ring-ink" : "opacity-80 hover:opacity-100"
                 }`}
                 style={{ left: `${left * 100}%`, width: `${(right - left) * 100}%`, backgroundColor: p.color }}
                 data-testid={`geo-period-${p.id}`}
@@ -144,7 +144,7 @@ export function GeoTimelinePanel() {
           onPointerMove={onPointerMove}
           data-testid="geo-track"
         >
-          <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-white/15" />
+          <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-ink/15" />
           <div
             role="slider"
             tabIndex={0}

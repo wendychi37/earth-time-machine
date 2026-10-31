@@ -66,7 +66,7 @@ export function EraCard() {
   return (
     <article
       aria-label={`${t.cardLabel}：${era.name}`}
-      className="w-full rounded-lg border border-panel-border bg-white/[0.03] p-4 text-sm"
+      className="w-full rounded-lg border border-panel-border bg-paper-2/60 p-4 text-sm"
       data-testid="era-card"
     >
       <header className="mb-2 flex items-start justify-between gap-2">
@@ -113,7 +113,7 @@ export function EraCard() {
                   <li key={e.id}>
                     <button
                       type="button"
-                      className="text-left underline decoration-white/30 hover:decoration-white"
+                      className="text-left underline decoration-ink/30 hover:decoration-ink"
                       onClick={() => {
                         setYear(periodRange(e.period)[0]);
                         selectEvent(e.id);

@@ -84,7 +84,7 @@ export function Timeline({ scale = PHASE1_SCALE, ticks = PHASE1_TICKS, mobileTic
         onPointerMove={onPointerMove}
         data-testid={id("timeline-track")}
       >
-        <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-white/15" />
+        <div className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-ink/15" />
         <div
           className="absolute left-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-accent/60"
           style={{ width: `${position * 100}%` }}

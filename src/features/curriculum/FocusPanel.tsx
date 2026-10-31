@@ -123,7 +123,7 @@ export function FocusPanel() {
   return (
     <section aria-label={t.tabTitle} className="space-y-4 text-sm" data-testid="focus-panel">
       <div
-        className="rounded-xl border border-panel-border bg-white/[0.04] p-3"
+        className="rounded-xl border border-panel-border bg-paper-2/60 p-3"
         style={{ borderTopColor: period.color, borderTopWidth: 4 }}
       >
         <div className="flex items-center justify-between gap-2">
@@ -132,7 +132,7 @@ export function FocusPanel() {
             onClick={() => goPeriod(PERIODS[index - 1])}
             disabled={index === 0}
             aria-label={t.prev}
-            className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-panel-border text-lg hover:bg-white/10 disabled:opacity-30"
+            className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-panel-border text-lg hover:bg-ink/10 disabled:opacity-30"
           >
             ‹
           </button>
@@ -148,7 +148,7 @@ export function FocusPanel() {
             onClick={() => goPeriod(PERIODS[index + 1])}
             disabled={index === PERIODS.length - 1}
             aria-label={t.next}
-            className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-panel-border text-lg hover:bg-white/10 disabled:opacity-30"
+            className="flex size-9 shrink-0 items-center justify-center rounded-lg border border-panel-border text-lg hover:bg-ink/10 disabled:opacity-30"
           >
             ›
           </button>
@@ -171,7 +171,7 @@ export function FocusPanel() {
                   aria-pressed={active}
                   onClick={() => pickTheme(th.title)}
                   className={`rounded-full border px-2.5 py-1 text-left text-[13px] leading-snug ${
-                    active ? "border-accent bg-accent/20 font-semibold text-accent" : "border-white/20 hover:bg-white/10"
+                    active ? "border-accent bg-accent/20 font-semibold text-accent" : "border-ink/20 hover:bg-ink/10"
                   }`}
                 >
                   {th.title}
@@ -202,12 +202,12 @@ export function FocusPanel() {
             const open = openCourse === course.id;
             const main = chapters.at(-1);
             return (
-              <li key={course.id} className="rounded-lg bg-white/[0.04] leading-snug" data-testid={`focus-course-${course.id}`}>
+              <li key={course.id} className="rounded-lg bg-paper-2/60 leading-snug" data-testid={`focus-course-${course.id}`}>
                 <button
                   type="button"
                   onClick={() => setOpenCourse(open ? null : course.id)}
                   aria-expanded={open}
-                  className="flex w-full items-center gap-2 px-2.5 py-2 text-left hover:bg-white/5"
+                  className="flex w-full items-center gap-2 px-2.5 py-2 text-left hover:bg-ink/5"
                   data-testid="focus-course-toggle"
                 >
                   <span
@@ -225,14 +225,14 @@ export function FocusPanel() {
                   </span>
                 </button>
                 {open && (
-                  <div className="space-y-1 border-t border-white/10 px-2.5 pb-2.5 pt-2" data-testid="focus-course-detail">
+                  <div className="space-y-1 border-t border-ink/10 px-2.5 pb-2.5 pt-2" data-testid="focus-course-detail">
                     {chapters.map((ch) => (
                       <button
                         key={ch.n}
                         type="button"
                         onClick={() => goChapter(course, ch)}
                         aria-label={t.jumpChapter(course.name, ch.n, ch.title)}
-                        className="block text-left font-semibold underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                        className="block text-left font-semibold underline decoration-ink/30 underline-offset-2 hover:decoration-ink"
                         data-testid="focus-chapter"
                       >
                         L{ch.n}【{ch.title}】
@@ -252,7 +252,7 @@ export function FocusPanel() {
                       <button
                         type="button"
                         onClick={() => openEvent(event)}
-                        className="block text-left text-[13px] underline decoration-white/30 underline-offset-2 hover:decoration-white"
+                        className="block text-left text-[13px] underline decoration-ink/30 underline-offset-2 hover:decoration-ink"
                       >
                         <span className="text-accent" aria-hidden>
                           ★{" "}
@@ -280,7 +280,7 @@ export function FocusPanel() {
                   type="button"
                   onClick={() => openEvent(e)}
                   aria-pressed={e.id === selectedEventId}
-                  className={`flex w-full items-baseline gap-2 rounded-md px-2 py-1.5 text-left leading-snug hover:bg-white/10 ${
+                  className={`flex w-full items-baseline gap-2 rounded-md px-2 py-1.5 text-left leading-snug hover:bg-ink/10 ${
                     nearNow ? "bg-accent/15" : ""
                   } ${e.id === selectedEventId ? "ring-1 ring-accent" : ""}`}
                 >
@@ -300,7 +300,7 @@ export function FocusPanel() {
       <button
         type="button"
         onClick={() => pressTab("sameEra")}
-        className="flex w-full items-center justify-between rounded-lg border border-panel-border px-3 py-2.5 text-muted hover:bg-white/5 hover:text-foreground"
+        className="flex w-full items-center justify-between rounded-lg border border-panel-border px-3 py-2.5 text-muted hover:bg-ink/5 hover:text-foreground"
         data-testid="focus-others"
       >
         {t.others(others)}

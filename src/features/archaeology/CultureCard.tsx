@@ -22,12 +22,12 @@ export function CultureCard() {
   return (
     <article
       aria-label={culture.name}
-      className="w-full rounded-lg border border-panel-border bg-white/[0.03] p-4 text-sm"
+      className="w-full rounded-lg border border-panel-border bg-paper-2/60 p-4 text-sm"
       data-testid="culture-card"
     >
       <header className="mb-2 flex items-start justify-between gap-2">
         <div>
-          <span className="mb-1 inline-block rounded bg-orange-400/20 px-1.5 py-0.5 text-[11px] font-medium text-orange-200">
+          <span className="mb-1 inline-block rounded bg-orange-400/20 px-1.5 py-0.5 text-[11px] font-medium text-orange-900">
             {t.badge}
           </span>
           <h2 className="text-base font-semibold" data-testid="culture-title">
