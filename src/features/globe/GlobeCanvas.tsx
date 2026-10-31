@@ -111,7 +111,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           <Stars radius={50} depth={30} count={3000} factor={2.5} fade />
           {/* 大氣層與地球一起出現，避免貼圖載入前只看到光暈 */}
           <Suspense fallback={null}>
-            {plates ? <PaleoEarth /> : <Earth quality={quality} countries={mapCountries} />}
+            <Earth quality={quality} countries={mapCountries} />
             <Atmosphere />
           </Suspense>
           {showHistorical && boundaries && (
@@ -137,6 +137,8 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           {showEras && <EraLabels />}
           {showCurriculum && <ChapterTags />}
           {!plates && <SelectionMarker />}
+          {/* 古大陸蓋在原本的地球外面一點點；原本的地球不卸載，切換時比較順 */}
+          {plates && <PaleoEarth />}
           <GlobeControls />
           <CameraFocus />
         </Canvas>

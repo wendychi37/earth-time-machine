@@ -41,23 +41,32 @@ function drawFrame(ctx: CanvasRenderingContext2D, w: number, h: number, rings: n
   ctx.stroke();
 
   const path = new Path2D();
-  for (const r of rings) {
+  const pieces = rings.map((r) => {
+    const piece = new Path2D();
     for (let i = 0; i < r.length; i += 2) {
-      if (i === 0) path.moveTo(px(r[0]), py(r[1]));
-      else path.lineTo(px(r[i]), py(r[i + 1]));
+      if (i === 0) piece.moveTo(px(r[0]), py(r[1]));
+      else piece.lineTo(px(r[i]), py(r[i + 1]));
     }
-    path.closePath();
-  }
-  // 淺海陸棚的淡色光暈，再畫陸地
+    piece.closePath();
+    path.addPath(piece);
+    return piece;
+  });
+  // 淺海陸棚的淡色光暈 → 海岸線 → 最後填陸地。資料是一塊塊地體拼成的，
+  // 先描邊再填色，相鄰地體之間的線會被後畫的陸地色蓋掉，只留下真正的海岸線。
+  ctx.lineJoin = "round";
   ctx.strokeStyle = SHELF;
   ctx.lineWidth = w / 400;
-  ctx.lineJoin = "round";
   ctx.stroke(path);
-  ctx.fillStyle = LAND;
-  ctx.fill(path, "nonzero");
+  // 簡化後相鄰地體之間有細縫，用陸地色描粗一點把縫補起來
   ctx.strokeStyle = LAND_EDGE;
-  ctx.lineWidth = Math.max(1, w / 2048);
+  ctx.lineWidth = Math.max(3, w / 700);
   ctx.stroke(path);
+  ctx.strokeStyle = LAND;
+  ctx.lineWidth = Math.max(2, w / 1000);
+  ctx.stroke(path);
+  // 每塊分開填色：方向相反的重疊地體放在同一條路徑裡會互相抵消，變成一條條細縫
+  ctx.fillStyle = LAND;
+  for (const p of pieces) ctx.fill(p);
 }
 
 function usePaleoTexture(data: PaleoCoastlines | null, time: number | null) {
@@ -94,8 +103,9 @@ export function PaleoEarth() {
   const time = data ? nearestTime(data.times, ma) : null;
   const texture = usePaleoTexture(data, time);
   return (
-    <mesh name="earth" userData={{ baseMap: "paleo", time }}>
-      <sphereGeometry args={[1, 128, 64]} />
+    // 古大陸上點擊不選地點（底下現代地球的點擊不要穿透上來）
+    <mesh name="paleo-earth" userData={{ time }} onClick={(e) => e.stopPropagation()}>
+      <sphereGeometry args={[1.002, 128, 64]} />
       <meshStandardMaterial map={texture} roughness={0.95} metalness={0} />
     </mesh>
   );
