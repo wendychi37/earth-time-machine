@@ -106,6 +106,23 @@ export const messages = {
       filtering: (names: string) => `只顯示：${names}`,
     },
   },
+  categories: {
+    title: "事件分類",
+    hint: "依標題自動分類，偶爾會分錯",
+    all: "全部",
+    names: {
+      politics: "建國與政治",
+      war: "戰爭",
+      diplomacy: "外交條約",
+      revolution: "革命獨立",
+      science: "科學與探險",
+      economy: "經濟貿易",
+      culture: "文化宗教",
+      other: "其他",
+    } as Record<string, string>,
+    densityLabel: "各時期各類大事的多寡",
+    densityHint: "越高表示這段時間這類大事越多",
+  },
   layers: {
     title: "圖層",
     events: "歷史大事（世界與各國年表）",

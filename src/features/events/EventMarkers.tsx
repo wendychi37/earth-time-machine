@@ -4,7 +4,7 @@ import { Html } from "@react-three/drei";
 import { useFrame, useThree, type ThreeEvent } from "@react-three/fiber";
 import { useCallback, useMemo, useRef, useState } from "react";
 import type { Group } from "three";
-import { continentColor } from "@/lib/chronology/continents";
+import { CATEGORIES, categoryColor, categoryOf } from "@/lib/events/categories";
 import { CLUSTER_DEGREES, clusterMarkers, markerScale, scaleStep, stepScale, type MarkerCluster } from "@/lib/events/cluster";
 import { latLonToVector3 } from "@/lib/geo/sphere";
 import { messages } from "@/messages/zh-Hant";
@@ -58,7 +58,7 @@ function Marker({ event, selected, dim }: { event: MarkerCluster["events"][numbe
   const selectEvent = useAppStore((s) => s.selectEvent);
   const ref = useScreenScale(selected ? 1.5 : dim ? DIM_SCALE : 1);
   const position = latLonToVector3(event.location.lat, event.location.lon, SURFACE).toArray();
-  const color = continentColor(event.continent);
+  const color = categoryColor(event);
   const faded = dim && !selected;
   return (
     <group ref={ref} position={position}>
@@ -181,13 +181,21 @@ export function useFacingCamera(position: [number, number, number]) {
   );
 }
 
+/** 數字圈用裡面最多的那一類的顏色 */
+function dominantColor(events: HistoricalEvent[]) {
+  const counts = new Map<string, number>();
+  for (const e of events) counts.set(categoryOf(e), (counts.get(categoryOf(e)) ?? 0) + 1);
+  const top = [...counts].sort((a, b) => b[1] - a[1])[0][0];
+  return CATEGORIES.find((c) => c.id === top)!.color;
+}
+
 function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; open: boolean; onToggle: () => void; dim: boolean }) {
   const selectedEventId = useAppStore((s) => s.selectedEventId);
   const selectEvent = useAppStore((s) => s.selectEvent);
   const ref = useScreenScale(dim ? 0.8 : 1);
   const position = latLonToVector3(cluster.lat, cluster.lon, SURFACE).toArray() as [number, number, number];
   const labelRef = useFacingCamera(position);
-  const color = continentColor(cluster.events[0].continent);
+  const color = dominantColor(cluster.events);
   const selected = cluster.events.some((e) => e.id === selectedEventId);
   return (
     <group position={position}>
@@ -223,12 +231,13 @@ function Cluster({ cluster, open, onToggle, dim }: { cluster: MarkerCluster; ope
                   <li key={e.id}>
                     <button
                       type="button"
-                      className="w-full rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
+                      className="flex w-full items-baseline gap-1.5 rounded px-2 py-1.5 text-left leading-snug hover:bg-white/10"
                       onClick={() => {
                         selectEvent(e.id);
                         onToggle();
                       }}
                     >
+                      <span className="size-2 shrink-0 translate-y-[-1px] rounded-full" style={{ backgroundColor: categoryColor(e) }} aria-hidden />
                       {e.title}
                     </button>
                   </li>

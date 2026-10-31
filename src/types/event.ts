@@ -41,7 +41,7 @@ export interface HistoricalEvent {
   location: { lat: number; lon: number } | null;
   locationLabel: string;
   locationPrecision: LocationPrecision;
-  category: "politics" | "war" | "culture" | "exploration" | "science" | "other";
+  category: EventCategory;
   /** 依標記位置判斷的大洲（年表事件才有） */
   continent?: Continent | null;
   /** 依標記位置判斷的今日國家（供使用者依國家篩選） */
@@ -57,3 +57,6 @@ export interface HistoricalEvent {
   reviewStatus: ReviewStatus;
   curriculum?: CurriculumTag;
 }
+
+/** 事件分類（「探險」併入科學；年表事件載入後依關鍵字自動分類，見 lib/events/categories） */
+export type EventCategory = "politics" | "war" | "diplomacy" | "revolution" | "science" | "economy" | "culture" | "exploration" | "other";

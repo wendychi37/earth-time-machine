@@ -2,6 +2,7 @@
 
 import { chaptersAt, courseOf } from "@/lib/curriculum/courses";
 import { PERIODS, periodLabel } from "@/lib/curriculum/periods";
+import { categoryColor, categoryOf } from "@/lib/events/categories";
 import { formatLatLon } from "@/lib/geo/format";
 import { formatHistoricalDate, formatPeriod } from "@/lib/time/formatDate";
 import { messages } from "@/messages/zh-Hant";
@@ -32,6 +33,13 @@ export function EventCard({ event }: { event: HistoricalEvent }) {
     >
       <header className="mb-2 flex items-start justify-between gap-2">
         <div>
+          <span
+            className="mb-1 mr-1 inline-flex items-center gap-1 rounded bg-white/10 px-1.5 py-0.5 text-[11px] font-medium text-foreground"
+            data-testid="category-badge"
+          >
+            <span className="size-2 rounded-full" style={{ backgroundColor: categoryColor(event) }} aria-hidden />
+            {messages.categories.names[categoryOf(event)]}
+          </span>
           {key && (
             <span className="mb-1 mr-1 inline-block rounded bg-accent/25 px-1.5 py-0.5 text-[11px] font-bold text-accent" data-testid="key-badge">
               {c.badge}

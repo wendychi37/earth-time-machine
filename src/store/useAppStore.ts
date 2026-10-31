@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import type { EraRef } from "@/lib/eras/query";
+import type { ShownCategory } from "@/lib/events/categories";
 import type { LatLon } from "@/lib/geo/sphere";
 import { DEFAULT_YEAR, PHASE1_MAX_YEAR, PHASE1_MIN_YEAR } from "@/lib/time/constants";
 import type { AstronomicalYear } from "@/types/time";
@@ -52,6 +53,9 @@ interface AppState {
   /** 只顯示這些國家（ISO 代碼）的事件；null 表示全部顯示 */
   countryFilter: string[] | null;
   setCountryFilter: (isos: string[] | null) => void;
+  /** 只顯示這些分類的事件；null 表示全部顯示 */
+  categoryFilter: ShownCategory[] | null;
+  setCategoryFilter: (ids: ShownCategory[] | null) => void;
   /** 「各地朝代」只顯示這些地區（地區代號）；null 表示全部顯示 */
   regionFilter: string[] | null;
   setRegionFilter: (ids: string[] | null) => void;
@@ -91,6 +95,8 @@ export const useAppStore = create<AppState>((set) => ({
   setPanelOpen: (panelOpen) => set({ panelOpen }),
   countryFilter: null,
   setCountryFilter: (countryFilter) => set({ countryFilter }),
+  categoryFilter: null,
+  setCategoryFilter: (categoryFilter) => set({ categoryFilter }),
   regionFilter: null,
   setRegionFilter: (regionFilter) => set({ regionFilter }),
   focusTarget: null,

@@ -1,0 +1,27 @@
+# 下載板塊重建的古海岸線（寒武紀到現在），更新 public/data/plates/coastlines.json。
+# 修改下載腳本並推送後會自動執行；也可在 Actions 頁面手動按「Run workflow」。
+name: fetch-plates
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/fetch-plates.mts
+      - .github/workflows/fetch-plates.yml
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      - run: npm ci
+      - run: npx tsx scripts/fetch-plates.mts
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/plates/coastlines.json
+          git commit -m "更新板塊古海岸線（自動下載）" || echo "沒有變更"
+          git pull --rebase && git push

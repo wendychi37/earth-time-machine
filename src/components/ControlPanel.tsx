@@ -4,6 +4,7 @@ import { BoundaryGapBanner, BoundaryLegendBar } from "@/features/boundaries/Boun
 import { CultureCard } from "@/features/archaeology/CultureCard";
 import { SameEraPanel } from "@/features/chronology/SameEraPanel";
 import { FocusPanel } from "@/features/curriculum/FocusPanel";
+import { CategoryFilter } from "@/features/categories/CategoryFilter";
 import { EraBands } from "@/features/eras/EraBands";
 import { EraCard } from "@/features/eras/EraCard";
 import { SelectedEventCard } from "@/features/events/SelectedEventCard";
@@ -46,6 +47,7 @@ export function ControlPanel() {
       <div role="tabpanel" id="panel-layers" className={`${shown("layers")} space-y-4`}>
         <h2 className="text-base font-semibold max-sm:text-lg">{t.layersTitle}</h2>
         <LayerToggles />
+        <CategoryFilter />
         <div>
           <h3 className="mb-1.5 text-xs font-semibold text-muted">{messages.baseMap.label}</h3>
           <BaseMapToggle />
