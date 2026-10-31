@@ -33,7 +33,7 @@ export function PanelTabs() {
     <nav
       role="tablist"
       aria-label={t.label}
-      className="flex shrink-0 border-t border-panel-border bg-paper pb-[env(safe-area-inset-bottom)] sm:col-start-2 sm:row-start-1 sm:border-l sm:border-t-0 sm:border-b sm:bg-panel sm:pb-0"
+      className="flex shrink-0 land:hidden! border-t border-panel-border bg-paper pb-[env(safe-area-inset-bottom)] sm:col-start-2 sm:row-start-1 sm:border-l sm:border-t-0 sm:border-b sm:bg-panel sm:pb-0"
     >
       {TABS.map(({ id, icon }) => {
         // 桌面沒有「年份」分頁，此時顯示「重點」
