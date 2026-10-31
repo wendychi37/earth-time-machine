@@ -56,23 +56,29 @@ export function GlobeOverlay() {
         </header>
         {!plates && <CategoryChips />}
       </div>
-      {/* 手機橫放：只留一個小小的年份牌 */}
-      <div
-        className="pointer-events-none absolute left-3 top-3 z-10 hidden items-center gap-1.5 whitespace-nowrap rounded-full bg-paper/90 px-3 py-1 text-ink shadow-[0_2px_10px_rgb(0_0_0/0.35)] land:flex"
-        data-label-avoid
-        data-testid="landscape-year"
-      >
-        <span className="font-mono text-sm font-semibold tabular-nums">{plates ? formatMa(ma) : formatYear(year)}</span>
-        {plates ? (
-          <span className="rounded px-1.5 py-0.5 text-[11px] font-bold text-slate-950" style={{ backgroundColor: geo.color }}>
-            {geo.name}
-          </span>
-        ) : (
-          curriculum && (
-            <span className="rounded px-1.5 py-0.5 text-[11px] font-bold text-white" style={{ backgroundColor: period.color }}>
-              {periodLabel(period)}
+      {/* 手機橫放：只留一個小小的年份牌（板塊模式再加一句這個地質年代的重點） */}
+      <div className="pointer-events-none absolute left-3 top-3 z-10 hidden max-w-[min(26rem,60vw)] flex-col items-start gap-1.5 land:flex" data-label-avoid>
+        <div
+          className="flex items-center gap-1.5 whitespace-nowrap rounded-full bg-paper/90 px-3 py-1 text-ink shadow-[0_2px_10px_rgb(0_0_0/0.35)]"
+          data-testid="landscape-year"
+        >
+          <span className="font-mono text-sm font-semibold tabular-nums">{plates ? formatMa(ma) : formatYear(year)}</span>
+          {plates ? (
+            <span className="rounded px-1.5 py-0.5 text-[11px] font-bold text-slate-950" style={{ backgroundColor: geo.color }}>
+              {geo.name}
             </span>
-          )
+          ) : (
+            curriculum && (
+              <span className="rounded px-1.5 py-0.5 text-[11px] font-bold text-white" style={{ backgroundColor: period.color }}>
+                {periodLabel(period)}
+              </span>
+            )
+          )}
+        </div>
+        {plates && (
+          <p className="rounded-xl bg-paper/90 px-3 py-1.5 text-xs leading-snug text-ink shadow-[0_2px_10px_rgb(0_0_0/0.35)]" data-testid="landscape-geo-note">
+            {geo.note}
+          </p>
         )}
       </div>
       <GlobeActions />

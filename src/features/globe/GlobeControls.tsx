@@ -3,6 +3,7 @@
 import { MapControls, OrbitControls } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useRef, useState, type ComponentRef } from "react";
+import type { PerspectiveCamera } from "three";
 import { FLAT_HEIGHT, FLAT_WIDTH, isFlatProjection } from "@/lib/geo/sphere";
 
 // 最近可拉到離地表約 0.12 個地球半徑，看得到縣市名稱
@@ -51,14 +52,28 @@ function FlatControls() {
   // 鏡頭一開始正對著它下方那一點（不是地圖中心），畫面才不會斜斜的
   const [target] = useState<[number, number, number]>(() => [camera.position.x, camera.position.y, 0]);
 
-  useFrame(() => {
+  useFrame(({ size }) => {
     const controls = ref.current;
     if (!controls) return;
+    const camera = controls.object as PerspectiveCamera;
     const t = controls.target;
-    const cam = controls.object.position;
-    const x = Math.min(FLAT_WIDTH / 2, Math.max(-FLAT_WIDTH / 2, t.x));
-    const y = Math.min(FLAT_HEIGHT / 2, Math.max(-FLAT_HEIGHT / 2, t.y));
-    if (x !== t.x || y !== t.y) {
+    const cam = camera.position;
+    // 地圖一律填滿畫面（比例固定，不會縮到露出外面的空白）：最遠只能退到「剛好蓋滿」的高度
+    const tan = Math.tan((camera.fov / 2) * (Math.PI / 180));
+    const aspect = size.width / Math.max(1, size.height);
+    const cover = Math.min(FLAT_WIDTH / 2 / (tan * aspect), FLAT_HEIGHT / 2 / tan);
+    controls.maxDistance = Math.min(FLAT_MAX_HEIGHT, cover);
+    let changed = false;
+    if (cam.z > cover) {
+      cam.z = cover;
+      changed = true;
+    }
+    // 畫面邊緣不超出地圖
+    const halfW = Math.min(FLAT_WIDTH / 2, cam.z * tan * aspect);
+    const halfH = Math.min(FLAT_HEIGHT / 2, cam.z * tan);
+    const x = Math.min(FLAT_WIDTH / 2 - halfW, Math.max(-FLAT_WIDTH / 2 + halfW, t.x));
+    const y = Math.min(FLAT_HEIGHT / 2 - halfH, Math.max(-FLAT_HEIGHT / 2 + halfH, t.y));
+    if (x !== t.x || y !== t.y || changed) {
       cam.x += x - t.x;
       cam.y += y - t.y;
       t.set(x, y, 0);
