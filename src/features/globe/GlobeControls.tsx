@@ -51,8 +51,10 @@ function FlatControls() {
   const camera = useThree((s) => s.camera);
   // 鏡頭一開始正對著它下方那一點（不是地圖中心），畫面才不會斜斜的
   const [target] = useState<[number, number, number]>(() => [camera.position.x, camera.position.y, 0]);
+  // 上一次畫面的形狀（直放／橫放）；一打開或轉向時，地圖自動貼齊螢幕邊緣
+  const lastShape = useRef<"portrait" | "landscape" | null>(null);
 
-  useFrame(({ size }) => {
+  useFrame(({ size, invalidate }) => {
     const controls = ref.current;
     if (!controls) return;
     const camera = controls.object as PerspectiveCamera;
@@ -64,7 +66,12 @@ function FlatControls() {
     const cover = Math.min(FLAT_WIDTH / 2 / (tan * aspect), FLAT_HEIGHT / 2 / tan);
     controls.maxDistance = Math.min(FLAT_MAX_HEIGHT, cover);
     let changed = false;
-    if (cam.z > cover) {
+    const shape = aspect >= 1 ? "landscape" : "portrait";
+    if (shape !== lastShape.current) {
+      lastShape.current = shape;
+      cam.z = cover;
+      changed = true;
+    } else if (cam.z > cover) {
       cam.z = cover;
       changed = true;
     }
@@ -77,6 +84,8 @@ function FlatControls() {
       cam.x += x - t.x;
       cam.y += y - t.y;
       t.set(x, y, 0);
+      // 只在有變化時重畫（frameloop="demand"）；再畫一次讓國名、標記跟著新位置
+      invalidate();
     }
   });
 

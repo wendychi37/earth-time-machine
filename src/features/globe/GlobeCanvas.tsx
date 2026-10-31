@@ -92,7 +92,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
       // 平面地圖：地圖塞滿畫面（寬的螢幕看得到全世界；直的手機螢幕上下塞滿，左右可以拖），
       // 先對準東亞，但不露出地圖外面
       const tan = Math.tan((FOV / 2) * (Math.PI / 180));
-      const z = Math.min(FLAT_WIDTH / 2 / (tan * aspect), FLAT_HEIGHT / 2 / tan) * 1.02;
+      const z = Math.min(FLAT_WIDTH / 2 / (tan * aspect), FLAT_HEIGHT / 2 / tan);
       const halfWidth = Math.min(FLAT_WIDTH / 2, z * tan * aspect);
       const x = Math.max(-FLAT_WIDTH / 2 + halfWidth, Math.min(FLAT_WIDTH / 2 - halfWidth, (INITIAL_VIEW.lon * Math.PI) / 180));
       return [x, 0, z];
