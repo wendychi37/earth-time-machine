@@ -9,6 +9,7 @@ import { BoundaryLayer } from "@/features/boundaries/BoundaryLayer";
 import { ChapterTags } from "@/features/curriculum/ChapterTags";
 import { EraLabels } from "@/features/eras/EraLabels";
 import { EventMarkers } from "@/features/events/EventMarkers";
+import { PaleoEarth } from "@/features/plates/PaleoEarth";
 import type { BoundaryFeature } from "@/types/boundary";
 import type { HistoricalEvent } from "@/types/event";
 import { Atmosphere } from "./Atmosphere";
@@ -35,11 +36,14 @@ interface GlobeCanvasProps {
 }
 
 export default function GlobeCanvas({ boundaries, events, onContextLost, onCreated }: GlobeCanvasProps) {
-  const showLabels = useAppStore((s) => s.layers.labels);
-  const showHistorical = useAppStore((s) => s.layers.historical);
-  const showEvents = useAppStore((s) => s.layers.events);
-  const showEras = useAppStore((s) => s.layers.eras);
-  const showCurriculum = useAppStore((s) => s.layers.curriculum);
+  // 板塊移動：地球換成古大陸，人類歷史的圖層（疆域、國名、事件、朝代…）先收起來
+  const plates = useAppStore((s) => s.layers.plates);
+  const human = (on: boolean) => on && !plates;
+  const showLabels = useAppStore((s) => human(s.layers.labels));
+  const showHistorical = useAppStore((s) => human(s.layers.historical));
+  const showEvents = useAppStore((s) => human(s.layers.events));
+  const showEras = useAppStore((s) => human(s.layers.eras));
+  const showCurriculum = useAppStore((s) => human(s.layers.curriculum));
   const baseMap = useAppStore((s) => s.baseMap);
   const tone = baseMap === "map" ? "dark" : "light";
   const mapCountries = useMapCountries(baseMap === "map" || showLabels);
@@ -50,7 +54,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
     [allLabels, showEras],
   );
   const adminLines = useAdminLines(showLabels);
-  const showCultures = useAppStore((s) => s.layers.cultures);
+  const showCultures = useAppStore((s) => human(s.layers.cultures));
   const year = useAppStore((s) => s.year);
   const selectCulture = useAppStore((s) => s.selectCulture);
   const cultureData = useCultures(showCultures);
@@ -107,7 +111,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           <Stars radius={50} depth={30} count={3000} factor={2.5} fade />
           {/* 大氣層與地球一起出現，避免貼圖載入前只看到光暈 */}
           <Suspense fallback={null}>
-            <Earth quality={quality} countries={mapCountries} />
+            {plates ? <PaleoEarth /> : <Earth quality={quality} countries={mapCountries} />}
             <Atmosphere />
           </Suspense>
           {showHistorical && boundaries && (
@@ -117,7 +121,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
               colorByRegion={showEras}
             />
           )}
-          {(showLabels || baseMap === "map") && (
+          {!plates && (showLabels || baseMap === "map") && (
             <MapBorders countries={mapCountries} adminLines={showLabels ? adminLines : null} tone={tone} />
           )}
           {((showLabels && labels) || cultures.length > 0) && (
@@ -132,7 +136,7 @@ export default function GlobeCanvas({ boundaries, events, onContextLost, onCreat
           {(showEvents || showCurriculum) && <EventMarkers events={events} showOthers={showEvents} showKeys={showCurriculum} />}
           {showEras && <EraLabels />}
           {showCurriculum && <ChapterTags />}
-          <SelectionMarker />
+          {!plates && <SelectionMarker />}
           <GlobeControls />
           <CameraFocus />
         </Canvas>
